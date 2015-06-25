@@ -1,5 +1,2 @@
 hello
 you are great
-
-
-github
