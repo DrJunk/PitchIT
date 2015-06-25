@@ -1,0 +1,23 @@
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:yourapp="http://schemas.android.com/apk/res-auto" >
+    <item android:id="@+id/action_refresh"
+        android:icon="@drawable/ic_cached_white_30dp"
+        android:title="@string/action_refresh"
+        yourapp:showAsAction="always"/>
+</menu>
+<!--
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:yourapp="http://schemas.android.com/apk/res-auto" >
+
+
+<item android:id="@+id/action_example"
+    android:title="@string/action_example"
+    android:showAsAction="withText|ifRoom" />
+
+<item android:id="@+id/action_settings"
+    android:title="@string/action_settings"
+    android:orderInCategory="100"
+    android:showAsAction="never" />
+
+</menu>-->

@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp"
+    android:divider="@null"
+    android:dividerHeight="0dp"
+    android:descendantFocusability="beforeDescendants">
+    <LinearLayout
+        android:id="@+id/outerLayout"
+        android:dividerHeight="0dp"
+        android:divider="@null"
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/card_background"
+        android:padding="1dp"
+        android:layout_gravity="left|top"
+        android:showDividers="none">
+
+    <TextView
+    android:layout_marginLeft="12dp"
+    android:layout_marginRight="12dp"
+    android:dividerHeight="0dp"
+    android:divider="@null"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textAppearance="?android:attr/textAppearanceLarge"
+    android:text="Head"
+    android:textSize="35dp"
+    android:id="@+id/HeadName"
+    android:layout_alignParentTop="true"
+    android:layout_alignParentLeft="true"
+    android:layout_alignParentStart="true"
+    android:layout_marginTop="10dp"
+    android:layout_marginBottom="5dp"
+    android:textColor="#ff231f20" />
+
+    <TextView
+    android:layout_marginLeft="12dp"
+    android:layout_marginRight="12dp"
+    android:dividerHeight="0dp"
+    android:divider="@null"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textAppearance="?android:attr/textAppearanceLarge"
+    android:text="Body"
+    android:textSize="20dp"
+    android:id="@+id/Body"
+    android:layout_alignParentTop="true"
+    android:layout_alignParentLeft="true"
+    android:layout_alignParentStart="true"
+    android:layout_marginTop="5dp"
+    android:layout_marginBottom="5dp"
+    android:textColor="#ff231f20" />
+        <ImageView
+            android:dividerHeight="0dp"
+            android:divider="@null"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="0"
+            android:textSize="20dp"
+            android:id="@+id/dev_line"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:src="@drawable/line"
+             />
+
+    <RelativeLayout
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        android:layout_marginBottom="0dp"
+        android:id="@+id/innerLayout"
+        android:dividerHeight="0dp"
+        android:divider="@null"
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:layout_gravity="right|top"
+        android:visibility="visible"
+        android:showDividers="none">
+
+        <LinearLayout
+            android:layout_alignParentLeft="true"
+            android:id="@+id/SuperInnerLayout"
+            android:layout_marginTop="10dp"
+            android:dividerHeight="0dp"
+            android:divider="@null"
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_gravity="right|top"
+            android:visibility="visible"
+            android:showDividers="none">
+     <Button
+     android:layout_alignParentLeft="true"
+     android:dividerHeight="0dp"
+     android:divider="@null"
+     android:layout_marginLeft="1dp"
+     android:layout_marginTop="15dp"
+     android:layout_marginBottom="0dp"
+     android:layout_width="15dp"
+     android:layout_height="22.5dp"
+     android:background="@drawable/like_icon_16"
+     android:id="@+id/button_liked"
+     android:layout_gravity="left|bottom" />
+
+    <TextView
+        android:layout_alignLeft="@+id/button_liked"
+        android:layout_marginBottom="0dp"
+        android:dividerHeight="0dp"
+        android:divider="@null"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="0"
+        android:textSize="13dp"
+        android:id="@+id/up_votes"
+        android:layout_marginLeft="10dp"
+        android:textColor="#ff231f20" />
+
+        <Button
+            android:layout_alignLeft="@+id/up_votes"
+            android:dividerHeight="0dp"
+            android:divider="@null"
+            android:layout_marginLeft="70dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="0dp"
+            android:layout_width="80dp"
+            android:layout_height="20dp"
+            android:background="@drawable/on_it_unpressed"
+            android:id="@+id/button_OnIt"
+            android:layout_gravity="right|bottom"
+            android:gravity="right"
+            />
+
+        <TextView
+            android:layout_alignLeft="@+id/button_OnIt"
+            android:layout_marginBottom="0dp"
+            android:dividerHeight="0dp"
+            android:divider="@null"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="0"
+            android:textSize="13dp"
+            android:id="@+id/on_it_votes"
+            android:layout_marginLeft="10dp"
+            android:textColor="#ff231f20" />
+    </LinearLayout>
+
+        <Button
+            android:dividerHeight="0dp"
+            android:divider="@null"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="1dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="0dp"
+            android:layout_width="22.5dp"
+            android:layout_height="22.5dp"
+            android:background="@drawable/flag_upressed"
+            android:id="@+id/button_report"
+            />
+    </RelativeLayout>
+    </LinearLayout>
+</FrameLayout>
