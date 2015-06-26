@@ -10,17 +10,17 @@ import android.view.MenuItem;
 import android.view.Window;
 
 import com.snepos.pitchit.database.Database;
+import com.snepos.pitchit.sqliteHelpers.MyPrefs;
 
 /**
  * Created by user1 on 12/06/2015.
  */
 public class SplashScreen extends Activity {
     /** Duration of wait **/
-    private final int SPLASH_DISPLAY_LENGTH = 3000;
-    private final String PREFS_NAME = "myPrefs";
-    private final String FIRST_TIME = "firstTime";
+    public final int SPLASH_DISPLAY_LENGTH = 3000;
 
     boolean isFirstTime;
+    boolean isLogin;
 
     /** Called when the activity is first created. */
     @Override
@@ -31,8 +31,15 @@ public class SplashScreen extends Activity {
 
 
 
-        SharedPreferences settings = getApplicationContext().getSharedPreferences(PREFS_NAME, 0);
-        isFirstTime = settings.getBoolean(FIRST_TIME, true);
+        SharedPreferences settings = getApplicationContext().getSharedPreferences(MyPrefs.PREFS_NAME, 0);
+        isFirstTime = settings.getBoolean(MyPrefs.FIRST_TIME, true);
+        isLogin = settings.getBoolean(MyPrefs.LOGIN, false);
+        if(!isLogin)
+        {
+            Intent mainIntent = new Intent(SplashScreen.this,Login.class);
+            SplashScreen.this.startActivity(mainIntent);
+            SplashScreen.this.finish();
+        }
 
 
 
@@ -40,7 +47,7 @@ public class SplashScreen extends Activity {
         {
 
             SharedPreferences.Editor editor = settings.edit();
-            editor.putBoolean(FIRST_TIME, false);
+            editor.putBoolean(MyPrefs.FIRST_TIME, false);
             editor.apply();
             Intent mainIntent = new Intent(SplashScreen.this,TutorialSwipe.class);
             SplashScreen.this.startActivity(mainIntent);

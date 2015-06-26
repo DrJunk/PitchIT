@@ -12,6 +12,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.widget.Button;
+import android.widget.FrameLayout;
 
 public class TutorialSwipe extends FragmentActivity {
     /**
@@ -20,6 +21,9 @@ public class TutorialSwipe extends FragmentActivity {
     private static final int NUM_PAGES = 7;
     Context context;
     Button [] radios;
+    boolean isSignUp;
+    FrameLayout frameLayout;
+
     /**
      * The pager widget, which handles animation and allows swiping horizontally to access previous
      * and next wizard steps.
@@ -36,8 +40,10 @@ public class TutorialSwipe extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tutorial);
         context=this;
+        isSignUp=false;
         radios = new Button[6];
         // Instantiate a ViewPager and a PagerAdapter.
+        frameLayout = (FrameLayout) findViewById(R.id.frameLayoutTutorial);
         radios[0] = (Button)findViewById(R.id.radioButton0);
         radios[1] = (Button)findViewById(R.id.radioButton1);
         radios[2] = (Button)findViewById(R.id.radioButton2);
@@ -47,6 +53,26 @@ public class TutorialSwipe extends FragmentActivity {
         mPager = (ViewPager) findViewById(R.id.pager);
         mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
         mPager.setAdapter(mPagerAdapter);
+        changeRadios(mPager.getCurrentItem());
+        mPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int i, float v, int i2) {
+
+            }
+
+            @Override
+            public void onPageSelected(int i) {
+                changeRadios(mPager.getCurrentItem());
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int i) {
+
+            }
+        });
+
+
+
     }
 
     @Override
@@ -61,6 +87,8 @@ public class TutorialSwipe extends FragmentActivity {
         }
     }
 
+
+
     /**
      * A simple pager adapter that represents 5 ScreenSlidePageFragment objects, in
      * sequence.
@@ -73,28 +101,15 @@ public class TutorialSwipe extends FragmentActivity {
         @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
         @Override
         public Fragment getItem(int position) {
-            for(int i=0;i<6;i++)
-            {
-                radios[i].setBackground((getResources().getDrawable(R.drawable.emepty_dots)));
-                radios[i].setWidth(20);
-                radios[i].setHeight(20);
-            }
-            if(position>0) {
-                radios[position - 1].setBackground((getResources().getDrawable(R.drawable.white_dots)));
-                radios[position - 1].setWidth(25);
-                radios[position - 1].setHeight(25);
-            }
-            else {
-                radios[position].setBackground((getResources().getDrawable(R.drawable.white_dots)));
-                radios[position].setWidth(25);
-                radios[position].setHeight(25);
-            }
+
             if(position==6) {
                 Intent intent = new Intent(context, MyPitch.class);
                 startActivity(intent);
                 TutorialSwipe.this.finish();
             }
-            return new FragmentTutorial().newInstance(position);
+            FragmentTutorial myFragment = FragmentTutorial.newInstance(position);
+            return myFragment;
+
             //Intent intent=new Intent(context, MyPitch.class);
 
         }
@@ -103,5 +118,26 @@ public class TutorialSwipe extends FragmentActivity {
         public int getCount() {
             return NUM_PAGES;
         }
+    }
+
+    public void changeSwipeable (boolean isSwipe)
+    {
+        isSignUp=isSwipe;
+        if(isSignUp)
+        {
+            mPager.setOnTouchListener(null);
+        }
+    }
+    public void changeRadios(int position){
+        for(int i=0;i<6;i++)
+        {
+            radios[i].setBackground((getResources().getDrawable(R.drawable.emepty_dots)));
+            radios[i].setWidth(20);
+            radios[i].setHeight(20);
+        }
+        radios[position].setBackground((getResources().getDrawable(R.drawable.white_dots)));
+        radios[position].setWidth(25);
+        radios[position].setHeight(25);
+
     }
 }

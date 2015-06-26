@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<AbsoluteLayout
+    android:id="@+id/widget0"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@drawable/tutorial_11">
+    <Button
+        android:id="@+id/widget32"
+        android:layout_width="221dp"
+        android:layout_height="wrap_content"
+        android:text="sign up"
+        android:layout_x="40dp"
+        android:layout_y="430dp" />
+
+    <EditText
+        android:inputType="textEmailAddress"
+        android:id="@+id/sign_up_email"
+        android:layout_width="268dp"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:password="false"
+        android:layout_x="40dp"
+        android:layout_y="230dp"
+        android:hint="Email" />
+
+    <EditText
+        android:id="@+id/sign_up_username"
+        android:layout_width="268dp"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:layout_x="40dp"
+        android:layout_y="280dp"
+        android:hint="user name" />
+
+    <EditText
+        android:id="@+id/sign_up_password"
+        android:layout_width="268dp"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:layout_x="40dp"
+        android:layout_y="330dp"
+        android:hint="password" />
+
+    <EditText
+        android:id="@+id/sign_up_password_confirmed"
+        android:layout_width="268dp"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:layout_x="40dp"
+        android:layout_y="380dp"
+        android:hint="password-confirm" />
+
+    <ImageView
+        android:id="@+id/widget42"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_x="334dp"
+        android:layout_y="471dp" />
+
+</AbsoluteLayout>
