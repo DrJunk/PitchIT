@@ -21,6 +21,7 @@ public class FragmentTutorial extends Fragment {
 
 
 
+
     public static final FragmentTutorial newInstance(int num)
     {
         FragmentTutorial f = new FragmentTutorial();
@@ -34,34 +35,35 @@ public class FragmentTutorial extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        ViewGroup rootView = (ViewGroup) inflater.inflate(
-                R.layout.tutorial_fragment_1, container, false);
-        img = (ImageView) rootView.findViewById(R.id.img_tutorial);
+        ViewGroup rootView;
         position = getArguments().getInt("position");
 
+            rootView  = (ViewGroup) inflater.inflate(
+                    R.layout.tutorial_fragment_1, container, false);
+            img = (ImageView) rootView.findViewById(R.id.img_tutorial);
 
-        switch (position)
-        {
-            case 0:
-                img.setImageResource(R.drawable.to_1);
-            break;
-            case 1:
-                img.setImageResource(R.drawable.to_2);
-                break;
-            case 2:
-                img.setImageResource(R.drawable.to_3);
-                break;
-            case 3:
-                img.setImageResource(R.drawable.to_4);
-                break;
-            case 4:
-                img.setImageResource(R.drawable.to_5);
-                break;
-            case 5:
-                img.setImageResource(R.drawable.rt_6);
-                break;
+            switch (position) {
+                case 0:
+                    img.setImageResource(R.drawable.tutorial_1);
+                    break;
+                case 1:
+                    img.setImageResource(R.drawable.tutorial_2);
+                    break;
+                case 2:
+                    img.setImageResource(R.drawable.tutorial_3);
+                    break;
+                case 3:
+                    img.setImageResource(R.drawable.tutorial_4);
+                    break;
+                case 4:
+                    img.setImageResource(R.drawable.tutorial_5);
+                    break;
+                case 5:
+                    img.setImageResource(R.drawable.tutorial_6);
+                    break;
 
-        }
+            }
+
 
         return rootView;
     }
