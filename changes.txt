@@ -1,0 +1,4 @@
+tom 27.6.15:
+1. deleted the nevigation drawer
+2. minor changes like alowing only english and disabling the screen rotation
+3. added login and sign up (waiting to server for full function)

@@ -32,6 +32,9 @@ public class SplashScreen extends Activity {
 
 
         SharedPreferences settings = getApplicationContext().getSharedPreferences(MyPrefs.PREFS_NAME, 0);
+
+
+
         isFirstTime = settings.getBoolean(MyPrefs.FIRST_TIME, true);
         isLogin = settings.getBoolean(MyPrefs.LOGIN, false);
         if(!isLogin)
@@ -63,7 +66,7 @@ public class SplashScreen extends Activity {
             @Override
             public void run() {
                 /* Create an Intent that will start the Menu-Activity. */
-                if(!isFirstTime) {
+                if(!isFirstTime&&isLogin) {
                     Intent mainIntent = new Intent(SplashScreen.this, MyPitch.class);
                     SplashScreen.this.startActivity(mainIntent);
                     SplashScreen.this.finish();

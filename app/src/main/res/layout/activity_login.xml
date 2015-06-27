@@ -7,20 +7,21 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:background="@drawable/tutorial_11">
     <Button
-        android:id="@+id/widget32"
+        android:id="@+id/signUp_btn"
         android:layout_width="221dp"
         android:layout_height="wrap_content"
         android:text="sign up"
         android:layout_x="43dp"
         android:layout_y="444dp" />
     <Button
-        android:id="@+id/widget33"
+        android:id="@+id/login_btn"
         android:layout_width="87dp"
         android:layout_height="wrap_content"
         android:text="login"
         android:layout_x="41dp"
         android:layout_y="356dp" />
     <EditText
+        android:digits="abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$%^*()_+='/.,"
         android:inputType="textEmailAddress"
         android:id="@+id/login_email"
         android:layout_width="268dp"
@@ -30,6 +31,7 @@
         android:layout_y="232dp"
         android:hint="Email" />
     <EditText
+        android:digits="abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$%^*()_+='/.,"
         android:id="@+id/login_password"
         android:layout_width="268dp"
         android:layout_height="wrap_content"
@@ -40,20 +42,31 @@
         android:hint="password"
         android:inputType="text" />
     <Button
-        android:id="@+id/widget40"
+        android:id="@+id/login_facebook"
         android:layout_width="194dp"
         android:layout_height="wrap_content"
         android:text="Login with facebook"
         android:layout_x="166dp"
         android:layout_y="354dp" />
 
+<LinearLayout
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_marginLeft="50dp"
+    android:layout_marginBottom="5dp"
+    android:gravity="bottom|right">
+
     <ImageView
         android:id="@+id/widget42"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_x="334dp"
-        android:layout_y="471dp"
-        android:src="@drawable/snepos_logo" />
+        android:layout_marginRight="5dp"
+        android:layout_marginBottom="5dp"
+        android:src="@drawable/snepos_logo"
+        android:layout_x="320dp"
+        android:layout_y="446dp" />
+</LinearLayout>
+
     <CheckBox
         android:id="@+id/widget43"
         android:layout_width="143dp"
@@ -61,4 +74,5 @@
         android:text="Remember me"
         android:layout_x="43dp"
         android:layout_y="316dp" />
+
 </AbsoluteLayout>

@@ -4,7 +4,6 @@ import android.annotation.TargetApi;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
-import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
@@ -17,7 +16,6 @@ import android.os.Looper;
 import android.os.Message;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -33,15 +31,11 @@ import android.widget.TextView;
 
 import com.snepos.pitchit.database.Database;
 import com.snepos.pitchit.database.IdeaData;
-import com.snepos.pitchit.sqliteHelpers.DatabaseHandler;
-
-import java.util.ArrayList;
-import java.util.List;
 
 //import android.support.v7.widget.Toolbar;
 
 
-public class MyPitch extends ActionBarActivity implements  NavigationDrawerFragment.NavigationDrawerCallbacks , ActionBar.TabListener   {
+public class MyPitch extends ActionBarActivity implements ActionBar.TabListener   {
     public static Handler mHandler;
 
     AppSectionsPagerAdapter mAppSectionsPagerAdapter;
@@ -53,7 +47,7 @@ public class MyPitch extends ActionBarActivity implements  NavigationDrawerFragm
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
      */
-    private NavigationDrawerFragment mNavigationDrawerFragment;
+
 
     /**
      * Used to store the last screen title. For use in {@link #restoreActionBar()}.
@@ -68,7 +62,7 @@ public class MyPitch extends ActionBarActivity implements  NavigationDrawerFragm
         final ActionBar actionBar = getActionBar();
         actionBar.setBackgroundDrawable(new ColorDrawable(0xFFBE3A27));
         actionBar.setIcon(R.drawable.icon);
-       // actionBar.setStripEnabled(false);
+
 
         mHandler = new Handler(Looper.getMainLooper()) {
             @Override
@@ -115,7 +109,7 @@ public class MyPitch extends ActionBarActivity implements  NavigationDrawerFragm
         Database.PostRefreshTrending();
         Database.PostRefreshHot();
 
-
+        mTitle = getTitle();
         context= this;
        // mDbHelper = new FeedReaderDbHelper(context);
         FAB = (Button) findViewById(R.id.button_add);
@@ -124,6 +118,7 @@ public class MyPitch extends ActionBarActivity implements  NavigationDrawerFragm
             public void onClick(View v) {
                 Intent intent=new Intent(context, MyPost.class);
                 startActivity(intent);
+
 
                 //Toast.makeText(MyPitch.this, "Refresh", Toast.LENGTH_SHORT).show();
 
@@ -165,50 +160,27 @@ public class MyPitch extends ActionBarActivity implements  NavigationDrawerFragm
         });
 
 
-
-
-
-        /*
-        //TextView Head = (TextView) view.findViewById(R.id.HeadName);
-
-        //View tabView = inflater.inflate(R.layout.my_tab_layout, null);
-        LayoutInflater inflater ;
-        inflater = getLayoutInflater();
-        View tabView = inflater.inflate(R.layout.my_tab_layout, null);
-        tabView.setBackgroundColor(Color.RED); // set custom color
-        tab.setCustomView(tabView);*/
-
-        //actionBar.addTab(
-         //       actionBar.newTab()
-           //             .setText("wow")
-           //             .setTabListener(this));
         TextView tv = new TextView(context);
-        tv.setText("hot");
-        tv.setTextColor(Color.GRAY);
-        //tv.setHeight(500);
-        //tv.setWidth(200);
+        tv.setText("popular");
+        tv.setTextColor(getResources().getColor((R.color.greyText)));
         tv.setLayoutParams(new TableLayout.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.MATCH_PARENT, 1f));
         tv.setGravity(Gravity.CENTER);
         tv.setTextSize(20);
 
         TextView tv1 = new TextView(context);
-        tv1.setText("brewing");
-        tv1.setTextColor(Color.GRAY);
-        //tv1.setHeight(500);
-        //tv1.setWidth(200);
+        tv1.setText("growing");
+        tv1.setTextColor(getResources().getColor((R.color.greyText)));
         tv1.setLayoutParams(new TableLayout.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.MATCH_PARENT, 1f));
         tv1.setGravity(Gravity.CENTER);
         tv1.setTextSize(20);
 
         TextView tv2 = new TextView(context);
         tv2.setText("new");
-        tv2.setTextColor(Color.GRAY);
-        //tv2.setHeight(500);
-        //tv2.setWidth(200);
+        tv2.setTextColor(getResources().getColor((R.color.greyText)));
         tv2.setLayoutParams(new TableLayout.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.MATCH_PARENT, 1f));
         tv2.setGravity(Gravity.CENTER);
         tv2.setTextSize(20);
-        //if (currentapiVersion >= Build.VERSION_CODES.JELLY_BEAN_MR1)
+
         actionBar.addTab(
                 actionBar.newTab()
                         .setCustomView(tv)
@@ -223,19 +195,15 @@ public class MyPitch extends ActionBarActivity implements  NavigationDrawerFragm
                         .setTabListener(this));
 
 
-        mNavigationDrawerFragment = (NavigationDrawerFragment)
-                getFragmentManager().findFragmentById(R.id.navigation_drawer);
-        mTitle = getTitle();
 
-        // Set up the drawer.
-        mNavigationDrawerFragment.setUp(
-                R.id.navigation_drawer,
-                (DrawerLayout) findViewById(R.id.drawer_layout));
+
+
+
     }
     @Override
     public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
         TextView tv=(TextView)tab.getCustomView();
-        tv.setTextColor(Color.GRAY);
+        tv.setTextColor(getResources().getColor((R.color.greyText)));
     }
     @Override
     public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
@@ -249,37 +217,7 @@ public class MyPitch extends ActionBarActivity implements  NavigationDrawerFragm
     public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
     }
 
-    @Override
-    public void onNavigationDrawerItemSelected(int position) {
-        // update the main content by replacing fragments
-        if(position==1)
-        {
 
-            Intent intent=new Intent(context, TutorialSwipe.class);
-            startActivity(intent);
-            this.finish();
-
-           // Bundle args = new Bundle();
-            //args.putInt(PlanetFragment.ARG_PLANET_NUMBER, position);
-           // fragment.setArguments(args);
-            //FragmentTutorial fragment = new FragmentTutorial();
-            //FragmentTutorial.newInstance(1);
-
-            //FragmentManager fragmentManager = getFragmentManager();
-            //fragmentManager.invalidateOptionsMenu();
-
-            //fragmentManager.beginTransaction()
-              //      .replace(R.id.container, FragmentTutorial.newInstance(1))
-              //      .commit();
-
-        }
-        else {
-            FragmentManager fragmentManager = getFragmentManager();
-            fragmentManager.beginTransaction()
-                    .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
-                    .commit();
-        }
-    }
 
     public void onSectionAttached(int number) {
         switch (number) {
@@ -305,24 +243,16 @@ public class MyPitch extends ActionBarActivity implements  NavigationDrawerFragm
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        if (!mNavigationDrawerFragment.isDrawerOpen()) {
-            // Only show items in the action bar relevant to this screen
-            // if the drawer is not showing. Otherwise, let the drawer
-            // decide what to show in the action bar.
-            MenuInflater inflater = getMenuInflater();
-            inflater.inflate(R.menu.my_pitch, menu);
-            //getMenuInflater().inflate(R.menu.my_pitch, menu);
-            restoreActionBar();
-            return true;
-        }
-        return super.onCreateOptionsMenu(menu);
+
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.my_pitch, menu);
+        restoreActionBar();
+        return true;
+
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         if (id == R.id.action_refresh) {
 
@@ -331,6 +261,23 @@ public class MyPitch extends ActionBarActivity implements  NavigationDrawerFragm
             Database.PostRefreshHot();
 
             return true;
+        }
+        if(id== R.id.action_tutorial)
+        {
+            Intent mainIntent = new Intent(MyPitch.this, TutorialSwipe.class);
+            MyPitch.this.startActivity(mainIntent);
+            MyPitch.this.finish();
+        }
+        if(id== R.id.action_add_post)
+        {
+            Intent mainIntent = new Intent(MyPitch.this, MyPost.class);
+            MyPitch.this.startActivity(mainIntent);
+        }
+        if(id== R.id.action_change_user)
+        {
+            Intent mainIntent = new Intent(MyPitch.this, Login.class);
+            MyPitch.this.startActivity(mainIntent);
+            MyPitch.this.finish();
         }
         return super.onOptionsItemSelected(item);
     }

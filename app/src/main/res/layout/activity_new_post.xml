@@ -4,6 +4,7 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
     <EditText
+        android:digits="abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$%^*()_+='/.,"
         android:background="@android:color/transparent"
         android:maxLength="22"
         android:layout_width="wrap_content"
@@ -24,6 +25,7 @@
         android:textColor="#ff231f20" />
 
     <EditText
+        android:digits="abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$%^*()_+='/.,"
         android:background="@android:color/transparent"
         android:lines="8"
         android:maxLength="200"
