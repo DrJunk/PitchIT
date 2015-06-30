@@ -2,6 +2,8 @@ package com.snepos.pitchit.database;
 
 import android.util.Log;
 
+import com.snepos.pitchit.MyPitch;
+
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.ParseException;
@@ -64,6 +66,14 @@ public class HttpHandler {
 
         System.out.println("Received response to: " + response.msg);
         System.out.println("Response data: " + response.data);
+
+        if(!response.data.startsWith("[200"))
+        {
+            System.out.println("Error in response: " + response.msg);
+            System.out.println("Response's data: " + response.data);
+            MyPitch.mHandler.obtainMessage(1, 0).sendToTarget();
+            return;
+        }
 
         if(     response.msg == "get_new_ideas" ||
                 response.msg == "get_trending_ideas" ||

@@ -28,6 +28,7 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TableLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.snepos.pitchit.database.Database;
 import com.snepos.pitchit.database.IdeaData;
@@ -69,7 +70,7 @@ public class MyPitch extends ActionBarActivity implements ActionBar.TabListener 
             public void handleMessage(Message inputMessage) {
 
                 switch (inputMessage.what) {
-                    case 0:
+                    case 0:  // New data from server
                         IdeaData[] data = null;
                         ListView listView = null;
                         switch((Integer)inputMessage.obj)
@@ -101,6 +102,15 @@ public class MyPitch extends ActionBarActivity implements ActionBar.TabListener 
                                 System.err.println("Error: 'data' is null(" + inputMessage.what + ")");
                             }
                         }
+                        break;
+                    case 1: // Failed to receive update
+                        switch((Integer)inputMessage.obj)
+                        {
+                            case 0:
+                                Toast.makeText(getApplicationContext(), "Error: Failed to receive an update", Toast.LENGTH_SHORT).show();
+                                break;
+                        }
+                        break;
                 }
             }
         };
