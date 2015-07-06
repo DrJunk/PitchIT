@@ -13,9 +13,14 @@ public class Request {
 
     public String msg;
     public List<NameValuePair> pairs;
-    public Request(String msg)
+
+    public enum App{MyPitch, MyPost};
+    public App app;
+
+    public Request(String msg, App app)
     {
         this.msg = msg;
+        this.app = app;
         pairs = new ArrayList<NameValuePair>();
     }
 

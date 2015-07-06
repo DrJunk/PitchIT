@@ -3,6 +3,9 @@ package com.snepos.pitchit;
 import android.app.ActionBar;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.support.v7.app.ActionBarActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -11,11 +14,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.snepos.pitchit.database.Database;
 import com.snepos.pitchit.database.HttpHandler;
+import com.snepos.pitchit.database.IdeaData;
 import com.snepos.pitchit.database.Request;
 import com.snepos.pitchit.sqliteHelpers.DatabaseHandler;
 
@@ -25,6 +30,8 @@ import java.util.TimerTask;
 
 
 public class MyPost extends ActionBarActivity {
+    public static Handler mHandler;
+
     EditText body;
     EditText head;
     TextView bodyLeftLength;
@@ -38,6 +45,23 @@ public class MyPost extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_post);
+
+        mHandler = new Handler(Looper.getMainLooper()) {
+            @Override
+            public void handleMessage(Message inputMessage) {
+
+                switch (inputMessage.what) {
+                    case 0:
+                        Toast.makeText(MyPost.this, "Error: Failed to send idea to server", Toast.LENGTH_SHORT).show();
+                        break;
+                    case 1:
+                        Database.PostRefreshNews();
+                        Toast.makeText(MyPost.this, "Sent", Toast.LENGTH_SHORT).show();
+                        finish();
+                        break;
+                }
+            }
+        };
 
         final ActionBar actionBar = getActionBar();
         actionBar.setBackgroundDrawable(new ColorDrawable(0xFFBE3A27));
@@ -132,10 +156,10 @@ public class MyPost extends ActionBarActivity {
             case R.id.action_send:
                 //here here here here send
 
-                Request req = new Request("new_idea");
+                Request req = new Request("add_idea", Request.App.MyPost);
                 req.put("title", head.getText().toString());
                 req.put("text", body.getText().toString());
-                req.put("user", "admin");
+                req.put("email", "omer934@walla.co.il");
                 HttpHandler.addRequest(req);
 
                 //tom tries to figure it out*****************************************************************
@@ -145,10 +169,6 @@ public class MyPost extends ActionBarActivity {
                 db.addPost(post, DatabaseHandler.Table.NEW);
                 //tom tries figured it out*******************************************************************
 
-                Database.PostRefreshNews();
-
-                Toast.makeText(MyPost.this, "Sent", Toast.LENGTH_SHORT).show();
-                finish();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

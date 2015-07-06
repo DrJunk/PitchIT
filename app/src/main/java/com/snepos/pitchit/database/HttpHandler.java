@@ -3,6 +3,7 @@ package com.snepos.pitchit.database;
 import android.util.Log;
 
 import com.snepos.pitchit.MyPitch;
+import com.snepos.pitchit.MyPost;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -22,6 +23,9 @@ import org.apache.http.util.EntityUtils;
 import org.json.JSONObject;
 
 import java.util.*;
+import java.util.logging.ConsoleHandler;
+
+import android.os.Handler;
 
 public class HttpHandler {
 
@@ -48,8 +52,8 @@ public class HttpHandler {
         }.start();
     }
 
-    public static void addRequest(String msg) {
-        Request req = new Request(msg);
+    public static void addRequest(String msg, Request.App app) {
+        Request req = new Request(msg, app);
         requests.add(req);
     }
 
@@ -67,11 +71,29 @@ public class HttpHandler {
         System.out.println("Received response to: " + response.msg);
         System.out.println("Response data: " + response.data);
 
+        Handler handler = null;
+
+        switch (response.app)
+        {
+            case MyPitch:
+                handler = MyPitch.mHandler;
+                break;
+            case MyPost:
+                handler = MyPost.mHandler;
+                break;
+        }
+
         if(!response.data.startsWith("[200"))
         {
             System.out.println("Error in response: " + response.msg);
             System.out.println("Response's data: " + response.data);
-            MyPitch.mHandler.obtainMessage(1, 0).sendToTarget();
+            handler.obtainMessage(0, 0).sendToTarget();
+            return;
+        }
+
+        if(response.msg == "add_idea")
+        {
+            handler.obtainMessage(1).sendToTarget();
             return;
         }
 
@@ -110,6 +132,8 @@ public class HttpHandler {
                 Database.RefreshTrending(ideasArray);
             else if(response.msg == "get_hot_ideas")
                 Database.RefreshHot(ideasArray);
+
+            return;
         }
     }
 
@@ -135,7 +159,7 @@ public class HttpHandler {
                 e.printStackTrace();
                 Log.i("Parse Exception", e + "");
             }
-            responses.add(new Response(msg, responseText));
+            responses.add(new Response(msg, responseText, req.app));
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }

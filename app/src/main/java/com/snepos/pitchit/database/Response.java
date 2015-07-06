@@ -6,9 +6,12 @@ package com.snepos.pitchit.database;
 public class Response {
     public String msg;
     public String data;
-    public Response(String msg, String data)
+    public Request.App app;
+
+    public Response(String msg, String data, Request.App app)
     {
         this.msg = msg;
         this.data = data;
+        this.app = app;
     }
 }
