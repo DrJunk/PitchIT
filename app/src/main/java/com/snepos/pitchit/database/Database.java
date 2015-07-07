@@ -95,7 +95,8 @@ public class Database {
     public static void PostOnItVoteCanceled(int ideaId)
     {
         Request req = new Request("remove_on_it_vote", Request.App.MyPitch);
-        req.put("id", String.valueOf(ideaId));
+        req.put("idea_id", String.valueOf(ideaId));
+        req.put("email", "omer934@walla.co.il");
         HttpHandler.addRequest(req);
     }
 }
