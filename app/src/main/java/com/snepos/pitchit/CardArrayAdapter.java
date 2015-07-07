@@ -52,7 +52,6 @@ public class CardArrayAdapter  extends ArrayAdapter<Card> {
     @Override
     public View getView(final int position, final View convertView, final ViewGroup parent) {
         View view = convertView;
-        System.out.println("getView " + String.valueOf(position));
 
         if (view == null) {
             LayoutInflater inflater = (LayoutInflater) this.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);

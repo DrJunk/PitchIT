@@ -22,6 +22,7 @@ import com.snepos.pitchit.database.Database;
 import com.snepos.pitchit.database.HttpHandler;
 import com.snepos.pitchit.database.IdeaData;
 import com.snepos.pitchit.database.Request;
+import com.snepos.pitchit.database.Response;
 import com.snepos.pitchit.sqliteHelpers.DatabaseHandler;
 
 import java.util.Random;
@@ -30,7 +31,7 @@ import java.util.TimerTask;
 
 
 public class MyPost extends ActionBarActivity {
-    public static Handler mHandler;
+    private static Handler mHandler;
 
     EditText body;
     EditText head;
@@ -132,7 +133,10 @@ public class MyPost extends ActionBarActivity {
 
     }
 
-
+    public static void HandleResponse(Response response)
+    {
+        MyPostResponseHandler.HandleResponse(mHandler, response);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

@@ -68,72 +68,23 @@ public class HttpHandler {
 
         Response response = responses.poll();
 
-        System.out.println("Received response to: " + response.msg);
-        System.out.println("Response data: " + response.data);
+        System.out.println("Received response to: " + response.GetMessage());
+        System.out.println("Response data: " + response.GetData());
 
-        Handler handler = null;
+        if(!response.IsSucceeded())
+        {
+            System.out.println("Error in response: " + response.GetMessage());
+            System.out.println("Response's data: " + response.GetData());
+        }
 
-        switch (response.app)
+        switch (response.GetApp())
         {
             case MyPitch:
-                handler = MyPitch.mHandler;
+                MyPitch.HandleResponse(response);
                 break;
             case MyPost:
-                handler = MyPost.mHandler;
+                MyPost.HandleResponse(response);
                 break;
-        }
-
-        if(!response.data.startsWith("[200"))
-        {
-            System.out.println("Error in response: " + response.msg);
-            System.out.println("Response's data: " + response.data);
-            handler.obtainMessage(0, 0).sendToTarget();
-            return;
-        }
-
-        if(response.msg == "add_idea")
-        {
-            handler.obtainMessage(1).sendToTarget();
-            return;
-        }
-
-        if(     response.msg == "get_new_ideas" ||
-                response.msg == "get_trending_ideas" ||
-                response.msg == "get_hot_ideas")
-        {
-            String data = response.data;
-            data = data.substring(data.lastIndexOf("["), data.indexOf("]"));
-            System.out.println("Data: " + data);
-            int left = -1;
-            List<IdeaData> ideas = new LinkedList<IdeaData>();
-            IdeaData idea;
-            for(int i = 0; i < data.length(); i++)
-            {
-                if(data.charAt(i) == '{')
-                {
-                    left = i;
-                }
-                else if(left != -1 && data.charAt(i) == '}')
-                {
-                    idea = IdeaData.fromJSON(data.substring(left, i + 1));
-                    left = -1;
-                    if(idea.id != -1)
-                        ideas.add(idea);
-                }
-            }
-
-            IdeaData[] ideasArray = new IdeaData[ideas.size()];
-            for(int i = 0; i < ideasArray.length; i++)
-                ideasArray[i] = ideas.get(ideasArray.length - i - 1);
-
-            if(response.msg == "get_new_ideas")
-                Database.RefreshNews(ideasArray);
-            else if(response.msg == "get_trending_ideas")
-                Database.RefreshTrending(ideasArray);
-            else if(response.msg == "get_hot_ideas")
-                Database.RefreshHot(ideasArray);
-
-            return;
         }
     }
 

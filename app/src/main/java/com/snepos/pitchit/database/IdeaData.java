@@ -24,18 +24,17 @@ public class IdeaData {
         this.imOnItVotes = imOnItVotes;
     }
 
-    public static IdeaData fromJSON(String json)
+    public static IdeaData fromJSON(JSONObject json)
     {
         IdeaData res = new IdeaData(-1,"None", "None", "None", -1, -1, -1);
         try {
-            JSONObject obj = new JSONObject(json);
-            res.title = obj.getString("title");
-            res.text = obj.getString("text");
-            res.publisherName = obj.getString("user");
-            res.upVotes = obj.getInt("up_votes");
-            res.spamVotes = obj.getInt("spam_votes");
-            res.imOnItVotes = obj.getInt("on_it_votes");
-            res.id = obj.getInt("id");
+            res.title = json.getString("title");
+            res.text = json.getString("text");
+            res.publisherName = json.getString("user");
+            res.upVotes = json.getInt("up_votes");
+            res.spamVotes = json.getInt("spam_votes");
+            res.imOnItVotes = json.getInt("on_it_votes");
+            res.id = json.getInt("id");
         }
         catch(Exception e)
         {

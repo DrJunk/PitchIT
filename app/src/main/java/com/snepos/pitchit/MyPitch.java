@@ -32,12 +32,13 @@ import android.widget.Toast;
 
 import com.snepos.pitchit.database.Database;
 import com.snepos.pitchit.database.IdeaData;
+import com.snepos.pitchit.database.Response;
 
 //import android.support.v7.widget.Toolbar;
 
 
 public class MyPitch extends ActionBarActivity implements ActionBar.TabListener   {
-    public static Handler mHandler;
+    private static Handler mHandler;
 
     AppSectionsPagerAdapter mAppSectionsPagerAdapter;
     ViewPager mViewPager;
@@ -74,6 +75,8 @@ public class MyPitch extends ActionBarActivity implements ActionBar.TabListener 
                         switch((Integer)inputMessage.obj)
                         {
                             case 0:
+                                break;
+                            case 1:
                                 Toast.makeText(getApplicationContext(), "Error: Failed to receive an update", Toast.LENGTH_SHORT).show();
                                 break;
                         }
@@ -227,7 +230,10 @@ public class MyPitch extends ActionBarActivity implements ActionBar.TabListener 
     public void onTabReselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
     }
 
-
+    public static void HandleResponse(Response response)
+    {
+        MyPitchResponseHandler.HandleResponse(mHandler, response);
+    }
 
     public void onSectionAttached(int number) {
         switch (number) {
