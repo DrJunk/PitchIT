@@ -1,5 +1,7 @@
 package com.snepos.pitchit;
 
+import com.snepos.pitchit.database.Database;
+
 /**
  * Created by user1 on 12/06/2015.
  */
@@ -47,26 +49,39 @@ public class Card {
         clicks = _clicks;
     }
 
-    public void clickedLike() {
-        if (isLiked)
+    public void clickedLike()
+    {
+        if (isLiked) {
             isLiked = false;
-        else
+            Database.PostUpVoteCanceled(id);
+        }
+        else{
             isLiked = true;
+            Database.PostUpVote(id);
+        }
     }
 
     public void clickedOnIt() {
-        if (isOnIt)
+        if (isOnIt) {
             isOnIt = false;
-        else
+            Database.PostOnItVoteCanceled(id);
+        }
+        else{
             isOnIt = true;
+            Database.PostOnItVote(id);
+        }
 
     }
 
     public void clickedReport() {
-        if (isReport)
+        if (isReport){
             isReport = false;
-        else
+            Database.PostSpamVoteCanceled(id);
+        }
+        else{
             isReport = true;
+            Database.PostSpamVote(id);
+        }
     }
 
     public String getBody() {

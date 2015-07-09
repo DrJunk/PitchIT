@@ -47,11 +47,6 @@ public class Database {
         hot = data;
     }
 
-    public static void PostIdea(String Title, String Text)
-    {
-        //TODO: implement
-    }
-
     public static void PostUpVote(int ideaId)
     {
         Request req = new Request("add_up_vote", Request.App.MyPitch);

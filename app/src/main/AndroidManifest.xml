@@ -2,7 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.snepos.pitchit" android:versionCode="3" android:versionName="2"  >
     <uses-permission android:name="android.permission.INTERNET" />
-
+    <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
+    <uses-permission android:name="android.permission.USE_CREDENTIALS"/>
 
     <application
         android:largeHeap="true"
@@ -58,6 +59,12 @@
                 <action android:name="android.intent.action.ASSIST" />
                 <category android:name="android.intent.category.ALTERNATIVE" />
             </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data android:host="pitchit" android:scheme="com.googleusercontent.apps.909078922028-vp0tcrci554h8e1a0o7i3027hng9q8pj"/>
+            </intent-filter>
         </activity>
         <activity
             android:screenOrientation="portrait"
@@ -68,5 +75,16 @@
                 <category android:name="android.intent.category.ALTERNATIVE" />
             </intent-filter>
         </activity>
+
+        <activity android:name="com.facebook.LoginActivity"/>
+        <meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version"/>
+        <meta-data android:name="identitytoolkit.show_providers" android:value="Google, Facebook"/>
+        <meta-data android:name="identitytoolkit.use_google_plus" android:value="false"/>
+        <meta-data android:name="identitytoolkit.api_key" android:value="AIzaSyAgKUmv3_O_cyMkSIVCbH2tMKciXOznAe8" />
+        <meta-data android:name="identitytoolkit.server_client_id" android:value="909078922028-vp0tcrci554h8e1a0o7i3027hng9q8pj.apps.googleusercontent.com" />
+        <meta-data android:name="identitytoolkit.server_widget_url" android:value="http://pitchitserver-pitchit.rhcloud.com" />
+
+        <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/fb_app_id"/>
+
     </application>
 </manifest>

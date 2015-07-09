@@ -10,8 +10,6 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.snepos.pitchit.database.Database;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -106,7 +104,6 @@ public class CardArrayAdapter  extends ArrayAdapter<Card> {
                     if (currentCard.getIsLiked()) {
                         Like.setBackgroundResource(R.drawable.like_icon_16);
                         UpVotes.setText(String.valueOf(Integer.parseInt(UpVotes.getText().toString()) + 1));
-                        Database.PostUpVote(currentCard.getId());
                     } else {
                         Like.setBackgroundResource(R.drawable.like_icon_16_blackend);
                         UpVotes.setText(String.valueOf(Integer.parseInt(UpVotes.getText().toString()) - 1));
@@ -122,15 +119,12 @@ public class CardArrayAdapter  extends ArrayAdapter<Card> {
             @Override
             public void onClick(View v) {
                 currentCard.clickedLike();
-                if(currentCard.getIsLiked()){
+                if (currentCard.getIsLiked()) {
                     Like.setBackgroundResource(R.drawable.like_icon_16);
                     UpVotes.setText(String.valueOf(Integer.parseInt(UpVotes.getText().toString()) + 1));
-                    Database.PostUpVote(currentCard.getId());
-                }
-                else{
+                } else {
                     Like.setBackgroundResource(R.drawable.like_icon_16_blackend);
                     UpVotes.setText(String.valueOf(Integer.parseInt(UpVotes.getText().toString()) - 1));
-                    Database.PostUpVoteCanceled(currentCard.getId());
                 }
             }
         });
@@ -143,10 +137,12 @@ public class CardArrayAdapter  extends ArrayAdapter<Card> {
             @Override
             public void onClick(View v) {
                 currentCard.clickedReport();
-                if(currentCard.getIsReport())
+                if (currentCard.getIsReport()) {
                     Report.setBackgroundResource(R.drawable.flag_pressed);
-                else
+                } else
+                {
                     Report.setBackgroundResource(R.drawable.flag_upressed);
+                }
             }
         });
         if(currentCard.getIsReport())
@@ -161,12 +157,10 @@ public class CardArrayAdapter  extends ArrayAdapter<Card> {
                 if(currentCard.getIsOnIt()){
                     OnIt.setBackgroundResource(R.drawable.on_it_pressed);
                     OnItVotes.setText(String.valueOf(Integer.parseInt(OnItVotes.getText().toString()) + 1));
-                    Database.PostOnItVote(currentCard.getId());
                 }
                 else{
                     OnIt.setBackgroundResource(R.drawable.on_it_unpressed);
                     OnItVotes.setText(String.valueOf(Integer.parseInt(OnItVotes.getText().toString()) - 1));
-                    Database.PostOnItVoteCanceled(currentCard.getId());
                 }
             }
         });
