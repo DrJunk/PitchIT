@@ -17,6 +17,7 @@ import android.os.Message;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -65,6 +66,16 @@ public class MyPitch extends ActionBarActivity implements ActionBar.TabListener 
         actionBar.setBackgroundDrawable(new ColorDrawable(0xFFBE3A27));
         actionBar.setIcon(R.drawable.icon);
 
+        if(Login.LoadUserEmail(getApplicationContext()))
+        {
+            Toast.makeText(getApplicationContext(), "Logged in: " + Login.GetUserEmail(), Toast.LENGTH_SHORT).show();
+        }
+        else
+        {
+            Toast.makeText(getApplicationContext(), "Not logged in", Toast.LENGTH_SHORT).show();
+        }
+
+        KeyGenerator.GenerateKey("Hello");
 
         mHandler = new Handler(Looper.getMainLooper()) {
             @Override
@@ -289,8 +300,9 @@ public class MyPitch extends ActionBarActivity implements ActionBar.TabListener 
             Intent mainIntent = new Intent(MyPitch.this, MyPost.class);
             MyPitch.this.startActivity(mainIntent);
         }
-        if(id== R.id.action_change_user)
+        if(id== R.id.action_log_out)
         {
+            Login.LogOut(getApplicationContext());
             Intent mainIntent = new Intent(MyPitch.this, Login.class);
             MyPitch.this.startActivity(mainIntent);
             MyPitch.this.finish();

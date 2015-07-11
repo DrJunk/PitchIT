@@ -5,81 +5,27 @@
     android:layout_height="fill_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:background="@drawable/tutorial_11">
-    <Button
-        android:id="@+id/signUp_server"
-        android:layout_width="221dp"
-        android:layout_height="wrap_content"
-        android:text="sign up"
-        android:layout_x="40dp"
-        android:layout_y="430dp" />
-
-    <EditText
-        android:digits="abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$%^*()_+='/.,"
-        android:maxLines="1"
-        android:inputType="textEmailAddress"
-        android:id="@+id/sign_up_email"
+    <TextView
+        android:text="Enter a nickname:"
         android:layout_width="268dp"
         android:layout_height="wrap_content"
         android:textSize="18sp"
-        android:password="false"
         android:layout_x="40dp"
-        android:layout_y="230dp"
-        android:hint="Email" />
+        android:layout_y="250dp"
+        android:textColor="#ffffff"
+        />
 
     <EditText
-        android:digits="abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$%^*()_+='/.,"
+        android:digits="abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890_"
         android:inputType="text"
         android:maxLines="1"
-        android:id="@+id/sign_up_username"
+        android:id="@+id/sign_up_nickname"
         android:layout_width="268dp"
         android:layout_height="wrap_content"
         android:textSize="18sp"
         android:layout_x="40dp"
         android:layout_y="280dp"
-        android:hint="user name" />
-
-    <EditText
-        android:digits="abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$%^*()_+='/.,"
-        android:inputType="text"
-        android:maxLines="1"
-        android:id="@+id/sign_up_password"
-        android:layout_width="268dp"
-        android:layout_height="wrap_content"
-        android:textSize="18sp"
-        android:layout_x="40dp"
-        android:layout_y="330dp"
-        android:hint="password"
-        android:password="true" />
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="bottom|right"
-        android:layout_x="40dp"
-        android:layout_y="369dp">
-        <EditText
-            android:digits="abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$%^*()_+='/.,"
-            android:inputType="text"
-            android:maxLines="1"
-            android:id="@+id/sign_up_password_confirmed"
-            android:layout_width="268dp"
-            android:layout_height="wrap_content"
-            android:textSize="18sp"
-            android:layout_x="40dp"
-            android:layout_y="380dp"
-            android:hint="password-confirm"
-            android:password="true" />
-        <ImageView
-            android:id="@+id/smallvconfirm"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_marginRight="5dp"
-            android:layout_marginBottom="5dp"
-            android:src="@drawable/check_mark"
-            android:layout_x="320dp"
-            android:layout_y="446dp" />
-    </LinearLayout>
-
+        android:hint="Nickname" />
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -87,6 +33,14 @@
         android:layout_marginLeft="50dp"
         android:layout_marginBottom="5dp"
         android:gravity="bottom|right">
+
+        <Button
+            android:id="@+id/sign_up_button"
+            android:layout_width="221dp"
+            android:layout_height="wrap_content"
+            android:text="sign up"
+            android:layout_gravity="center_vertical|center_horizontal"
+            android:layout_marginTop="130dp" />
 
         <ImageView
             android:id="@+id/widget42"
@@ -97,6 +51,7 @@
             android:src="@drawable/snepos_logo"
             android:layout_x="320dp"
             android:layout_y="446dp" />
+
     </LinearLayout>
 
 </AbsoluteLayout>

@@ -14,7 +14,7 @@ public class Request {
     public String msg;
     public List<NameValuePair> pairs;
 
-    public enum App{MyPitch, MyPost};
+    public enum App{MyPitch, MyPost, Login, Register};
     public App app;
 
     public Request(String msg, App app)

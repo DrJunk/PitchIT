@@ -6,48 +6,6 @@
     android:layout_height="fill_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:background="@drawable/tutorial_11">
-    <Button
-        android:id="@+id/signUp_btn"
-        android:layout_width="221dp"
-        android:layout_height="wrap_content"
-        android:text="sign up"
-        android:layout_x="43dp"
-        android:layout_y="444dp" />
-    <Button
-        android:id="@+id/login_btn"
-        android:layout_width="87dp"
-        android:layout_height="wrap_content"
-        android:text="login"
-        android:layout_x="41dp"
-        android:layout_y="356dp" />
-    <EditText
-        android:digits="abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$%^*()_+='/.,"
-        android:inputType="textEmailAddress"
-        android:id="@+id/login_email"
-        android:layout_width="268dp"
-        android:layout_height="wrap_content"
-        android:textSize="18sp"
-        android:layout_x="47dp"
-        android:layout_y="232dp"
-        android:hint="Email" />
-    <EditText
-        android:digits="abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$%^*()_+='/.,"
-        android:id="@+id/login_password"
-        android:layout_width="268dp"
-        android:layout_height="wrap_content"
-        android:textSize="18sp"
-        android:password="true"
-        android:layout_x="45dp"
-        android:layout_y="274dp"
-        android:hint="password"
-        android:inputType="text" />
-    <Button
-        android:id="@+id/login_facebook"
-        android:layout_width="194dp"
-        android:layout_height="wrap_content"
-        android:text="Login with facebook"
-        android:layout_x="166dp"
-        android:layout_y="354dp" />
 
 <LinearLayout
     android:layout_width="fill_parent"
@@ -55,6 +13,15 @@
     android:layout_marginLeft="50dp"
     android:layout_marginBottom="5dp"
     android:gravity="bottom|right">
+
+    <Button
+        android:id="@+id/signIn_btn"
+        android:layout_width="221dp"
+        android:layout_height="wrap_content"
+        android:text="Sign in"
+        android:layout_gravity="center_vertical|center_horizontal"
+        android:layout_marginTop="100dp"
+        />
 
     <ImageView
         android:id="@+id/widget42"
@@ -66,13 +33,5 @@
         android:layout_x="320dp"
         android:layout_y="446dp" />
 </LinearLayout>
-
-    <CheckBox
-        android:id="@+id/widget43"
-        android:layout_width="143dp"
-        android:layout_height="wrap_content"
-        android:text="Remember me"
-        android:layout_x="43dp"
-        android:layout_y="316dp" />
 
 </AbsoluteLayout>

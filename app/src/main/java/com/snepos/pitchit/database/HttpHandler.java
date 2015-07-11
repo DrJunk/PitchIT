@@ -2,8 +2,10 @@ package com.snepos.pitchit.database;
 
 import android.util.Log;
 
+import com.snepos.pitchit.Login;
 import com.snepos.pitchit.MyPitch;
 import com.snepos.pitchit.MyPost;
+import com.snepos.pitchit.Signup;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -84,6 +86,12 @@ public class HttpHandler {
                 break;
             case MyPost:
                 MyPost.HandleResponse(response);
+                break;
+            case Login:
+                Login.HandleResponse(response);
+                break;
+            case Register:
+                Signup.HandleResponse(response);
                 break;
         }
     }

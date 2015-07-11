@@ -29,11 +29,7 @@ public class SplashScreen extends Activity {
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_splash);
 
-
-
-        SharedPreferences settings = getApplicationContext().getSharedPreferences(MyPrefs.PREFS_NAME, 0);
-
-
+        /*SharedPreferences settings = getApplicationContext().getSharedPreferences(MyPrefs.PREFS_NAME, 0);
 
         isFirstTime = settings.getBoolean(MyPrefs.FIRST_TIME, true);
         isLogin = settings.getBoolean(MyPrefs.LOGIN, false);
@@ -44,8 +40,6 @@ public class SplashScreen extends Activity {
             SplashScreen.this.finish();
         }
 
-
-
         if(isFirstTime)
         {
 
@@ -55,7 +49,7 @@ public class SplashScreen extends Activity {
             Intent mainIntent = new Intent(SplashScreen.this,TutorialSwipe.class);
             SplashScreen.this.startActivity(mainIntent);
             SplashScreen.this.finish();
-        }
+        }*/
 
         Database.Init();
 
@@ -66,8 +60,21 @@ public class SplashScreen extends Activity {
             @Override
             public void run() {
                 /* Create an Intent that will start the Menu-Activity. */
-                if(!isFirstTime&&isLogin) {
+                /*if(!isFirstTime&&isLogin) {
                     Intent mainIntent = new Intent(SplashScreen.this, MyPitch.class);
+                    SplashScreen.this.startActivity(mainIntent);
+                    SplashScreen.this.finish();
+                }*/
+
+                if(Login.LoadUserEmail(getApplicationContext()))
+                {
+                    Intent mainIntent = new Intent(SplashScreen.this, MyPitch.class);
+                    SplashScreen.this.startActivity(mainIntent);
+                    SplashScreen.this.finish();
+                }
+                else
+                {
+                    Intent mainIntent = new Intent(SplashScreen.this,Login.class);
                     SplashScreen.this.startActivity(mainIntent);
                     SplashScreen.this.finish();
                 }
