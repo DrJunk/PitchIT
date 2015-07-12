@@ -17,5 +17,12 @@
     <string name="first_time">first</string>
     <string name="email">mail</string>
     <string name="fb_app_id">586739864800307</string>
+    <string name="eula_accept">Accept</string>
+    <string name="eula_string_to_button">By pressing the \"</string>
+    <string name="eula_string_from_button">\" button you agree to the terms and conditions below:
+    \n
+    \n 1. The use of the application, developing ideas contained in the application and publication of ideas with the application are at your own risk.
+    \n 2. In the event that the PROFITS from a product developed on the basis of an idea that was published with the application are bigger than 100,000$ - the developers of the product will owe 6,000$ to the user who published the idea.
+    \n 3. In the event that a user of the application receives 6,000$ following term number 2, he will owe 1,000$ to the developers of this application(PitchIT) </string>
 
 </resources>

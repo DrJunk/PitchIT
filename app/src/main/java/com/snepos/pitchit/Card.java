@@ -27,6 +27,10 @@ public class Card {
         isReport = _isReport;
         upVotes = _upVotes;
         onItVotes = _onItVotes;
+
+        isLiked = Database.up_votes.contains(id);
+        isOnIt = Database.on_it_votes.contains(id);
+        isReport = Database.spam_votes.contains(id);
     }
 
     public Card() {
@@ -43,6 +47,10 @@ public class Card {
         isReport = _isReport;
         upVotes = _upVotes;
         onItVotes = _onItVotes;
+
+        isLiked = Database.up_votes.contains(id);
+        isOnIt = Database.on_it_votes.contains(id);
+        isReport = Database.spam_votes.contains(id);
     }
 
     public void setClicks(int _clicks) {

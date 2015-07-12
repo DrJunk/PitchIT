@@ -66,18 +66,8 @@ public class SplashScreen extends Activity {
                     SplashScreen.this.finish();
                 }*/
 
-                if(Login.LoadUserEmail(getApplicationContext()))
-                {
-                    Intent mainIntent = new Intent(SplashScreen.this, MyPitch.class);
-                    SplashScreen.this.startActivity(mainIntent);
-                    SplashScreen.this.finish();
-                }
-                else
-                {
-                    Intent mainIntent = new Intent(SplashScreen.this,Login.class);
-                    SplashScreen.this.startActivity(mainIntent);
-                    SplashScreen.this.finish();
-                }
+
+                new AppEULA(SplashScreen.this).show(SplashScreen.this);
             }
         }, SPLASH_DISPLAY_LENGTH);
     }

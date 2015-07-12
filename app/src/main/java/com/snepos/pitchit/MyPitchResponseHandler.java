@@ -54,6 +54,45 @@ public class MyPitchResponseHandler {
             return;
         }
 
+        if (response.GetMessage() == "get_up_votes" ||
+                response.GetMessage() == "get_on_it_votes" ||
+                response.GetMessage() == "get_spam_votes") {
+
+            if (!response.IsSucceeded()) {
+                handler.obtainMessage(0, 1).sendToTarget();
+                return;
+            }
+
+            List<Integer> ids = new LinkedList<Integer>();
+            Integer ideaId;
+            for (int i = 0; i < response.GetJsonObjects().length; i++) {
+                ideaId = -1;
+                try{ideaId = response.GetJsonObjects()[i].getInt("id");}
+                catch (Exception e){System.out.println(e.getMessage());}
+                if (ideaId != -1)
+                    ids.add(ideaId);
+            }
+
+            Integer[] idsArray = new Integer[ids.size()];
+            for (int i = 0; i < idsArray.length; i++)
+                idsArray[i] = ids.get(idsArray.length - i - 1);
+
+            if (response.GetMessage() == "get_up_votes")
+            {
+                Database.RefreshUpVotes(idsArray);
+            }
+            else if (response.GetMessage() == "get_on_it_votes")
+            {
+                Database.RefreshOnItVotes(idsArray);
+            }
+            else if (response.GetMessage() == "get_spam_votes")
+            {
+                Database.RefreshSpamVotes(idsArray);
+            }
+
+            return;
+        }
+
         if (!response.IsSucceeded()) {
             handler.obtainMessage(0, 0).sendToTarget();
             return;

@@ -66,16 +66,7 @@ public class MyPitch extends ActionBarActivity implements ActionBar.TabListener 
         actionBar.setBackgroundDrawable(new ColorDrawable(0xFFBE3A27));
         actionBar.setIcon(R.drawable.icon);
 
-        if(Login.LoadUserEmail(getApplicationContext()))
-        {
-            Toast.makeText(getApplicationContext(), "Logged in: " + Login.GetUserEmail(), Toast.LENGTH_SHORT).show();
-        }
-        else
-        {
-            Toast.makeText(getApplicationContext(), "Not logged in", Toast.LENGTH_SHORT).show();
-        }
 
-        KeyGenerator.GenerateKey("Hello");
 
         mHandler = new Handler(Looper.getMainLooper()) {
             @Override
@@ -128,6 +119,10 @@ public class MyPitch extends ActionBarActivity implements ActionBar.TabListener 
                 }
             }
         };
+
+        Database.PostRefreshUpVotes();
+        Database.PostRefreshOnItVotes();
+        Database.PostRefreshSpamVotes();
 
         Database.PostRefreshNews();
         Database.PostRefreshTrending();

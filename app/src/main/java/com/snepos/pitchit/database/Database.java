@@ -1,7 +1,15 @@
 package com.snepos.pitchit.database;
 
+import android.content.Intent;
+import android.util.Log;
+
 import com.snepos.pitchit.Card;
+import com.snepos.pitchit.Login;
 import com.snepos.pitchit.MyPitch;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created by User on 12/06/2015.
@@ -12,9 +20,17 @@ public class Database {
     public static IdeaData[] trending;
     public static IdeaData[] hot;
 
+    public static List<Integer> up_votes;
+    public static List<Integer> on_it_votes;
+    public static List<Integer> spam_votes;
+
     public static void Init()
     {
         HttpHandler.Init();
+
+        up_votes = new ArrayList<Integer>();
+        on_it_votes = new ArrayList<Integer>();
+        spam_votes = new ArrayList<Integer>();
     }
 
     public static void PostRefreshNews()
@@ -32,6 +48,93 @@ public class Database {
         HttpHandler.addRequest("get_hot_ideas", Request.App.MyPitch);
     }
 
+    public static void PostRefreshUpVotes()
+    {
+        Request req = new Request("get_up_votes", Request.App.MyPitch);
+        req.put("email", Login.GetUserEmail());
+        HttpHandler.addRequest(req);
+    }
+
+    public static void PostRefreshOnItVotes()
+    {
+        Request req = new Request("get_on_it_votes", Request.App.MyPitch);
+        req.put("email", Login.GetUserEmail());
+        HttpHandler.addRequest(req);
+    }
+
+    public static void PostRefreshSpamVotes()
+    {
+        Request req = new Request("get_spam_votes", Request.App.MyPitch);
+        req.put("email", Login.GetUserEmail());
+        HttpHandler.addRequest(req);
+    }
+
+    public static void PostUpVote(int ideaId)
+    {
+        Request req = new Request("add_up_vote", Request.App.MyPitch);
+        req.put("idea_id", String.valueOf(ideaId));
+        req.put("email", Login.GetUserEmail());
+        HttpHandler.addRequest(req);
+
+        if(up_votes.contains(ideaId))
+            up_votes.remove((Integer)ideaId);
+    }
+
+    public static void PostUpVoteCanceled(int ideaId)
+    {
+        Request req = new Request("remove_up_vote", Request.App.MyPitch);
+        req.put("idea_id", String.valueOf(ideaId));
+        req.put("email", Login.GetUserEmail());
+        HttpHandler.addRequest(req);
+
+        if(!up_votes.contains(ideaId))
+            up_votes.add(ideaId);
+    }
+
+    public static void PostSpamVote(int ideaId)
+    {
+        Request req = new Request("add_spam_vote", Request.App.MyPitch);
+        req.put("idea_id", String.valueOf(ideaId));
+        req.put("email", Login.GetUserEmail());
+        HttpHandler.addRequest(req);
+
+        if(spam_votes.contains(ideaId))
+            spam_votes.remove((Integer)ideaId);
+    }
+
+    public static void PostSpamVoteCanceled(int ideaId)
+    {
+        Request req = new Request("remove_spam_vote", Request.App.MyPitch);
+        req.put("idea_id", String.valueOf(ideaId));
+        req.put("email", Login.GetUserEmail());
+        HttpHandler.addRequest(req);
+
+        if(!spam_votes.contains(ideaId))
+            spam_votes.add(ideaId);
+    }
+
+    public static void PostOnItVote(int ideaId)
+    {
+        Request req = new Request("add_on_it_vote", Request.App.MyPitch);
+        req.put("idea_id", String.valueOf(ideaId));
+        req.put("email", Login.GetUserEmail());
+        HttpHandler.addRequest(req);
+
+        if(on_it_votes.contains(ideaId))
+            on_it_votes.remove((Integer)ideaId);
+    }
+
+    public static void PostOnItVoteCanceled(int ideaId)
+    {
+        Request req = new Request("remove_on_it_vote", Request.App.MyPitch);
+        req.put("idea_id", String.valueOf(ideaId));
+        req.put("email", Login.GetUserEmail());
+        HttpHandler.addRequest(req);
+
+        if(!on_it_votes.contains(ideaId))
+            on_it_votes.add(ideaId);
+    }
+
     public static void RefreshNews(IdeaData[] data)
     {
         news = data;
@@ -47,51 +150,13 @@ public class Database {
         hot = data;
     }
 
-    public static void PostUpVote(int ideaId)
+    public static void RefreshUpVotes(Integer[] data)
     {
-        Request req = new Request("add_up_vote", Request.App.MyPitch);
-        req.put("idea_id", String.valueOf(ideaId));
-        req.put("email", "omer934@walla.co.il");
-        HttpHandler.addRequest(req);
+        up_votes = Arrays.asList(data);
     }
 
-    public static void PostUpVoteCanceled(int ideaId)
-    {
-        Request req = new Request("remove_up_vote", Request.App.MyPitch);
-        req.put("idea_id", String.valueOf(ideaId));
-        req.put("email", "omer934@walla.co.il");
-        HttpHandler.addRequest(req);
-    }
+    public static void RefreshOnItVotes(Integer[] data){on_it_votes=Arrays.asList(data);}
 
-    public static void PostSpamVote(int ideaId)
-    {
-        Request req = new Request("add_spam_vote", Request.App.MyPitch);
-        req.put("idea_id", String.valueOf(ideaId));
-        req.put("email", "omer934@walla.co.il");
-        HttpHandler.addRequest(req);
-    }
+    public static void RefreshSpamVotes(Integer[] data){spam_votes=Arrays.asList(data);}
 
-    public static void PostSpamVoteCanceled(int ideaId)
-    {
-        Request req = new Request("remove_spam_vote", Request.App.MyPitch);
-        req.put("idea_id", String.valueOf(ideaId));
-        req.put("email", "omer934@walla.co.il");
-        HttpHandler.addRequest(req);
-    }
-
-    public static void PostOnItVote(int ideaId)
-    {
-        Request req = new Request("add_on_it_vote", Request.App.MyPitch);
-        req.put("idea_id", String.valueOf(ideaId));
-        req.put("email", "omer934@walla.co.il");
-        HttpHandler.addRequest(req);
-    }
-
-    public static void PostOnItVoteCanceled(int ideaId)
-    {
-        Request req = new Request("remove_on_it_vote", Request.App.MyPitch);
-        req.put("idea_id", String.valueOf(ideaId));
-        req.put("email", "omer934@walla.co.il");
-        HttpHandler.addRequest(req);
-    }
 }

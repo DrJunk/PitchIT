@@ -33,6 +33,7 @@ import com.google.identitytoolkit.IdToken;
 public class Login extends Activity {
     private static Handler mHandler;
     private static String userEmail = MyPrefs.NOT_CONNECTED;
+    private static String userNickname = "";
 
     Button signIn;
 
@@ -221,6 +222,11 @@ public class Login extends Activity {
     public static String GetUserEmail()
     {
         return userEmail;
+    }
+
+    public static String GetUserNickname()
+    {
+        return userNickname;
     }
 
     public static void HandleResponse(Response response)
