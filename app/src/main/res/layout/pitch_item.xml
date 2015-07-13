@@ -8,6 +8,7 @@
     android:divider="@null"
     android:dividerHeight="0dp"
     android:descendantFocusability="beforeDescendants">
+
     <LinearLayout
         android:id="@+id/outerLayout"
         android:dividerHeight="0dp"
@@ -16,45 +17,51 @@
         android:layout_width="fill_parent"
         android:layout_height="match_parent"
         android:background="@drawable/card_background"
-        android:padding="1dp"
         android:layout_gravity="left|top"
         android:showDividers="none">
 
-    <TextView
-    android:layout_marginLeft="12dp"
-    android:layout_marginRight="12dp"
-    android:dividerHeight="0dp"
-    android:divider="@null"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:textAppearance="?android:attr/textAppearanceLarge"
-    android:text="Head"
-    android:textSize="35dp"
-    android:id="@+id/HeadName"
-    android:layout_alignParentTop="true"
-    android:layout_alignParentLeft="true"
-    android:layout_alignParentStart="true"
-    android:layout_marginTop="10dp"
-    android:layout_marginBottom="5dp"
-    android:textColor="#ff231f20" />
+        <ImageView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:src="@drawable/category_pic"/>
 
-    <TextView
-    android:layout_marginLeft="12dp"
-    android:layout_marginRight="12dp"
-    android:dividerHeight="0dp"
-    android:divider="@null"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:textAppearance="?android:attr/textAppearanceLarge"
-    android:text="Body"
-    android:textSize="20dp"
-    android:id="@+id/Body"
-    android:layout_alignParentTop="true"
-    android:layout_alignParentLeft="true"
-    android:layout_alignParentStart="true"
-    android:layout_marginTop="5dp"
-    android:layout_marginBottom="5dp"
-    android:textColor="#ff231f20" />
+        <TextView
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            android:dividerHeight="0dp"
+            android:divider="@null"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Head"
+            android:textSize="35dp"
+            android:id="@+id/HeadName"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="5dp"
+            android:textColor="#ff231f20" />
+
+        <TextView
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            android:dividerHeight="0dp"
+            android:divider="@null"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Body"
+            android:textSize="20dp"
+            android:id="@+id/Body"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:textColor="#ff231f20" />
+
         <ImageView
             android:dividerHeight="0dp"
             android:divider="@null"
@@ -70,20 +77,20 @@
             android:src="@drawable/line"
              />
 
-    <RelativeLayout
-        android:layout_marginLeft="12dp"
-        android:layout_marginRight="12dp"
-        android:layout_marginBottom="0dp"
-        android:id="@+id/innerLayout"
-        android:dividerHeight="0dp"
-        android:divider="@null"
-        android:orientation="horizontal"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:padding="5dp"
-        android:layout_gravity="right|top"
-        android:visibility="visible"
-        android:showDividers="none">
+        <RelativeLayout
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            android:layout_marginBottom="0dp"
+            android:id="@+id/innerLayout"
+            android:dividerHeight="0dp"
+            android:divider="@null"
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:layout_gravity="right|top"
+            android:visibility="visible"
+            android:showDividers="none">
 
         <LinearLayout
             android:layout_alignParentLeft="true"
@@ -97,18 +104,18 @@
             android:layout_gravity="right|top"
             android:visibility="visible"
             android:showDividers="none">
-     <Button
-     android:layout_alignParentLeft="true"
-     android:dividerHeight="0dp"
-     android:divider="@null"
-     android:layout_marginLeft="1dp"
-     android:layout_marginTop="15dp"
-     android:layout_marginBottom="0dp"
-     android:layout_width="15dp"
-     android:layout_height="22.5dp"
-     android:background="@drawable/like_icon_16"
-     android:id="@+id/button_liked"
-     android:layout_gravity="left|bottom" />
+         <Button
+             android:layout_alignParentLeft="true"
+             android:dividerHeight="0dp"
+             android:divider="@null"
+             android:layout_marginLeft="1dp"
+             android:layout_marginTop="15dp"
+             android:layout_marginBottom="0dp"
+             android:layout_width="15dp"
+             android:layout_height="22.5dp"
+             android:background="@drawable/like_icon_16"
+             android:id="@+id/button_liked"
+             android:layout_gravity="left|bottom" />
 
     <TextView
         android:layout_alignLeft="@+id/button_liked"
