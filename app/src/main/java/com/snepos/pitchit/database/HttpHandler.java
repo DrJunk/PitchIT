@@ -102,10 +102,8 @@ public class HttpHandler {
             return;
 
         System.out.println("Got a request!");
+        Request req = requests.poll();
         try {
-            StringBuilder builder = new StringBuilder();
-            HttpClient client = new DefaultHttpClient();
-            Request req = requests.poll();
             String msg = req.msg;
             DefaultHttpClient httpclient = new DefaultHttpClient();
             HttpPost httpPost = new HttpPost("http://pitchitserver-pitchit.rhcloud.com/app/" + msg);
@@ -121,6 +119,7 @@ public class HttpHandler {
             responses.add(new Response(msg, responseText, req.app));
         } catch (Exception e) {
             System.out.println(e.getMessage());
+            responses.add(new Response(req.msg, "Error: code 1", req.app));
         }
     }
 }

@@ -42,15 +42,19 @@ public class MyPost extends ActionBarActivity {
     final long seconds = 3;
     Timer timer;
 
+    private boolean waitingForResponse;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_post);
 
+        waitingForResponse = false;
+
         mHandler = new Handler(Looper.getMainLooper()) {
             @Override
             public void handleMessage(Message inputMessage) {
-
+                waitingForResponse = false;
                 switch (inputMessage.what) {
                     case 0:
                         Toast.makeText(MyPost.this, "Error: Failed to send idea to server", Toast.LENGTH_SHORT).show();
@@ -71,8 +75,9 @@ public class MyPost extends ActionBarActivity {
         //inflater.inflate(R.menu.my_pitch, menu);
         //getMenuInflater().inflate(R.menu.my_pitch, menu);
         //restoreActionBar();
-        body = (EditText) findViewById(R.id.new_Body);
         head = (EditText) findViewById(R.id.new_Head);
+        body = (EditText) findViewById(R.id.new_Body);
+
         bodyLeftLength = (TextView) findViewById(R.id.body_chars_left);
         task = new MyTimerTask();
         timer = new Timer();
@@ -159,20 +164,25 @@ public class MyPost extends ActionBarActivity {
                 return true;
             case R.id.action_send:
                 //here here here here send
+                if(!waitingForResponse) {
+                    Request req = new Request("add_idea", Request.App.MyPost);
+                    req.put("title", head.getText().toString());
+                    req.put("text", body.getText().toString());
+                    req.put("email", Login.GetUserEmail());
+                    HttpHandler.addRequest(req);
 
-                Request req = new Request("add_idea", Request.App.MyPost);
-                req.put("title", head.getText().toString());
-                req.put("text", body.getText().toString());
-                req.put("email", "omer934@walla.co.il");
-                HttpHandler.addRequest(req);
+                    Toast.makeText(MyPost.this, "Sending...", Toast.LENGTH_SHORT).show();
 
+                    waitingForResponse = true;
+                }
+/*
                 //tom tries to figure it out*****************************************************************
                 DatabaseHandler db = new DatabaseHandler(this);
                 Random rand = new Random();
                 Card post = new Card(rand.nextInt(),head.getText().toString(),body.getText().toString(),false,0,false,false,0,0);
                 db.addPost(post, DatabaseHandler.Table.NEW);
                 //tom tries figured it out*******************************************************************
-
+*/
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

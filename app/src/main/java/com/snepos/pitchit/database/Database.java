@@ -33,6 +33,20 @@ public class Database {
         spam_votes = new ArrayList<Integer>();
     }
 
+    private static IdeaData getIdea(int id)
+    {
+        for(int i = 0; i < news.length; i++)
+            if(news[i].id == id)
+                return news[i];
+        for(int i = 0; i < trending.length; i++)
+            if(trending[i].id == id)
+                return trending[i];
+        for(int i = 0; i < hot.length; i++)
+            if(hot[i].id == id)
+                return hot[i];
+        return null;
+    }
+
     public static void PostRefreshNews()
     {
         HttpHandler.addRequest("get_new_ideas", Request.App.MyPitch);
@@ -76,8 +90,8 @@ public class Database {
         req.put("email", Login.GetUserEmail());
         HttpHandler.addRequest(req);
 
-        if(up_votes.contains(ideaId))
-            up_votes.remove((Integer)ideaId);
+        if(!up_votes.contains(ideaId))
+            up_votes.add(ideaId);
     }
 
     public static void PostUpVoteCanceled(int ideaId)
@@ -87,8 +101,8 @@ public class Database {
         req.put("email", Login.GetUserEmail());
         HttpHandler.addRequest(req);
 
-        if(!up_votes.contains(ideaId))
-            up_votes.add(ideaId);
+        if(up_votes.contains(ideaId))
+            up_votes.remove((Integer) ideaId);
     }
 
     public static void PostSpamVote(int ideaId)
@@ -98,8 +112,8 @@ public class Database {
         req.put("email", Login.GetUserEmail());
         HttpHandler.addRequest(req);
 
-        if(spam_votes.contains(ideaId))
-            spam_votes.remove((Integer)ideaId);
+        if(!spam_votes.contains(ideaId))
+            spam_votes.add(ideaId);
     }
 
     public static void PostSpamVoteCanceled(int ideaId)
@@ -109,8 +123,8 @@ public class Database {
         req.put("email", Login.GetUserEmail());
         HttpHandler.addRequest(req);
 
-        if(!spam_votes.contains(ideaId))
-            spam_votes.add(ideaId);
+        if (spam_votes.contains(ideaId))
+            spam_votes.remove((Integer) ideaId);
     }
 
     public static void PostOnItVote(int ideaId)
@@ -120,8 +134,8 @@ public class Database {
         req.put("email", Login.GetUserEmail());
         HttpHandler.addRequest(req);
 
-        if(on_it_votes.contains(ideaId))
-            on_it_votes.remove((Integer)ideaId);
+        if(!on_it_votes.contains(ideaId))
+            on_it_votes.add(ideaId);
     }
 
     public static void PostOnItVoteCanceled(int ideaId)
@@ -131,8 +145,8 @@ public class Database {
         req.put("email", Login.GetUserEmail());
         HttpHandler.addRequest(req);
 
-        if(!on_it_votes.contains(ideaId))
-            on_it_votes.add(ideaId);
+        if(on_it_votes.contains(ideaId))
+            on_it_votes.remove((Integer) ideaId);
     }
 
     public static void RefreshNews(IdeaData[] data)
@@ -152,11 +166,17 @@ public class Database {
 
     public static void RefreshUpVotes(Integer[] data)
     {
-        up_votes = Arrays.asList(data);
+        up_votes = new ArrayList<Integer>(Arrays.asList(data));
     }
 
-    public static void RefreshOnItVotes(Integer[] data){on_it_votes=Arrays.asList(data);}
+    public static void RefreshOnItVotes(Integer[] data)
+    {
+        on_it_votes=new ArrayList<Integer>(Arrays.asList(data));
+    }
 
-    public static void RefreshSpamVotes(Integer[] data){spam_votes=Arrays.asList(data);}
+    public static void RefreshSpamVotes(Integer[] data)
+    {
+        spam_votes=new ArrayList<Integer>(Arrays.asList(data));
+    }
 
 }

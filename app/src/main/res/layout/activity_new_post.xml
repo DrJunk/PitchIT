@@ -2,7 +2,8 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:gravity="bottom">
     <EditText
         android:digits="abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$%^*()_+='/.,"
         android:background="@android:color/transparent"
@@ -15,11 +16,13 @@
         android:id="@+id/new_Head"
         android:inputType="textMultiLine"
         android:minLines="1"
-        android:gravity="top|left"
+        android:gravity="top|start"
         android:maxLines="2"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
+        android:layout_marginLeft="15dp"
+        android:layout_marginStart="15dp"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="5dp"
         android:textColor="#ff231f20" />
@@ -30,32 +33,44 @@
         android:lines="8"
         android:maxLength="200"
         android:layout_width="fill_parent"
-        android:layout_height="100dp"
+        android:layout_height="wrap_content"
         android:textSize="20dp"
         android:id="@+id/new_Body"
         android:hint="@string/body_hint"
         android:inputType="textMultiLine"
         android:imeOptions="actionGo"
         android:minLines="6"
-        android:gravity="top|left"
+        android:gravity="top|start"
         android:maxLines="10"
+        android:layout_marginLeft="20dp"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="5dp"
         android:layout_marginBottom="5dp"
         android:textColor="#ff231f20" />
-    <TextView
-        android:background="@android:color/transparent"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textSize="20dp"
-        android:id="@+id/body_chars_left"
-        android:inputType="text"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="5dp"
-        android:textColor="#ff231f20" />
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:background="@android:color/transparent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textSize="20dp"
+            android:id="@+id/body_chars_left"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:textColor="#ff231f20"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:text="123"/>
+    </RelativeLayout>
+
+
+    <!-- android:layout_marginTop="10dp"
+    android:layout_marginBottom="5dp"
+          -->
 
 </LinearLayout>

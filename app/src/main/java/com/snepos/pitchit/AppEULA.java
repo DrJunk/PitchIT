@@ -46,7 +46,7 @@ public class AppEULA {
 
         // The eulaKey changes every time you increment the version number in
         // the AndroidManifest.xml
-        final String eulaKey = "2" + EULA_PREFIX + versionInfo.versionCode;
+        final String eulaKey = EULA_PREFIX + versionInfo.versionCode;
         final SharedPreferences prefs = PreferenceManager
                 .getDefaultSharedPreferences(mContext);
 
