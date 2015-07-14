@@ -25,6 +25,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TableLayout;
@@ -41,12 +43,18 @@ import com.snepos.pitchit.database.Response;
 public class MyPitch extends ActionBarActivity implements ActionBar.TabListener   {
     private static Handler mHandler;
     private static boolean refreshing = false;
+    private static boolean canRefresh = true;
     private final int REFRESH_DELTA_LENGTH = 3000;
 
     AppSectionsPagerAdapter mAppSectionsPagerAdapter;
     ViewPager mViewPager;
     Context context;
     Button FAB;
+
+    private View mRefresh;
+    private MenuItem mRefreshItem;
+    private Animation mRotate;
+
     //static FeedReaderDbHelper mDbHelper ;
 
     /**
@@ -68,12 +76,39 @@ public class MyPitch extends ActionBarActivity implements ActionBar.TabListener 
         actionBar.setBackgroundDrawable(new ColorDrawable(0xFFBE3A27));
         actionBar.setIcon(R.drawable.icon);
 
+        // Animation test:
+        canRefresh = true;
+        mRotate = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.rotate_refresh);
+        mRotate.setRepeatCount(Animation.INFINITE);
+        mRotate.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
 
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+                if (!refreshing) {
+                    mRefreshItem.getActionView().clearAnimation();
+                    mRefreshItem.setActionView(null);
+                }
+            }
+        });
+
+        LayoutInflater inflater = (LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        mRefresh = inflater.inflate(R.layout.iv_refresh, null);
+
+        // End of test
 
         mHandler = new Handler(Looper.getMainLooper()) {
             @Override
             public void handleMessage(Message inputMessage) {
-
+                refreshing = false;
                 switch (inputMessage.what) {
                     case 0: // Failed to receive update
                         switch((Integer)inputMessage.obj)
@@ -271,6 +306,13 @@ public class MyPitch extends ActionBarActivity implements ActionBar.TabListener 
 
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.my_pitch, menu);
+
+        mRefreshItem = menu.findItem(R.id.action_refresh);
+        if(refreshing){
+            mRefreshItem.setActionView(mRefresh);
+            mRefresh.startAnimation(mRotate);
+        }
+
         restoreActionBar();
         return true;
 
@@ -281,17 +323,22 @@ public class MyPitch extends ActionBarActivity implements ActionBar.TabListener 
         int id = item.getItemId();
         if (id == R.id.action_refresh) {
 
-            if(!refreshing) {
+            if(canRefresh) {
+                mRefreshItem.setActionView(mRefresh);
+                mRefresh.startAnimation(mRotate);
+
                 Database.PostRefreshNews();
                 Database.PostRefreshTrending();
                 Database.PostRefreshHot();
 
                 refreshing = true;
+                canRefresh = false;
 
                 new Handler().postDelayed(new Runnable(){
                     @Override
                     public void run() {
                         refreshing = false;
+                        canRefresh = true;
                     }
                 }, REFRESH_DELTA_LENGTH);
             }
