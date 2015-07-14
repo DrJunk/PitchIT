@@ -40,6 +40,8 @@ import com.snepos.pitchit.database.Response;
 
 public class MyPitch extends ActionBarActivity implements ActionBar.TabListener   {
     private static Handler mHandler;
+    private static boolean refreshing = false;
+    private final int REFRESH_DELTA_LENGTH = 3000;
 
     AppSectionsPagerAdapter mAppSectionsPagerAdapter;
     ViewPager mViewPager;
@@ -77,6 +79,7 @@ public class MyPitch extends ActionBarActivity implements ActionBar.TabListener 
                         switch((Integer)inputMessage.obj)
                         {
                             case 0:
+                                Toast.makeText(getApplicationContext(), "Error: Failed to communicate with the server", Toast.LENGTH_SHORT).show();
                                 break;
                             case 1:
                                 Toast.makeText(getApplicationContext(), "Error: Failed to receive an update", Toast.LENGTH_SHORT).show();
@@ -106,7 +109,7 @@ public class MyPitch extends ActionBarActivity implements ActionBar.TabListener 
                                 CardArrayAdapter cardArrayAdapter = new CardArrayAdapter(MyPitch.this.getApplicationContext(), R.layout.pitch_item);
 
                                 for (int i = 0; i < data.length; i++) {
-                                    Card c = new Card(data[i].id, data[i].title, data[i].text, false, 0, false, false, data[i].upVotes, data[i].imOnItVotes);
+                                    Card c = new Card(data[i].id, data[i].title, data[i].publisherName, data[i].text, false, 0, false, false, data[i].upVotes, data[i].imOnItVotes);
                                     cardArrayAdapter.add(c);
                                 }
 
@@ -278,9 +281,20 @@ public class MyPitch extends ActionBarActivity implements ActionBar.TabListener 
         int id = item.getItemId();
         if (id == R.id.action_refresh) {
 
-            Database.PostRefreshNews();
-            Database.PostRefreshTrending();
-            Database.PostRefreshHot();
+            if(!refreshing) {
+                Database.PostRefreshNews();
+                Database.PostRefreshTrending();
+                Database.PostRefreshHot();
+
+                refreshing = true;
+
+                new Handler().postDelayed(new Runnable(){
+                    @Override
+                    public void run() {
+                        refreshing = false;
+                    }
+                }, REFRESH_DELTA_LENGTH);
+            }
 
             return true;
         }
@@ -393,7 +407,7 @@ public class MyPitch extends ActionBarActivity implements ActionBar.TabListener 
             IdeaData[] data = Database.news;
             if (data != null) {
                 for (int i = 0; i < data.length; i++) {
-                    Card c = new Card(data[i].id, data[i].title, data[i].text, false, 0, false, false, data[i].upVotes, data[i].imOnItVotes);
+                    Card c = new Card(data[i].id, data[i].title, data[i].publisherName, data[i].text, false, 0, false, false, data[i].upVotes, data[i].imOnItVotes);
                     cardArrayAdapter.add(c);
                 }
                 listView.setAdapter(cardArrayAdapter);
@@ -435,7 +449,7 @@ public class MyPitch extends ActionBarActivity implements ActionBar.TabListener 
             IdeaData[] data = Database.trending;
             if (data != null) {
                 for (int i = 0; i < data.length; i++) {
-                    Card c = new Card(data[i].id, data[i].title, data[i].text, false, 0, false, false, data[i].upVotes, data[i].imOnItVotes);
+                    Card c = new Card(data[i].id, data[i].title, data[i].publisherName, data[i].text, false, 0, false, false, data[i].upVotes, data[i].imOnItVotes);
                     cardArrayAdapter.add(c);
                 }
                 listView.setAdapter(cardArrayAdapter);
@@ -465,7 +479,7 @@ public class MyPitch extends ActionBarActivity implements ActionBar.TabListener 
             IdeaData[] data = Database.hot;
             if (data != null) {
                 for (int i = 0; i < data.length; i++) {
-                    Card c = new Card(data[i].id, data[i].title, data[i].text, false, 0, false, false, data[i].upVotes, data[i].imOnItVotes);
+                    Card c = new Card(data[i].id, data[i].title, data[i].publisherName, data[i].text, false, 0, false, false, data[i].upVotes, data[i].imOnItVotes);
                     cardArrayAdapter.add(c);
                 }
                 listView.setAdapter(cardArrayAdapter);

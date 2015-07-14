@@ -35,6 +35,8 @@ public class Login extends Activity {
     private static String userEmail = MyPrefs.NOT_CONNECTED;
     private static String userNickname = "";
 
+    private final int LOGIN_TIMEOUT_LENGTH = 6000;
+
     Button signIn;
 
     private GitkitClient client;
@@ -63,12 +65,7 @@ public class Login extends Activity {
 
         if(getIntent().getBooleanExtra("JustRegistered", false))
         {
-            Request req = new Request("login", Request.App.Login);
-            req.put("email", userEmail);
-            req.put("key", KeyGenerator.GenerateKey(userEmail));
-            HttpHandler.addRequest(req);
-
-            signIn.setEnabled(false);
+            LoginRequest();
         }
 
         mHandler = new Handler(Looper.getMainLooper()) {
@@ -143,12 +140,7 @@ public class Login extends Activity {
                 {
                     userEmail = user.getEmail();
 
-                    Request req = new Request("login", Request.App.Login);
-                    req.put("email", userEmail);
-                    req.put("key", KeyGenerator.GenerateKey(userEmail));
-                    HttpHandler.addRequest(req);
-
-                    signIn.setEnabled(false);
+                    LoginRequest();
                 }
 
                 // Now use the idToken to create a session for your user.
@@ -167,7 +159,22 @@ public class Login extends Activity {
 
     }
 
+    private void LoginRequest()
+    {
+        Request req = new Request("login", Request.App.Login);
+        req.put("email", userEmail);
+        req.put("key", KeyGenerator.GenerateKey(userEmail));
+        HttpHandler.addRequest(req);
 
+        signIn.setEnabled(false);
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                signIn.setEnabled(true);
+            }
+        }, LOGIN_TIMEOUT_LENGTH);
+    }
 
     public void Connected(){
         SharedPreferences settings = getApplicationContext().getSharedPreferences(MyPrefs.PREFS_NAME, 0);

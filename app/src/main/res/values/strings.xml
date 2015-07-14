@@ -17,6 +17,7 @@
     <string name="first_time">first</string>
     <string name="email">mail</string>
     <string name="fb_app_id">586739864800307</string>
+    <string name="eula_version">1</string>
     <string name="eula_accept">Accept</string>
     <string name="eula_string_to_button">By pressing the \"</string>
     <string name="eula_string_from_button">\" button you agree to the terms and conditions below:

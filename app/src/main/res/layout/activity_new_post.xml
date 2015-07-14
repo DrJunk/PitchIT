@@ -64,8 +64,7 @@
             android:textColor="#ff231f20"
             android:layout_alignParentBottom="true"
             android:layout_marginLeft="10dp"
-            android:layout_marginStart="10dp"
-            android:text="123"/>
+            android:layout_marginStart="10dp"/>
     </RelativeLayout>
 
 

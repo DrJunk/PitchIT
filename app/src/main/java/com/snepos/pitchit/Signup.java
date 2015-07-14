@@ -10,11 +10,14 @@ import android.os.Looper;
 import android.os.Message;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.snepos.pitchit.database.HttpHandler;
@@ -40,23 +43,24 @@ public class Signup extends Activity {
         fieldNickname = (EditText) findViewById(R.id.sign_up_nickname);
         btnSignUp = (Button) findViewById(R.id.sign_up_button);
 
+        fieldNickname.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    OnDone();
+                    return true;
+                }
+                return false;
+            }
+        });
+
         btnSignUp.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 if(event.getAction() == MotionEvent.ACTION_UP)
                 {
-                    String nickname = fieldNickname.getText().toString();
-                    String userEmail = Login.GetUserEmail();
-                    if(nickname.length() > 4)
-                    {
-                        Request req = new Request("register", Request.App.Register);
-                        req.put("email", userEmail);
-                        req.put("nick_name", nickname);
-                        req.put("key", KeyGenerator.GenerateKey(userEmail + nickname));
-                        HttpHandler.addRequest(req);
-                    }
-                    else
-                        Toast.makeText(Signup.this, "Nickname's length must be above 4.", Toast.LENGTH_SHORT).show();
+                    OnDone();
+                    return true;
                 }
                 return false;
             }
@@ -89,8 +93,33 @@ public class Signup extends Activity {
         };
     }
 
+    private void OnDone()
+    {
+        String nickname = fieldNickname.getText().toString();
+        String userEmail = Login.GetUserEmail();
+        if(nickname.length() > 4 && nickname.length() < 15)
+        {
+            Request req = new Request("register", Request.App.Register);
+            req.put("email", userEmail);
+            req.put("nick_name", nickname);
+            req.put("key", KeyGenerator.GenerateKey(userEmail + nickname));
+            HttpHandler.addRequest(req);
+        }
+        else if(nickname.length() > 4)
+            Toast.makeText(Signup.this, "Nickname's length must be above 4.", Toast.LENGTH_SHORT).show();
+        else
+            Toast.makeText(Signup.this, "Nickname's length must be below 15.", Toast.LENGTH_SHORT).show();
+    }
+
     public static void HandleResponse(Response response)
     {
         SignupResponseHandler.HandleResponse(mHandler, response);
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent loginIntent = new Intent(Signup.this, Login.class);
+        Signup.this.startActivity(loginIntent);
+        Signup.this.finish();
     }
 }

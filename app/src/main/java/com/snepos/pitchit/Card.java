@@ -12,14 +12,16 @@ public class Card {
     boolean isOnIt;
     boolean isReport;
     String head;
+    String publisherName;
     String body;
     int upVotes;
     int onItVotes;
 
 
-    public Card(int id, String _head, String _body, boolean _isLiked, int _clicks, boolean _isReport, boolean _isOnIt, int _upVotes, int _onItVotes) {
+    public Card(int id, String _head, String _publisherName, String _body, boolean _isLiked, int _clicks, boolean _isReport, boolean _isOnIt, int _upVotes, int _onItVotes) {
         this.id = id;
         head = _head;
+        publisherName = _publisherName;
         body = _body;
         isLiked = _isLiked;
         clicks = _clicks;
@@ -37,9 +39,10 @@ public class Card {
 
     }
 
-    public void setCard(int id, String _head, String _body, boolean _isLiked, int _clicks, boolean _isReport, boolean _isOnIt, int _upVotes, int _onItVotes) {
+    public void setCard(int id, String _head, String publisherName, String _body, boolean _isLiked, int _clicks, boolean _isReport, boolean _isOnIt, int _upVotes, int _onItVotes) {
         this.id = id;
         head = _head;
+        this.publisherName = publisherName;
         body = _body;
         isLiked = _isLiked;
         clicks = _clicks;
@@ -94,6 +97,10 @@ public class Card {
 
     public String getBody() {
         return body;
+    }
+
+    public String getPublisherName() {
+        return publisherName;
     }
 
     public String getHead() {

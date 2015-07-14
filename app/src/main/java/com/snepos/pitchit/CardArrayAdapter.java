@@ -59,7 +59,8 @@ public class CardArrayAdapter  extends ArrayAdapter<Card> {
         final LinearLayout outerLinearLayout = (LinearLayout) view.findViewById(R.id.outerLayout);
         outerLinearLayout.setShowDividers(LinearLayout.SHOW_DIVIDER_NONE);
         final TextView Head = (TextView) view.findViewById(R.id.HeadName);
-        final TextView Body = (TextView) view.findViewById(R.id.Body);;
+        final TextView Publisher = (TextView) view.findViewById(R.id.PublisherName);
+        final TextView Body = (TextView) view.findViewById(R.id.Body);
         final Button Like = (Button) view.findViewById(R.id.button_liked);
         final Button Report = (Button) view.findViewById(R.id.button_report);
         final Button OnIt = (Button) view.findViewById(R.id.button_OnIt);
@@ -70,6 +71,7 @@ public class CardArrayAdapter  extends ArrayAdapter<Card> {
         final Card currentCard = cardList.get(position);
 
         Head.setText(currentCard.getHead());
+        Publisher.setText(currentCard.getPublisherName());
         Body.setText(currentCard.getBody());
 
         UpVotes.setText(String.valueOf(currentCard.getUpVotes()));

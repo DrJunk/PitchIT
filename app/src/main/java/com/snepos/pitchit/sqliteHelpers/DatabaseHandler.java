@@ -117,7 +117,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         if (cursor != null)
             cursor.moveToFirst();
 
-        Card post = new Card(Integer.parseInt(cursor.getString(0)),cursor.getString(1), cursor.getString(2),false,0,false,false,0,0);
+        Card post = new Card(Integer.parseInt(cursor.getString(0)), "",cursor.getString(1), cursor.getString(2),false,0,false,false,0,0);
         // return contact
         return post;
     }
@@ -144,7 +144,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             do {
                 Card card = new Card();
-                card.setCard(Integer.parseInt(cursor.getString(0)),cursor.getString(1), cursor.getString(2),false,0,false,false,0,0);
+                card.setCard(Integer.parseInt(cursor.getString(0)), "",cursor.getString(1), cursor.getString(2),false,0,false,false,0,0);
                 cardList.add(card);
             } while (cursor.moveToNext());
         }
