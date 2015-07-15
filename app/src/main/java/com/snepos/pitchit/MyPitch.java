@@ -36,6 +36,7 @@ import android.widget.Toast;
 import com.snepos.pitchit.database.Database;
 import com.snepos.pitchit.database.IdeaData;
 import com.snepos.pitchit.database.Response;
+import com.snepos.pitchit.sqliteHelpers.DatabaseHandler;
 
 //import android.support.v7.widget.Toolbar;
 
@@ -88,7 +89,6 @@ public class MyPitch extends ActionBarActivity implements ActionBar.TabListener 
 
             @Override
             public void onAnimationEnd(Animation animation) {
-
             }
 
             @Override
@@ -111,8 +111,7 @@ public class MyPitch extends ActionBarActivity implements ActionBar.TabListener 
                 refreshing = false;
                 switch (inputMessage.what) {
                     case 0: // Failed to receive update
-                        switch((Integer)inputMessage.obj)
-                        {
+                        switch ((Integer) inputMessage.obj) {
                             case 0:
                                 Toast.makeText(getApplicationContext(), "Error: Failed to communicate with the server", Toast.LENGTH_SHORT).show();
                                 break;
@@ -124,34 +123,41 @@ public class MyPitch extends ActionBarActivity implements ActionBar.TabListener 
                     case 1:  // New data from server
                         IdeaData[] data = null;
                         ListView listView = null;
-                        switch((Integer)inputMessage.obj)
-                        {
+                        DatabaseHandler.Table table = null;
+                        switch ((Integer) inputMessage.obj) {
                             case 0:
                                 data = Database.news;
                                 listView = (ListView) MyPitch.this.findViewById(R.id.card_listView_new);
+                                table = DatabaseHandler.Table.NEW;
                                 break;
                             case 1:
                                 data = Database.trending;
                                 listView = (ListView) MyPitch.this.findViewById(R.id.card_listView_trending);
+                                table = DatabaseHandler.Table.GROWING;
                                 break;
                             case 2:
                                 data = Database.hot;
                                 listView = (ListView) MyPitch.this.findViewById(R.id.card_listView_hot);
+                                table = DatabaseHandler.Table.POPULAR;
                                 break;
                         }
-                        if (listView != null) {
-                            if (data != null) {
-                                CardArrayAdapter cardArrayAdapter = new CardArrayAdapter(MyPitch.this.getApplicationContext(), R.layout.pitch_item);
+                        if (data != null) {
+                            CardArrayAdapter cardArrayAdapter = new CardArrayAdapter(MyPitch.this.getApplicationContext(), R.layout.pitch_item);
 
-                                for (int i = 0; i < data.length; i++) {
-                                    Card c = new Card(data[i].id, data[i].title, data[i].publisherName, data[i].text, false, 0, false, false, data[i].upVotes, data[i].imOnItVotes);
-                                    cardArrayAdapter.add(c);
-                                }
-
-                                listView.setAdapter(cardArrayAdapter);
-                            } else {
-                                System.err.println("Error: 'data' is null(" + inputMessage.what + ")");
+                            Card[] cards = new Card[data.length];
+                            for (int i = 0; i < data.length; i++) {
+                                Card c = new Card(data[i].id, data[i].title, data[i].publisherName, data[i].text, false, 0, false, false, data[i].upVotes, data[i].imOnItVotes);
+                                cards[i] = c;
+                                cardArrayAdapter.add(c);
                             }
+
+                            DatabaseHandler db = new DatabaseHandler(MyPitch.this);
+                            db.refreshTable(table, cards);
+
+                            if (listView != null)
+                                listView.setAdapter(cardArrayAdapter);
+                        } else {
+                            System.err.println("Error: 'data' is null(" + inputMessage.what + ")");
                         }
                         break;
                 }
@@ -327,6 +333,10 @@ public class MyPitch extends ActionBarActivity implements ActionBar.TabListener 
                 mRefreshItem.setActionView(mRefresh);
                 mRefresh.startAnimation(mRotate);
 
+                Database.PostRefreshUpVotes();
+                Database.PostRefreshOnItVotes();
+                Database.PostRefreshSpamVotes();
+
                 Database.PostRefreshNews();
                 Database.PostRefreshTrending();
                 Database.PostRefreshHot();
@@ -460,20 +470,18 @@ public class MyPitch extends ActionBarActivity implements ActionBar.TabListener 
                 listView.setAdapter(cardArrayAdapter);
             } else {
                 System.err.println("Error: 'data' is null");
-            }
-            /*
-            List<Card> newPosts = new ArrayList<Card>();
 
-            DatabaseHandler db = new DatabaseHandler(this.getActivity());
-            newPosts = db.getAllPosts(DatabaseHandler.Table.NEW);
-            if(!newPosts.isEmpty())
-            {
-                for (int i = 0; i < db.getPostsCount(DatabaseHandler.Table.NEW); i++) {
-                    if(newPosts.get(i).getId() != 0)
-                    cardArrayAdapter.add(new Card(newPosts.get(i).getId(), newPosts.get(i).getHead(), newPosts.get(i).getBody(), false, 0, false, false, 0, 0));
+                DatabaseHandler db = new DatabaseHandler(getActivity().getApplicationContext());
+
+                Card[] cardsData = db.getAllPosts(DatabaseHandler.Table.NEW);
+
+                for (int i = 0; i < cardsData.length; i++) {
+                    cardArrayAdapter.add(cardsData[i]);
                 }
+
+                listView.setAdapter(cardArrayAdapter);
             }
-            */
+
             listView.setAdapter(cardArrayAdapter);
             return rootView;
         }
@@ -502,6 +510,16 @@ public class MyPitch extends ActionBarActivity implements ActionBar.TabListener 
                 listView.setAdapter(cardArrayAdapter);
             } else {
                 System.err.println("Error: 'data' is null");
+
+                DatabaseHandler db = new DatabaseHandler(getActivity().getApplicationContext());
+
+                Card[] cardsData = db.getAllPosts(DatabaseHandler.Table.GROWING);
+
+                for (int i = 0; i < cardsData.length; i++) {
+                    cardArrayAdapter.add(cardsData[i]);
+                }
+
+                listView.setAdapter(cardArrayAdapter);
             }
 
             listView.setAdapter(cardArrayAdapter);
@@ -532,6 +550,16 @@ public class MyPitch extends ActionBarActivity implements ActionBar.TabListener 
                 listView.setAdapter(cardArrayAdapter);
             } else {
                 System.err.println("Error: 'data' is null");
+
+                DatabaseHandler db = new DatabaseHandler(getActivity().getApplicationContext());
+
+                Card[] cardsData = db.getAllPosts(DatabaseHandler.Table.POPULAR);
+
+                for (int i = 0; i < cardsData.length; i++) {
+                    cardArrayAdapter.add(cardsData[i]);
+                }
+
+                listView.setAdapter(cardArrayAdapter);
             }
 
             listView.setAdapter(cardArrayAdapter);

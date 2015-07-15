@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import com.snepos.pitchit.Card;
+import com.snepos.pitchit.database.IdeaData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,10 +27,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String TABLE_GROWING_POSTS = "growingPosts";
     private static final String TABLE_POPULAR_POSTS = "popularPosts";
 
-
     // Contacts Table Columns names
     private static final String KEY_ID = "id";
     private static final String KEY_HEAD = "head";
+    private static final String KEY_PUBLISHER = "publisher";
     private static final String KEY_BODY = "body";
     private static final String KEY_isLiked = "isLiked";
     private static final String KEY_isOnIt = "isOnIt";
@@ -44,30 +45,38 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     // Creating Tables
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String CREATE_NEW_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_NEW_POSTS + "("
-                + KEY_ID + " INTEGER PRIMARY KEY," + KEY_HEAD + " TEXT,"
-                + KEY_BODY + " TEXT" +
-                KEY_isLiked + " TEXT" +
-                KEY_isOnIt + " TEXT" +
-                KEY_isReport + " TEXT" +
-                KEY_upVotes + " TEXT" +
-                KEY_onItVotes + " TEXT" +")";
-        String CREATE_GROWING_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_GROWING_POSTS + "("
-                + KEY_ID + " INTEGER PRIMARY KEY," + KEY_HEAD + " TEXT,"
-                + KEY_BODY + " TEXT" +
-                KEY_isLiked + " TEXT" +
-                KEY_isOnIt + " TEXT" +
-                KEY_isReport + " TEXT" +
-                KEY_upVotes + " TEXT" +
-                KEY_onItVotes + " TEXT" +")";
-        String CREATE_POPULAR_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_POPULAR_POSTS + "("
-                + KEY_ID + " INTEGER PRIMARY KEY," + KEY_HEAD + " TEXT,"
-                + KEY_BODY + " TEXT" +
-                KEY_isLiked + " TEXT" +
-                KEY_isOnIt + " TEXT" +
-                KEY_isReport + " TEXT" +
-                KEY_upVotes + " TEXT" +
-                KEY_onItVotes + " TEXT" +")";
+        if(true)
+            return;
+        String CREATE_NEW_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_NEW_POSTS + "(" +
+                KEY_ID + " INTEGER PRIMARY KEY," +
+                KEY_HEAD + " TEXT," +
+                KEY_PUBLISHER + " TEXT" +
+                KEY_BODY + " TEXT" +
+                KEY_isLiked + " INTEGER" +
+                KEY_isOnIt + " INTEGER" +
+                KEY_isReport + " INTEGER" +
+                KEY_upVotes + " INTEGER" +
+                KEY_onItVotes + " INTEGER" +")";
+        String CREATE_GROWING_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_GROWING_POSTS + "(" +
+                KEY_ID + " INTEGER PRIMARY KEY," +
+                KEY_HEAD + " TEXT," +
+                KEY_PUBLISHER + " TEXT" +
+                KEY_BODY + " TEXT" +
+                KEY_isLiked + " INTEGER" +
+                KEY_isOnIt + " INTEGER" +
+                KEY_isReport + " INTEGER" +
+                KEY_upVotes + " INTEGER" +
+                KEY_onItVotes + " INTEGER" +")";
+        String CREATE_POPULAR_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_POPULAR_POSTS + "(" +
+                KEY_ID + " INTEGER PRIMARY KEY," +
+                KEY_HEAD + " TEXT," +
+                KEY_PUBLISHER + " TEXT" +
+                KEY_BODY + " TEXT" +
+                KEY_isLiked + " INTEGER" +
+                KEY_isOnIt + " INTEGER" +
+                KEY_isReport + " INTEGER" +
+                KEY_upVotes + " INTEGER" +
+                KEY_onItVotes + " INTEGER" +")";
 
         db.execSQL(CREATE_NEW_TABLE);
         db.execSQL(CREATE_GROWING_TABLE);
@@ -85,26 +94,65 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         // Create tables again
         onCreate(db);
     }
-    public void addPost(Card card, Table table) {
+
+    private String getTableKey(Table table)
+    {
+        switch (table) {
+            case NEW:
+                return TABLE_NEW_POSTS;
+            case GROWING:
+                return TABLE_GROWING_POSTS;
+            case POPULAR:
+                return TABLE_POPULAR_POSTS;
+        }
+        return "NULL";
+    }
+
+    public void refreshTable(Table table, Card[] cards)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        String tableKey = getTableKey(table);
+
+        db.execSQL("DROP TABLE IF EXISTS " + tableKey);
+
+        System.out.println("Refresh table: " + tableKey);
+
+        String CREATE_NEW_TABLE = "CREATE TABLE IF NOT EXISTS " + tableKey + "(" +
+                KEY_ID + " INTEGER PRIMARY KEY," +
+                KEY_HEAD + " TEXT," +
+                KEY_PUBLISHER + " TEXT, " +
+                KEY_BODY + " TEXT, " +
+                KEY_isLiked + " INTEGER, " +
+                KEY_isOnIt + " INTEGER, " +
+                KEY_isReport + " INTEGER, " +
+                KEY_upVotes + " INTEGER, " +
+                KEY_onItVotes + " INTEGER" +")";
+
+        db.execSQL(CREATE_NEW_TABLE);
+
+        for(int i = 0; i < cards.length; i++)
+            addPost(cards[i], tableKey);
+
+        db.close(); // Closing database connection
+    }
+
+    private void addPost(Card card, String tableKey) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
         values.put(KEY_ID, card.getId());
-        values.put(KEY_HEAD, card.getHead()); // Contact Name
-        values.put(KEY_BODY, card.getBody()); // Contact Phone Number
+        values.put(KEY_HEAD, card.getHead());
+        values.put(KEY_PUBLISHER, card.getPublisherName());
+        values.put(KEY_BODY, card.getBody());
+        values.put(KEY_isLiked, card.getIsLiked() ? 1 : 0);
+        values.put(KEY_isReport, card.getIsReport() ? 1 : 0);
+        values.put(KEY_isOnIt, card.getIsOnIt() ? 1 : 0);
+        values.put(KEY_upVotes, card.getUpVotes());
+        values.put(KEY_onItVotes, card.getOnItVotes());
 
-        // Inserting Row
-        switch (table) {
-            case NEW:
-                db.insert(TABLE_NEW_POSTS, null, values);
-                break;
-            case GROWING:
-                db.insert(TABLE_GROWING_POSTS, null, values);
-                break;
-            case POPULAR:
-                db.insert(TABLE_POPULAR_POSTS, null, values);
-                break;
-        }
+        db.insert(tableKey, null, values);
+
         db.close(); // Closing database connection
     }
 
@@ -121,37 +169,57 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         // return contact
         return post;
     }
-    public List<Card> getAllPosts(Table table) {
-        List<Card> cardList = new ArrayList<Card>();
+
+    public Card[] getAllPosts(Table table) {
+        List<Card> cardsList = new ArrayList<Card>();
         // Select All Query
 
-        String selectQuery = "SELECT  * FROM " ;
-        switch (table) {
-            case NEW:
-                selectQuery += TABLE_NEW_POSTS;
-                break;
-            case GROWING:
-                selectQuery += TABLE_GROWING_POSTS;
-                break;
-            case POPULAR:
-                selectQuery += TABLE_POPULAR_POSTS;
-                break;
-        }
-        SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cursor = db.rawQuery(selectQuery, null);
+        String tableKey = getTableKey(table);
 
-        // looping through all rows and adding to list
-        if (cursor.moveToFirst()) {
-            do {
-                Card card = new Card();
-                card.setCard(Integer.parseInt(cursor.getString(0)), "",cursor.getString(1), cursor.getString(2),false,0,false,false,0,0);
-                cardList.add(card);
-            } while (cursor.moveToNext());
-        }
+        String selectQuery = "SELECT  * FROM " + tableKey;
 
-        // return contact list
-        return cardList;
+        System.out.println("Loading table: " + tableKey);
+
+        try {
+            SQLiteDatabase db = this.getWritableDatabase();
+            Cursor cursor = db.rawQuery(selectQuery, null);
+
+            System.out.println("Starting");
+
+            // looping through all rows and adding to list
+            if (cursor.moveToFirst()) {
+                do {
+                    System.out.println("another card");
+                    Card card = new Card();
+                    card.setCard(Integer.parseInt(
+                            cursor.getString(0)),
+                            cursor.getString(1),
+                            cursor.getString(2),
+                            cursor.getString(3),
+                            cursor.getInt(4) == 1,
+                            0,
+                            cursor.getInt(5) == 1,
+                            cursor.getInt(6) == 1,
+                            cursor.getInt(7),
+                            cursor.getInt(8));
+                    cardsList.add(card);
+                } while (cursor.moveToNext());
+            }
+
+            System.out.println("Done");
+
+            // return contact list
+            return cardsList.toArray(new Card[cardsList.size()]);
+        }
+        catch (Exception e)
+        {
+            System.out.println("Failed");
+            System.out.println(e.getMessage());
+            return new Card[0];
+        }
     }
+
+
     public int getPostsCount(Table table) {
         String countQuery = "SELECT  * FROM ";
         switch (table) {
