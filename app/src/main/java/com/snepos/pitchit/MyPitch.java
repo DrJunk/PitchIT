@@ -257,11 +257,7 @@ public class MyPitch extends ActionBarActivity implements ActionBar.TabListener 
                         .setCustomView(tv2)
                         .setTabListener(this));
 
-
-
-
-
-
+        actionBar.setSelectedNavigationItem(2);
     }
     @Override
     public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
@@ -475,7 +471,7 @@ public class MyPitch extends ActionBarActivity implements ActionBar.TabListener 
 
                 Card[] cardsData = db.getAllPosts(DatabaseHandler.Table.NEW);
 
-                for (int i = 0; i < cardsData.length; i++) {
+                for (int i = cardsData.length-1; i >= 0; i--) {
                     cardArrayAdapter.add(cardsData[i]);
                 }
 
@@ -515,7 +511,7 @@ public class MyPitch extends ActionBarActivity implements ActionBar.TabListener 
 
                 Card[] cardsData = db.getAllPosts(DatabaseHandler.Table.GROWING);
 
-                for (int i = 0; i < cardsData.length; i++) {
+                for (int i = cardsData.length-1; i >= 0; i--) {
                     cardArrayAdapter.add(cardsData[i]);
                 }
 
@@ -555,7 +551,7 @@ public class MyPitch extends ActionBarActivity implements ActionBar.TabListener 
 
                 Card[] cardsData = db.getAllPosts(DatabaseHandler.Table.POPULAR);
 
-                for (int i = 0; i < cardsData.length; i++) {
+                for (int i = cardsData.length-1; i >= 0; i--) {
                     cardArrayAdapter.add(cardsData[i]);
                 }
 

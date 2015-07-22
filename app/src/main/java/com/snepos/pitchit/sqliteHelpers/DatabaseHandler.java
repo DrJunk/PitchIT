@@ -178,18 +178,13 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         String selectQuery = "SELECT  * FROM " + tableKey;
 
-        System.out.println("Loading table: " + tableKey);
-
         try {
             SQLiteDatabase db = this.getWritableDatabase();
             Cursor cursor = db.rawQuery(selectQuery, null);
 
-            System.out.println("Starting");
-
             // looping through all rows and adding to list
             if (cursor.moveToFirst()) {
                 do {
-                    System.out.println("another card");
                     Card card = new Card();
                     card.setCard(Integer.parseInt(
                             cursor.getString(0)),
@@ -206,9 +201,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 } while (cursor.moveToNext());
             }
 
-            System.out.println("Done");
-
-            // return contact list
             return cardsList.toArray(new Card[cardsList.size()]);
         }
         catch (Exception e)

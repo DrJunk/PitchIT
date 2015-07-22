@@ -2,6 +2,8 @@ package com.snepos.pitchit;
 
 import android.content.Context;
 import android.os.Handler;
+import android.text.Editable;
+import android.view.ActionMode;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -64,6 +66,10 @@ public class CardArrayAdapter  extends ArrayAdapter<Card> {
         final Button Like = (Button) view.findViewById(R.id.button_liked);
         final Button Report = (Button) view.findViewById(R.id.button_report);
         final Button OnIt = (Button) view.findViewById(R.id.button_OnIt);
+
+        Head.setCustomSelectionActionModeCallback(new CopyCallback(Head));
+        Publisher.setCustomSelectionActionModeCallback(new CopyCallback(Publisher));
+        Body.setCustomSelectionActionModeCallback(new CopyCallback(Body));
 
         final TextView UpVotes = ((TextView) view.findViewById(R.id.up_votes));
         final TextView OnItVotes = ((TextView) view.findViewById(R.id.on_it_votes));
