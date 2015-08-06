@@ -165,14 +165,9 @@ public class MyPost extends ActionBarActivity {
             case R.id.action_send:
                 //here here here here send
                 if(!waitingForResponse) {
-                    if(head.getText().length() <= 4)
+                    if(head.getText().length() < 4 || body.getText().length() < 4)
                     {
-                        Toast.makeText(MyPost.this, "Head length most be above 4", Toast.LENGTH_SHORT).show();
-                        return true;
-                    }
-                    if(body.getText().length() <= 10)
-                    {
-                        Toast.makeText(MyPost.this, "Body length most be above 10", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MyPost.this, "Head and body length must be at least 4", Toast.LENGTH_SHORT).show();
                         return true;
                     }
 

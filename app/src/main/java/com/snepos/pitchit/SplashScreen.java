@@ -1,6 +1,7 @@
 package com.snepos.pitchit;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -28,7 +29,6 @@ public class SplashScreen extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
-
         setContentView(R.layout.activity_splash);
 
         /*SharedPreferences settings = getApplicationContext().getSharedPreferences(MyPrefs.PREFS_NAME, 0);
@@ -72,7 +72,7 @@ public class SplashScreen extends Activity {
                 new AppEULA(SplashScreen.this).show(SplashScreen.this);
             }
         }, SPLASH_DISPLAY_LENGTH);
-    }
+    }/*
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -90,5 +90,5 @@ public class SplashScreen extends Activity {
         //    return true;
         //}
         return super.onOptionsItemSelected(item);
-    }
+    }*/
 }
