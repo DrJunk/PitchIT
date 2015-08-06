@@ -19,12 +19,25 @@
         android:background="@drawable/card_background"
         android:layout_gravity="left|top"
         android:showDividers="none">
+    <LinearLayout
+        android:id="@+id/top_layout"
+        android:dividerHeight="0dp"
+        android:divider="@null"
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="60dp"
+        android:background="@drawable/card_background"
+        android:layout_gravity="center_horizontal|top"
+        android:gravity="center"
+        android:showDividers="none">
 
         <ImageView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+            android:id="@+id/card_top"
+            android:layout_width="30dp"
+            android:layout_height="60dp"
             android:adjustViewBounds="true"
-            android:src="@drawable/category_pic"/>
+            android:src="@drawable/light_bulb_top"/>
+    </LinearLayout>
 
         <TextView
             android:layout_marginLeft="12dp"
@@ -76,7 +89,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="Body"
-            android:textSize="15sp"
+            android:textSize="18sp"
             android:id="@+id/Body"
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"

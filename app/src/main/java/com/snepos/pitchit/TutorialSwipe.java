@@ -103,9 +103,17 @@ public class TutorialSwipe extends FragmentActivity {
         public Fragment getItem(int position) {
 
             if(position==6) {
-                Intent intent = new Intent(context, MyPitch.class);
-                startActivity(intent);
-                TutorialSwipe.this.finish();
+                if(Login.LoadUserEmail(TutorialSwipe.this.getApplicationContext())) {
+                    Intent intent = new Intent(context, MyPitch.class);
+                    startActivity(intent);
+                    TutorialSwipe.this.finish();
+                }
+                else
+                {
+                    Intent intent = new Intent(context, Login.class);
+                    startActivity(intent);
+                    TutorialSwipe.this.finish();
+                }
             }
             FragmentTutorial myFragment = FragmentTutorial.newInstance(position);
             return myFragment;

@@ -8,6 +8,8 @@
 package com.snepos.pitchit;
 
 import com.snepos.pitchit.R;
+import com.snepos.pitchit.sqliteHelpers.MyPrefs;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Application;
@@ -49,6 +51,8 @@ public class AppEULA {
         final String eulaKey = EULA_PREFIX + versionInfo.versionCode + R.string.eula_version;
         final SharedPreferences prefs = PreferenceManager
                 .getDefaultSharedPreferences(mContext);
+
+
 
         boolean bAlreadyAccepted = prefs.getBoolean(eulaKey, false);
         if (bAlreadyAccepted == false) {
@@ -122,7 +126,7 @@ public class AppEULA {
         }
         else
         {
-            Intent mainIntent = new Intent(_activity, Login.class);
+            Intent mainIntent = new Intent(_activity, TutorialSwipe.class);
             _activity.startActivity(mainIntent);
             _activity.finish();
         }

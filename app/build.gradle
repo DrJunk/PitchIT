@@ -7,9 +7,6 @@ android {
     defaultConfig {
         applicationId "com.snepos.pitchit"
         minSdkVersion 11
-        targetSdkVersion 19
-        versionCode 7
-        versionName "1.33"
         targetSdkVersion 20
         versionCode 8
         versionName "1.34"

@@ -1,6 +1,7 @@
 package com.snepos.pitchit;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Handler;
 import android.text.Editable;
 import android.view.ActionMode;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -22,6 +24,7 @@ public class CardArrayAdapter  extends ArrayAdapter<Card> {
     private static final String TAG = "CardArrayAdapter";
     private List<Card> cardList = new ArrayList<Card>();
     Context myContext;
+    int sum = 5000;
     public CardArrayAdapter(Context context, int textViewResourceId) {
         super(context, textViewResourceId);
         myContext = context;
@@ -67,6 +70,9 @@ public class CardArrayAdapter  extends ArrayAdapter<Card> {
         final Button Report = (Button) view.findViewById(R.id.button_report);
         final Button OnIt = (Button) view.findViewById(R.id.button_OnIt);
 
+        final ImageView cardTop = (ImageView) view.findViewById(R.id.card_top);
+        final LinearLayout top = (LinearLayout) view.findViewById(R.id.top_layout);
+
         Head.setCustomSelectionActionModeCallback(new CopyCallback(Head));
         Publisher.setCustomSelectionActionModeCallback(new CopyCallback(Publisher));
         Body.setCustomSelectionActionModeCallback(new CopyCallback(Body));
@@ -76,6 +82,12 @@ public class CardArrayAdapter  extends ArrayAdapter<Card> {
 
         final Card currentCard = cardList.get(position);
 
+        for (int i=0; i< Publisher.length(); i++)
+        {
+            sum+= Publisher.getText().charAt(i);
+        }
+        //cardTop
+        top.setBackgroundColor(Color.argb(100, sum % 200, (sum * Publisher.getText().charAt(1)) % 200, ((sum * 7) % 200)));
         Head.setText(currentCard.getHead());
         Publisher.setText(currentCard.getPublisherName());
         Body.setText(currentCard.getBody());
