@@ -128,14 +128,19 @@ public class TutorialSwipe extends FragmentActivity {
             mPager.setOnTouchListener(null);
         }
     }
+
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     public void changeRadios(int position){
+        int currentapiVersion = android.os.Build.VERSION.SDK_INT;
         for(int i=0;i<6;i++)
         {
-            radios[i].setBackground((getResources().getDrawable(R.drawable.emepty_dots)));
+            if (currentapiVersion >= Build.VERSION_CODES.JELLY_BEAN)
+                radios[i].setBackground((getResources().getDrawable(R.drawable.emepty_dots)));
             radios[i].setWidth(20);
             radios[i].setHeight(20);
         }
-        radios[position].setBackground((getResources().getDrawable(R.drawable.white_dots)));
+        if (currentapiVersion >= Build.VERSION_CODES.JELLY_BEAN)
+            radios[position].setBackground((getResources().getDrawable(R.drawable.white_dots)));
         radios[position].setWidth(25);
         radios[position].setHeight(25);
 

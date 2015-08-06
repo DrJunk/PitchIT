@@ -8,8 +8,8 @@ android {
         applicationId "com.snepos.pitchit"
         minSdkVersion 11
         targetSdkVersion 20
-        versionCode 7
-        versionName "1.33"
+        versionCode 8
+        versionName "1.34"
     }
     buildTypes {
         release {
