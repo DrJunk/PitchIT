@@ -1,9 +1,11 @@
 package com.snepos.pitchit;
 
+import android.annotation.TargetApi;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -33,6 +35,7 @@ public class Signup extends Activity {
     EditText fieldNickname;
     Button btnSignUp;
 
+    @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_signup);
@@ -105,7 +108,7 @@ public class Signup extends Activity {
             req.put("key", KeyGenerator.GenerateKey(userEmail + nickname));
             HttpHandler.addRequest(req);
         }
-        else if(nickname.length() > 4)
+        else if(nickname.length() <= 4)
             Toast.makeText(Signup.this, "Nickname's length must be above 4.", Toast.LENGTH_SHORT).show();
         else
             Toast.makeText(Signup.this, "Nickname's length must be below 15.", Toast.LENGTH_SHORT).show();

@@ -23,9 +23,9 @@
         android:id="@+id/top_layout"
         android:dividerHeight="0dp"
         android:divider="@null"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:layout_width="fill_parent"
-        android:layout_height="60dp"
+        android:layout_height="80dp"
         android:background="@drawable/card_background"
         android:layout_gravity="center_horizontal|top"
         android:gravity="center"
@@ -37,6 +37,22 @@
             android:layout_height="60dp"
             android:adjustViewBounds="true"
             android:src="@drawable/light_bulb_top"/>
+        <TextView
+            android:dividerHeight="0dp"
+            android:divider="@null"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="General"
+            android:textSize="10sp"
+            android:textStyle="bold"
+            android:textAllCaps="true"
+            android:id="@+id/CatName"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:textColor="#ff231f20"
+            android:textIsSelectable="true"/>
     </LinearLayout>
 
         <TextView
@@ -115,8 +131,8 @@
              />
 
         <RelativeLayout
-            android:layout_marginLeft="12dp"
-            android:layout_marginRight="12dp"
+            android:layout_marginLeft="0dp"
+            android:layout_marginRight="0dp"
             android:layout_marginBottom="0dp"
             android:id="@+id/innerLayout"
             android:dividerHeight="0dp"
@@ -130,6 +146,8 @@
             android:showDividers="none">
 
         <LinearLayout
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
             android:layout_alignParentLeft="true"
             android:id="@+id/SuperInnerLayout"
             android:layout_marginTop="10dp"

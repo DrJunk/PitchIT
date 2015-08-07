@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -25,6 +26,9 @@ public class CardArrayAdapter  extends ArrayAdapter<Card> {
     private List<Card> cardList = new ArrayList<Card>();
     Context myContext;
     int sum = 5000;
+    int red;
+    int blue;
+    int green;
     public CardArrayAdapter(Context context, int textViewResourceId) {
         super(context, textViewResourceId);
         myContext = context;
@@ -72,6 +76,7 @@ public class CardArrayAdapter  extends ArrayAdapter<Card> {
 
         final ImageView cardTop = (ImageView) view.findViewById(R.id.card_top);
         final LinearLayout top = (LinearLayout) view.findViewById(R.id.top_layout);
+        final RelativeLayout buttom= (RelativeLayout) view.findViewById(R.id.innerLayout);
 
         Head.setCustomSelectionActionModeCallback(new CopyCallback(Head));
         Publisher.setCustomSelectionActionModeCallback(new CopyCallback(Publisher));
@@ -82,15 +87,27 @@ public class CardArrayAdapter  extends ArrayAdapter<Card> {
 
         final Card currentCard = cardList.get(position);
 
-        for (int i=0; i< Publisher.length(); i++)
-        {
-            sum+= Publisher.getText().charAt(i);
-        }
-        //cardTop
-        top.setBackgroundColor(Color.argb(100, sum % 200, (sum * Publisher.getText().charAt(1)) % 200, ((sum * 7) % 200)));
         Head.setText(currentCard.getHead());
         Publisher.setText(currentCard.getPublisherName());
         Body.setText(currentCard.getBody());
+
+        sum = 5000;
+        for (int i=0; i< Publisher.length(); i++)
+        {
+            sum+= Publisher.getText().toString().charAt(i);
+        }
+        //cardTop
+        sum *= sum;
+        red= sum % 151;
+        green = sum % 152;
+        blue =sum % 154;
+        if (green < red &&green < blue )
+            green= green%2;
+        if (blue < green &&blue < red )
+            blue= blue%2;
+        if (red < green &&red < blue )
+            red= red%2;
+        top.setBackgroundColor(Color.argb(100,red, green,blue));
 
         UpVotes.setText(String.valueOf(currentCard.getUpVotes()));
         OnItVotes.setText(String.valueOf(currentCard.getOnItVotes()));
@@ -122,10 +139,12 @@ public class CardArrayAdapter  extends ArrayAdapter<Card> {
                     currentCard.setClicks(0);
                     currentCard.clickedLike();
                     if (currentCard.getIsLiked()) {
-                        Like.setBackgroundResource(R.drawable.like_icon_16);
+                        buttom.setBackgroundColor(Color.argb(100, 255, 213, 77));
+                        Like.setBackgroundResource(R.drawable.bulb_on);
                         UpVotes.setText(String.valueOf(Integer.parseInt(UpVotes.getText().toString()) + 1));
                     } else {
-                        Like.setBackgroundResource(R.drawable.like_icon_16_blackend);
+                        buttom.setBackgroundColor(Color.TRANSPARENT);
+                        Like.setBackgroundResource(R.drawable.bulb_off);
                         UpVotes.setText(String.valueOf(Integer.parseInt(UpVotes.getText().toString()) - 1));
                     }
                 }
@@ -140,18 +159,24 @@ public class CardArrayAdapter  extends ArrayAdapter<Card> {
             public void onClick(View v) {
                 currentCard.clickedLike();
                 if (currentCard.getIsLiked()) {
-                    Like.setBackgroundResource(R.drawable.like_icon_16);
+                    buttom.setBackgroundColor(Color.argb(100, 255, 213, 77));
+                    Like.setBackgroundResource(R.drawable.bulb_on);
                     UpVotes.setText(String.valueOf(Integer.parseInt(UpVotes.getText().toString()) + 1));
                 } else {
-                    Like.setBackgroundResource(R.drawable.like_icon_16_blackend);
+                    buttom.setBackgroundColor(Color.TRANSPARENT);
+                    Like.setBackgroundResource(R.drawable.bulb_off);
                     UpVotes.setText(String.valueOf(Integer.parseInt(UpVotes.getText().toString()) - 1));
                 }
             }
         });
-        if(currentCard.getIsLiked())
-            Like.setBackgroundResource(R.drawable.like_icon_16);
-        else
-            Like.setBackgroundResource(R.drawable.like_icon_16_blackend);
+        if(currentCard.getIsLiked()) {
+            buttom.setBackgroundColor(Color.argb(100, 255, 213, 77));
+            Like.setBackgroundResource(R.drawable.bulb_on);
+        }
+        else {
+            Like.setBackgroundResource(R.drawable.bulb_off);
+            buttom.setBackgroundColor(Color.TRANSPARENT);
+        }
 
         Report.setOnClickListener(new View.OnClickListener() {
             @Override

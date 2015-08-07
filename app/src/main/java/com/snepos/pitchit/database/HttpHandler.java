@@ -60,6 +60,8 @@ public class HttpHandler {
     }
 
     public static void addRequest(Request req) {
+        if(requests == null)
+            Init();
         requests.add(req);
     }
 
