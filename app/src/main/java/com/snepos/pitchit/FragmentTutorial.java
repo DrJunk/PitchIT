@@ -44,23 +44,23 @@ public class FragmentTutorial extends Fragment {
 
             switch (position) {
                 case 0:
-                    img.setImageResource(R.drawable.tutorial_1);
+                    img.setImageResource(R.drawable.t1);
                     break;
                 case 1:
-                    img.setImageResource(R.drawable.tutorial_2);
+                    img.setImageResource(R.drawable.t2);
                     break;
                 case 2:
-                    img.setImageResource(R.drawable.tutorial_3);
+                    img.setImageResource(R.drawable.t3);
                     break;
                 case 3:
-                    img.setImageResource(R.drawable.tutorial_4);
+                    img.setImageResource(R.drawable.t4);
                     break;
-                case 4:
+               /* case 4:
                     img.setImageResource(R.drawable.tutorial_5);
                     break;
                 case 5:
                     img.setImageResource(R.drawable.tutorial_6);
-                    break;
+                   break;*/
 
             }
 

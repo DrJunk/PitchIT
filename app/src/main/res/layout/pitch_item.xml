@@ -216,6 +216,17 @@
             android:textColor="#ff231f20" />
     </LinearLayout>
 
+            <LinearLayout
+                android:id="@+id/report_layout"
+                android:dividerHeight="0dp"
+                android:divider="@null"
+                android:orientation="vertical"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal|top"
+                android:layout_marginRight="10dp"
+                android:gravity="right"
+                android:showDividers="none">
         <Button
             android:dividerHeight="0dp"
             android:divider="@null"
@@ -228,6 +239,18 @@
             android:background="@drawable/flag_upressed"
             android:id="@+id/button_report"
             />
+                <TextView
+                    android:layout_alignLeft="@+id/button_OnIt"
+                    android:layout_marginBottom="0dp"
+                    android:dividerHeight="0dp"
+                    android:divider="@null"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="Report"
+                    android:textSize="7dp"
+                    android:textColor="#ff000000" />
+            </LinearLayout>
     </RelativeLayout>
     </LinearLayout>
 </FrameLayout>

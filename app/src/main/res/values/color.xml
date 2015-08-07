@@ -8,4 +8,5 @@
     <color name="dividercolor">#BE3A27</color>
     <color name="backgroundcolor">#E0E0DF</color>
     <color name="greyText">#AAAAAA</color>
+    <color name="Transparent">#00AAAAAA</color>
 </resources>

@@ -229,30 +229,36 @@ public class MyPitch extends ActionBarActivity implements ActionBar.TabListener 
         tv.setTextColor(getResources().getColor((R.color.greyText)));
         tv.setLayoutParams(new TableLayout.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.MATCH_PARENT, 1f));
         tv.setGravity(Gravity.CENTER);
-        tv.setTextSize(20);
+        tv.setTextSize(18);
 
         TextView tv1 = new TextView(context);
         tv1.setText("growing");
         tv1.setTextColor(getResources().getColor((R.color.greyText)));
         tv1.setLayoutParams(new TableLayout.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.MATCH_PARENT, 1f));
         tv1.setGravity(Gravity.CENTER);
-        tv1.setTextSize(20);
+        tv1.setTextSize(18);
 
         TextView tv2 = new TextView(context);
         tv2.setText("new");
         tv2.setTextColor(getResources().getColor((R.color.greyText)));
         tv2.setLayoutParams(new TableLayout.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.MATCH_PARENT, 1f));
         tv2.setGravity(Gravity.CENTER);
-        tv2.setTextSize(20);
+        tv2.setTextSize(18);
 
-        ImageView tv3 = new ImageView(context);
+        TextView tv3 = new TextView(context);
+        tv3.setText("my");
+        tv3.setTextColor(getResources().getColor((R.color.greyText)));
+        tv3.setLayoutParams(new TableLayout.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.MATCH_PARENT, 1f));
+        tv3.setGravity(Gravity.CENTER);
+        tv3.setTextSize(18);
+        //ImageView tv3 = new ImageView(context);
         //tv3.setText("");
         //tv3.setTextColor(getResources().getColor((R.color.greyText)));
         //tv3.setLayoutParams(new TableLayout.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.MATCH_PARENT, 1f));
         //tv3.setGravity(Gravity.CENTER);
         //tv3.setTextSize(20);
-        tv3.setImageDrawable(getResources().getDrawable(R.drawable.ic_person_white));
-        tv3.setLayoutParams(new TableLayout.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.MATCH_PARENT, 1f));
+       // tv3.setImageDrawable(getResources().getDrawable(R.drawable.ic_person_white));
+        //tv3.setLayoutParams(new TableLayout.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.MATCH_PARENT, 1f));
 
         actionBar.addTab(
                 actionBar.newTab()
@@ -276,19 +282,19 @@ public class MyPitch extends ActionBarActivity implements ActionBar.TabListener 
     }
     @Override
     public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
-        if(tab.getPosition()!=3) {
+       // if(tab.getPosition()!=3) {
             TextView tv = (TextView) tab.getCustomView();
             tv.setTextColor(getResources().getColor((R.color.greyText)));
-        }
+       // }
     }
     @Override
     public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
         // When the given tab is selected, switch to the corresponding page in the ViewPager.
         mViewPager.setCurrentItem(tab.getPosition());
-        if(tab.getPosition()!=3) {
+        //if(tab.getPosition()!=3) {
             TextView tv = (TextView) tab.getCustomView();
             tv.setTextColor(Color.WHITE);
-        }
+       // }
 
     }
     @Override

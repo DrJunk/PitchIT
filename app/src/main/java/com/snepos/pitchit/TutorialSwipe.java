@@ -11,6 +11,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
 
@@ -18,11 +19,13 @@ public class TutorialSwipe extends FragmentActivity {
     /**
      * The number of pages (wizard steps) to show in this demo.
      */
-    private static final int NUM_PAGES = 7;
+    private static final int NUM_PAGES = 4;
     Context context;
     Button [] radios;
+    Button start;
     boolean isSignUp;
     FrameLayout frameLayout;
+    boolean isLastFrame=false;
 
     /**
      * The pager widget, which handles animation and allows swiping horizontally to access previous
@@ -41,15 +44,32 @@ public class TutorialSwipe extends FragmentActivity {
         setContentView(R.layout.activity_tutorial);
         context=this;
         isSignUp=false;
-        radios = new Button[6];
+        radios = new Button[4];
+
         // Instantiate a ViewPager and a PagerAdapter.
         frameLayout = (FrameLayout) findViewById(R.id.frameLayoutTutorial);
-        radios[0] = (Button)findViewById(R.id.radioButton0);
-        radios[1] = (Button)findViewById(R.id.radioButton1);
-        radios[2] = (Button)findViewById(R.id.radioButton2);
-        radios[3] = (Button)findViewById(R.id.radioButton3);
-        radios[4] = (Button)findViewById(R.id.radioButton4);
-        radios[5] = (Button)findViewById(R.id.radioButton5);
+        start = (Button)findViewById(R.id.startbtn);
+        start.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(isLastFrame) {
+                    if (Login.LoadUserEmail(TutorialSwipe.this.getApplicationContext())) {
+                        Intent intent = new Intent(context, MyPitch.class);
+                        startActivity(intent);
+                        TutorialSwipe.this.finish();
+                    } else {
+                        Intent intent = new Intent(context, Login.class);
+                        startActivity(intent);
+                        TutorialSwipe.this.finish();
+                    }
+                }
+            }
+        });
+        radios[0] = (Button)findViewById(R.id.radioButton1);
+        radios[1] = (Button)findViewById(R.id.radioButton2);
+        radios[2] = (Button)findViewById(R.id.radioButton3);
+        radios[3] = (Button)findViewById(R.id.radioButton4);
+
         mPager = (ViewPager) findViewById(R.id.pager);
         mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
         mPager.setAdapter(mPagerAdapter);
@@ -57,12 +77,16 @@ public class TutorialSwipe extends FragmentActivity {
         mPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int i, float v, int i2) {
-
+                changeRadios(mPager.getCurrentItem());
             }
 
             @Override
             public void onPageSelected(int i) {
-                changeRadios(mPager.getCurrentItem());
+
+                isLastFrame=false;
+                if(mPager.getCurrentItem()==3) {
+                    isLastFrame=true;
+                }
             }
 
             @Override
@@ -102,19 +126,6 @@ public class TutorialSwipe extends FragmentActivity {
         @Override
         public Fragment getItem(int position) {
 
-            if(position==6) {
-                if(Login.LoadUserEmail(TutorialSwipe.this.getApplicationContext())) {
-                    Intent intent = new Intent(context, MyPitch.class);
-                    startActivity(intent);
-                    TutorialSwipe.this.finish();
-                }
-                else
-                {
-                    Intent intent = new Intent(context, Login.class);
-                    startActivity(intent);
-                    TutorialSwipe.this.finish();
-                }
-            }
             FragmentTutorial myFragment = FragmentTutorial.newInstance(position);
             return myFragment;
 
@@ -140,7 +151,7 @@ public class TutorialSwipe extends FragmentActivity {
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     public void changeRadios(int position){
         int currentapiVersion = android.os.Build.VERSION.SDK_INT;
-        for(int i=0;i<6;i++)
+        for(int i=0;i<4;i++)
         {
             if (currentapiVersion >= Build.VERSION_CODES.JELLY_BEAN)
                 radios[i].setBackground((getResources().getDrawable(R.drawable.emepty_dots)));

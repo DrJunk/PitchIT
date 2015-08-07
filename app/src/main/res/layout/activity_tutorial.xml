@@ -19,21 +19,21 @@ android:layout_alignParentEnd="true"
 android:layout_alignParentRight="true"
 android:layout_alignParentTop="true"
 android:id="@+id/frameLayoutTutorial">
-
+    <Button
+        android:radius="1dp"
+        android:layout_marginTop="-120dp"
+        android:layout_width="300dp"
+        android:layout_height="80dp"
+        android:background="@color/Transparent"
+        android:id="@+id/startbtn"
+        android:layout_gravity="center" />
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 android:layout_width="match_parent"
 android:layout_height="match_parent"
 android:orientation="horizontal"
     android:gravity="center">
 
-<Button
-    android:radius="1dp"
-    android:layout_margin="5dp"
-    android:layout_width="10dp"
-    android:layout_height="10dp"
-    android:background="@drawable/emepty_dots"
-    android:id="@+id/radioButton0"
-    android:layout_gravity="right|bottom" />
+
 <Button
     android:radius="1dp"
     android:layout_margin="5dp"
@@ -66,14 +66,7 @@ android:orientation="horizontal"
     android:background="@drawable/emepty_dots"
     android:id="@+id/radioButton4"
     android:layout_gravity="right|bottom" />
-<Button
-    android:radius="1dp"
-    android:layout_margin="5dp"
-    android:layout_width="10dp"
-    android:layout_height="10dp"
-    android:background="@drawable/emepty_dots"
-    android:id="@+id/radioButton5"
-    android:layout_gravity="right|bottom" />
+
 </LinearLayout>
 </FrameLayout>
     </RelativeLayout>
