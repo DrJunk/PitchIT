@@ -29,9 +29,31 @@ public class CardArrayAdapter  extends ArrayAdapter<Card> {
     int red;
     int blue;
     int green;
+    List<Integer> matColors;
     public CardArrayAdapter(Context context, int textViewResourceId) {
         super(context, textViewResourceId);
         myContext = context;
+        matColors = new ArrayList<Integer>();
+        matColors.add(Color.parseColor("#96F44336"));
+        matColors.add(Color.parseColor("#96E91E63"));
+        matColors.add(Color.parseColor("#969C27B0"));
+        matColors.add(Color.parseColor("#96673AB7"));
+        matColors.add(Color.parseColor("#963F51B5"));
+        matColors.add(Color.parseColor("#962196F3"));
+        matColors.add(Color.parseColor("#9603A9F4"));
+        matColors.add(Color.parseColor("#9600BCD4"));
+        matColors.add(Color.parseColor("#96009688"));
+        matColors.add(Color.parseColor("#964CAF50"));
+        matColors.add(Color.parseColor("#968BC34A"));
+        matColors.add(Color.parseColor("#96CDDC39"));
+        matColors.add(Color.parseColor("#96FFEB3B"));
+        matColors.add(Color.parseColor("#96FFC107"));
+        matColors.add(Color.parseColor("#96FF9800"));
+        matColors.add(Color.parseColor("#96FF5722"));
+        matColors.add(Color.parseColor("#96795548"));
+        matColors.add(Color.parseColor("#969E9E9E"));
+        matColors.add(Color.parseColor("#96607D8B"));
+
     }
 
     @Override
@@ -98,7 +120,7 @@ public class CardArrayAdapter  extends ArrayAdapter<Card> {
         }
         //cardTop
         sum *= sum;
-        red= sum % 151;
+       /* red= sum % 151;
         green = sum % 152;
         blue =sum % 154;
         if (green < red &&green < blue )
@@ -106,8 +128,8 @@ public class CardArrayAdapter  extends ArrayAdapter<Card> {
         if (blue < green &&blue < red )
             blue= blue%2;
         if (red < green &&red < blue )
-            red= red%2;
-        top.setBackgroundColor(Color.argb(100,red, green,blue));
+            red= red%2;*/
+        top.setBackgroundColor(matColors.get(sum % matColors.size()));
 
         UpVotes.setText(String.valueOf(currentCard.getUpVotes()));
         OnItVotes.setText(String.valueOf(currentCard.getOnItVotes()));

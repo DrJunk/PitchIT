@@ -28,6 +28,7 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TableLayout;
 import android.widget.TextView;
@@ -244,6 +245,15 @@ public class MyPitch extends ActionBarActivity implements ActionBar.TabListener 
         tv2.setGravity(Gravity.CENTER);
         tv2.setTextSize(20);
 
+        ImageView tv3 = new ImageView(context);
+        //tv3.setText("");
+        //tv3.setTextColor(getResources().getColor((R.color.greyText)));
+        //tv3.setLayoutParams(new TableLayout.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.MATCH_PARENT, 1f));
+        //tv3.setGravity(Gravity.CENTER);
+        //tv3.setTextSize(20);
+        tv3.setImageDrawable(getResources().getDrawable(R.drawable.ic_person_white));
+        tv3.setLayoutParams(new TableLayout.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.MATCH_PARENT, 1f));
+
         actionBar.addTab(
                 actionBar.newTab()
                         .setCustomView(tv)
@@ -256,20 +266,29 @@ public class MyPitch extends ActionBarActivity implements ActionBar.TabListener 
                 actionBar.newTab()
                         .setCustomView(tv2)
                         .setTabListener(this));
+        actionBar.addTab(
+                actionBar.newTab()
+                        .setTabListener(this)
+                        .setCustomView(tv3)
+        );
 
         actionBar.setSelectedNavigationItem(2);
     }
     @Override
     public void onTabUnselected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
-        TextView tv=(TextView)tab.getCustomView();
-        tv.setTextColor(getResources().getColor((R.color.greyText)));
+        if(tab.getPosition()!=3) {
+            TextView tv = (TextView) tab.getCustomView();
+            tv.setTextColor(getResources().getColor((R.color.greyText)));
+        }
     }
     @Override
     public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
         // When the given tab is selected, switch to the corresponding page in the ViewPager.
         mViewPager.setCurrentItem(tab.getPosition());
-        TextView tv=(TextView)tab.getCustomView();
-        tv.setTextColor(Color.WHITE);
+        if(tab.getPosition()!=3) {
+            TextView tv = (TextView) tab.getCustomView();
+            tv.setTextColor(Color.WHITE);
+        }
 
     }
     @Override
@@ -292,6 +311,7 @@ public class MyPitch extends ActionBarActivity implements ActionBar.TabListener 
             case 3:
                 mTitle = getString(R.string.title_section3);
                 break;
+
         }
     }
 
@@ -390,6 +410,8 @@ public class MyPitch extends ActionBarActivity implements ActionBar.TabListener 
                     return new TrendingFragment();
                 case 2:
                     return new NewFragment();
+                case 3:
+                    return new AcountFragment();
                 default:
                     return new ErrorFragment();
             }
@@ -397,7 +419,7 @@ public class MyPitch extends ActionBarActivity implements ActionBar.TabListener 
 
         @Override
         public int getCount() {
-            return 3;
+            return 4;
         }
 
         @Override
@@ -560,6 +582,16 @@ public class MyPitch extends ActionBarActivity implements ActionBar.TabListener 
 
             listView.setAdapter(cardArrayAdapter);
             return rootView;
+        }
+    }
+    public static class AcountFragment extends android.support.v4.app.Fragment {
+
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                                 Bundle savedInstanceState) {
+            View rootView = inflater.inflate(R.layout.fragment_account, container, false);
+            return rootView;
+
         }
     }
     public static class ErrorFragment extends android.support.v4.app.Fragment {
