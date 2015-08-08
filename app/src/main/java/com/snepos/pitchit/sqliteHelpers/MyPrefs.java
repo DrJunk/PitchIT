@@ -9,6 +9,7 @@ public class MyPrefs {
     static public final String SAVED = "isSaved";
     static public final String LOGIN = "isLogin";
     static public final String EMAIL = "userEmail";
-    static public final String LOGINKEY = "";
+    static public final String NICKNAME = "nickName";
+    static public final String LOGINKEY = "loginKey";
     static public final String NOT_CONNECTED = "NotConnected";
 }

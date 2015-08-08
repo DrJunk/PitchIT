@@ -1,7 +1,14 @@
 package com.snepos.pitchit;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.DrawableContainer;
+import android.graphics.drawable.PaintDrawable;
+import android.graphics.drawable.PictureDrawable;
+import android.os.Build;
 import android.os.Handler;
 import android.text.Editable;
 import android.view.ActionMode;
@@ -29,7 +36,7 @@ public class CardArrayAdapter  extends ArrayAdapter<Card> {
     int red;
     int blue;
     int green;
-    List<Integer> matColors;
+    static List<Integer> matColors;
     public CardArrayAdapter(Context context, int textViewResourceId) {
         super(context, textViewResourceId);
         myContext = context;
@@ -78,6 +85,7 @@ public class CardArrayAdapter  extends ArrayAdapter<Card> {
     public Card getItem(int index) {
         return this.cardList.get(index);
     }
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     @Override
     public View getView(final int position, final View convertView, final ViewGroup parent) {
         View view = convertView;
@@ -96,9 +104,9 @@ public class CardArrayAdapter  extends ArrayAdapter<Card> {
         final Button Report = (Button) view.findViewById(R.id.button_report);
         final Button OnIt = (Button) view.findViewById(R.id.button_OnIt);
 
-        final ImageView cardTop = (ImageView) view.findViewById(R.id.card_top);
+
         final LinearLayout top = (LinearLayout) view.findViewById(R.id.top_layout);
-        final RelativeLayout buttom= (RelativeLayout) view.findViewById(R.id.innerLayout);
+        final LinearLayout card = (LinearLayout) view.findViewById(R.id.middle_card_layout);
 
         Head.setCustomSelectionActionModeCallback(new CopyCallback(Head));
         Publisher.setCustomSelectionActionModeCallback(new CopyCallback(Publisher));
@@ -129,13 +137,17 @@ public class CardArrayAdapter  extends ArrayAdapter<Card> {
             blue= blue%2;
         if (red < green &&red < blue )
             red= red%2;*/
-        top.setBackgroundColor(matColors.get(sum % matColors.size()));
+        final Integer temp = (matColors.get(sum % matColors.size()));
+        top.setBackgroundColor(new Integer(temp));
+
+
 
         UpVotes.setText(String.valueOf(currentCard.getUpVotes()));
         OnItVotes.setText(String.valueOf(currentCard.getOnItVotes()));
 
         view.setOnClickListener(new View.OnClickListener() {
 
+            @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
@@ -161,15 +173,17 @@ public class CardArrayAdapter  extends ArrayAdapter<Card> {
                     currentCard.setClicks(0);
                     currentCard.clickedLike();
                     if (currentCard.getIsLiked()) {
-                        buttom.setBackgroundColor(Color.argb(100, 255, 213, 77));
+                        card.setBackgroundColor(temp);
+                        card.getBackground().setAlpha(70);
                         Like.setBackgroundResource(R.drawable.bulb_on);
                         UpVotes.setText(String.valueOf(Integer.parseInt(UpVotes.getText().toString()) + 1));
                     } else {
-                        buttom.setBackgroundColor(Color.TRANSPARENT);
+                        card.setBackground(null);
                         Like.setBackgroundResource(R.drawable.bulb_off);
                         UpVotes.setText(String.valueOf(Integer.parseInt(UpVotes.getText().toString()) - 1));
                     }
                 }
+
 
             }
 
@@ -181,23 +195,25 @@ public class CardArrayAdapter  extends ArrayAdapter<Card> {
             public void onClick(View v) {
                 currentCard.clickedLike();
                 if (currentCard.getIsLiked()) {
-                    buttom.setBackgroundColor(Color.argb(100, 255, 213, 77));
+                    card.setBackgroundColor(temp);
+                    card.getBackground().setAlpha(70);
                     Like.setBackgroundResource(R.drawable.bulb_on);
                     UpVotes.setText(String.valueOf(Integer.parseInt(UpVotes.getText().toString()) + 1));
                 } else {
-                    buttom.setBackgroundColor(Color.TRANSPARENT);
+                    card.setBackground(null);
                     Like.setBackgroundResource(R.drawable.bulb_off);
                     UpVotes.setText(String.valueOf(Integer.parseInt(UpVotes.getText().toString()) - 1));
                 }
             }
         });
         if(currentCard.getIsLiked()) {
-            buttom.setBackgroundColor(Color.argb(100, 255, 213, 77));
+            card.setBackgroundColor(temp);
+            card.getBackground().setAlpha(70);
             Like.setBackgroundResource(R.drawable.bulb_on);
         }
         else {
             Like.setBackgroundResource(R.drawable.bulb_off);
-            buttom.setBackgroundColor(Color.TRANSPARENT);
+            card.setBackground(null);
         }
 
         Report.setOnClickListener(new View.OnClickListener() {
@@ -240,7 +256,7 @@ public class CardArrayAdapter  extends ArrayAdapter<Card> {
             OnIt.setBackgroundResource(R.drawable.on_it_unpressed);
             //OnItVotes.setText(String.valueOf(Integer.parseInt(UpVotes.getText().toString()) - 1));
         }
-
+        top.setBackgroundColor(matColors.get(sum % matColors.size()));
         return view;
     }
 }

@@ -1,7 +1,9 @@
 package com.snepos.pitchit;
 
+import android.annotation.TargetApi;
 import android.app.ActionBar;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -44,6 +46,7 @@ public class MyPost extends ActionBarActivity {
 
     private boolean waitingForResponse;
 
+    @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

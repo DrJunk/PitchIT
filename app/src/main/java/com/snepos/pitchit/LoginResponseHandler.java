@@ -23,7 +23,13 @@ public class LoginResponseHandler
         }
         if(response.GetMessage() == "login")
         {
-            handler.obtainMessage(1).sendToTarget();
+            try {
+                handler.obtainMessage(1, response.GetJsonObjects()[0].getString("nick_name")).sendToTarget();
+            }
+            catch (Exception e)
+            {
+                handler.obtainMessage(0);
+            }
             return;
         }
     }

@@ -81,12 +81,14 @@ public class Login extends Activity {
                         signIn.setEnabled(true);
                         break;
                     case 1: // Succeeded
+                        userNickname = (String)inputMessage.obj;
                         String loginKey = KeyGenerator.GenerateKey(userEmail);
                         SharedPreferences settings = getApplicationContext().getSharedPreferences(MyPrefs.PREFS_NAME, 0);
                         SharedPreferences.Editor editor = settings.edit();
                         editor.putBoolean(MyPrefs.LOGIN, true);
                         editor.putString(MyPrefs.EMAIL, userEmail);
                         editor.putString(MyPrefs.LOGINKEY, loginKey);
+                        editor.putString(MyPrefs.NICKNAME, userNickname);
                         editor.apply();
 
                         if(getIntent().getBooleanExtra("JustRegistered", false))
@@ -221,6 +223,7 @@ public class Login extends Activity {
     {
         SharedPreferences settings = context.getSharedPreferences(MyPrefs.PREFS_NAME, 0);
         userEmail = settings.getString(MyPrefs.EMAIL, MyPrefs.NOT_CONNECTED);
+        userNickname = settings.getString(MyPrefs.NICKNAME, "");
         String loginKey = settings.getString(MyPrefs.LOGINKEY, "");
         if(!KeyGenerator.CheckKey(userEmail, loginKey))
         {

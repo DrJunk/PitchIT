@@ -7,7 +7,11 @@ import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.BitmapShader;
 import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.RectF;
+import android.graphics.Shader;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -596,10 +600,26 @@ public class MyPitch extends ActionBarActivity implements ActionBar.TabListener 
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_account, container, false);
+            ImageView acountColor = (ImageView) rootView.findViewById(R.id.acount_color);
+            TextView acountText = (TextView) rootView.findViewById(R.id.acount_text);
+            String Publisher = Login.GetUserNickname().toString();
+            if(Publisher!=null)
+            acountText.setText(Publisher.toString());
+            int sum = 5000;
+            for (int i=0; i< Publisher.length(); i++)
+            {
+                sum+= Publisher.charAt(i);
+            }
+
+            //cardTop
+            sum *= sum;
+            Integer temp = (CardArrayAdapter.matColors.get(sum % CardArrayAdapter.matColors.size()));
+            acountColor.setBackgroundColor(temp);
             return rootView;
 
         }
     }
+
     public static class ErrorFragment extends android.support.v4.app.Fragment {
 
         @Override

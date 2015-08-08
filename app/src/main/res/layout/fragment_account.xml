@@ -3,13 +3,36 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <ListView
-        android:background="@color/backgroundcolor"
-        android:id="@+id/card_listView_new"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:listSelector="@android:color/transparent"
-        android:cacheColorHint="@android:color/transparent"
-        android:divider="@null"
-        android:dividerHeight="10dp" />
+    <FrameLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp">
+
+        <ImageView
+            android:id="@+id/acount_color"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_gravity="center"/>
+        <ImageView
+            android:layout_gravity="center"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:src="@drawable/account_image"
+            />
+
+
+
+    </FrameLayout>
+    <TextView
+        android:layout_marginTop="10dp"
+        android:id="@+id/acount_text"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="acount"
+        android:textSize="30dp"
+
+        />
+
+
 </LinearLayout>
