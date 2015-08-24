@@ -24,7 +24,7 @@ public class LoginResponseHandler
         if(response.GetMessage() == "login")
         {
             try {
-                handler.obtainMessage(1, response.GetJsonObjects()[0].getString("nick_name")).sendToTarget();
+                handler.obtainMessage(1, response.GetAsJsonObject().getString("nick_name")).sendToTarget();
             }
             catch (Exception e)
             {

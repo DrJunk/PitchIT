@@ -1,5 +1,6 @@
 package com.snepos.pitchit.database;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.LinkedList;
@@ -13,7 +14,7 @@ public class Response {
     private String data;
     private Request.App app;
     private boolean success;
-    private JSONObject[] jsons;
+    //private JSONObject[] jsons;
 
     public Response(String msg, String data, Request.App app)
     {
@@ -25,6 +26,9 @@ public class Response {
         if(data.startsWith("[200"))
         {
             success = true;
+            //TODO: After upgrading the server-client communication there will be no need to delete [200, ...]
+            this.data = data.substring(5, data.length()-1);
+            /*
             data = data.substring(data.lastIndexOf("["), data.indexOf("]"));
             int left = -1;
             List<JSONObject> jsonsList = new LinkedList<JSONObject>();
@@ -46,7 +50,7 @@ public class Response {
                 }
             }
             jsons = new JSONObject[jsonsList.size()];
-            jsonsList.toArray(jsons);
+            jsonsList.toArray(jsons);*/
         }
     }
 
@@ -70,8 +74,46 @@ public class Response {
         return success;
     }
 
-    public JSONObject[] GetJsonObjects()
+    public JSONObject[] GetAsJsonObjectArray()
     {
-        return jsons;
+        try
+        {
+            JSONArray jsonArray = new JSONArray(data);
+            JSONObject res[] = new JSONObject[jsonArray.length()];
+            for(int i = 0; i < res.length; i++)
+                res[i] = jsonArray.getJSONObject(i);
+            return res;
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            return new JSONObject[0];
+        }
+    }
+
+    public JSONObject GetAsJsonObject()
+    {
+        try
+        {
+            return new JSONObject(data);
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            return new JSONObject();
+        }
+    }
+
+    public JSONArray GetAsJsonAray()
+    {
+        try
+        {
+            return new JSONArray(data);
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            return new JSONArray();
+        }
     }
 }
