@@ -30,9 +30,10 @@
         <ImageButton
             android:id="@+id/send_comment_btn"
             android:layout_marginTop="0dp"
-            android:layout_width="64dp"
-            android:layout_height="64dp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:src="@drawable/ic_send_black_48dp"
+            android:background="@color/Transparent"
             />
 
     </LinearLayout>
