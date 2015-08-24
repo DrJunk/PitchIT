@@ -6,6 +6,7 @@ import com.snepos.pitchit.database.Database;
 import com.snepos.pitchit.database.IdeaData;
 import com.snepos.pitchit.database.Response;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.LinkedList;
@@ -92,6 +93,26 @@ public class MyPitchResponseHandler {
             else if (response.GetMessage() == "get_spam_votes")
             {
                 Database.RefreshSpamVotes(idsArray);
+            }
+
+            return;
+        }
+
+        if(response.GetMessage() == "get_profile")
+        {
+            JSONArray jsonArray = response.GetAsJsonAray();
+            try
+            {
+                JSONArray myIdeas = (JSONArray)jsonArray.get(0);
+                JSONArray upVotedIdeas = (JSONArray)jsonArray.get(1);
+                JSONArray onItVotedIdeas = (JSONArray)jsonArray.get(2);
+                System.out.println("myIdeas: " + myIdeas.toString());
+                System.out.println("upVotedIdeas: " + upVotedIdeas.toString());
+                System.out.println("onItVotedIdeas: " + onItVotedIdeas.toString());
+            }
+            catch (Exception e)
+            {
+                System.out.println(e.getMessage());
             }
 
             return;

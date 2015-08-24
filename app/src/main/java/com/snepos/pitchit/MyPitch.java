@@ -169,6 +169,8 @@ public class MyPitch extends ActionBarActivity implements ActionBar.TabListener 
             }
         };
 
+        Database.PostRefreshProfile();
+
         Database.PostRefreshUpVotes();
         Database.PostRefreshOnItVotes();
         Database.PostRefreshSpamVotes();
@@ -358,6 +360,8 @@ public class MyPitch extends ActionBarActivity implements ActionBar.TabListener 
             if(canRefresh) {
                 mRefreshItem.setActionView(mRefresh);
                 mRefresh.startAnimation(mRotate);
+
+                Database.PostRefreshProfile();
 
                 Database.PostRefreshUpVotes();
                 Database.PostRefreshOnItVotes();

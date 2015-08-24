@@ -14,7 +14,7 @@ public class Response {
     private String data;
     private Request.App app;
     private boolean success;
-    private JSONObject[] jsons;
+    //private JSONObject[] jsons;
 
     public Response(String msg, String data, Request.App app)
     {
@@ -26,6 +26,9 @@ public class Response {
         if(data.startsWith("[200"))
         {
             success = true;
+            //TODO: After upgrading the server-client communication there will be no need to delete [200, ...]
+            this.data = data.substring(5, data.length()-1);
+            /*
             data = data.substring(data.lastIndexOf("["), data.indexOf("]"));
             int left = -1;
             List<JSONObject> jsonsList = new LinkedList<JSONObject>();
@@ -47,7 +50,7 @@ public class Response {
                 }
             }
             jsons = new JSONObject[jsonsList.size()];
-            jsonsList.toArray(jsons);
+            jsonsList.toArray(jsons);*/
         }
     }
 
@@ -75,8 +78,7 @@ public class Response {
     {
         try
         {
-            //TODO: After upgrading the server-client communication there will be no need to delete [200, ...]
-            JSONArray jsonArray = new JSONArray(data.substring(5, data.length()-1));
+            JSONArray jsonArray = new JSONArray(data);
             JSONObject res[] = new JSONObject[jsonArray.length()];
             for(int i = 0; i < res.length; i++)
                 res[i] = jsonArray.getJSONObject(i);
@@ -89,17 +91,29 @@ public class Response {
         }
     }
 
-    public  JSONObject GetAsJsonObject()
+    public JSONObject GetAsJsonObject()
     {
         try
         {
-            //TODO: After upgrading the server-client communication there will be no need to delete [200, ...]
-            return new JSONObject(data.substring(5, data.length()-1));
+            return new JSONObject(data);
         }
         catch (Exception e)
         {
             System.out.println(e.getMessage());
             return new JSONObject();
+        }
+    }
+
+    public JSONArray GetAsJsonAray()
+    {
+        try
+        {
+            return new JSONArray(data);
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            return new JSONArray();
         }
     }
 }

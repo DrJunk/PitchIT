@@ -62,6 +62,13 @@ public class Database {
         HttpHandler.addRequest("get_hot_ideas", Request.App.MyPitch);
     }
 
+    public static void PostRefreshProfile()
+    {
+        Request req = new Request("get_profile", Request.App.MyPitch);
+        req.put("email", Login.GetUserEmail());
+        HttpHandler.addRequest(req);
+    }
+
     public static void PostRefreshUpVotes()
     {
         Request req = new Request("get_up_votes", Request.App.MyPitch);
