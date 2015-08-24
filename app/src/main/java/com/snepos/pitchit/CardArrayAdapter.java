@@ -1,7 +1,9 @@
 package com.snepos.pitchit;
 
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
@@ -29,6 +31,7 @@ import java.util.List;
  * Created by user1 on 12/06/2015.
  */
 public class CardArrayAdapter  extends ArrayAdapter<Card> {
+    private Activity myActivity;
     private static final String TAG = "CardArrayAdapter";
     private List<Card> cardList = new ArrayList<Card>();
     Context myContext;
@@ -37,9 +40,10 @@ public class CardArrayAdapter  extends ArrayAdapter<Card> {
     int blue;
     int green;
     static List<Integer> matColors;
-    public CardArrayAdapter(Context context, int textViewResourceId) {
+    public CardArrayAdapter(Context context, int textViewResourceId, Activity _myActicity) {
         super(context, textViewResourceId);
         myContext = context;
+        myActivity=_myActicity;
         matColors = new ArrayList<Integer>();
         matColors.add(Color.parseColor("#96F44336"));
         matColors.add(Color.parseColor("#96E91E63"));
@@ -103,14 +107,15 @@ public class CardArrayAdapter  extends ArrayAdapter<Card> {
         final Button Like = (Button) view.findViewById(R.id.button_liked);
         final Button Report = (Button) view.findViewById(R.id.button_report);
         final Button OnIt = (Button) view.findViewById(R.id.button_OnIt);
+        final Button Comments = (Button) view.findViewById(R.id.button_Comments);
 
 
         final LinearLayout top = (LinearLayout) view.findViewById(R.id.top_layout);
         final LinearLayout card = (LinearLayout) view.findViewById(R.id.middle_card_layout);
 
-        Head.setCustomSelectionActionModeCallback(new CopyCallback(Head));
-        Publisher.setCustomSelectionActionModeCallback(new CopyCallback(Publisher));
-        Body.setCustomSelectionActionModeCallback(new CopyCallback(Body));
+        //Head.setCustomSelectionActionModeCallback(new CopyCallback(Head));
+        //Publisher.setCustomSelectionActionModeCallback(new CopyCallback(Publisher));
+        //Body.setCustomSelectionActionModeCallback(new CopyCallback(Body));
 
         final TextView UpVotes = ((TextView) view.findViewById(R.id.up_votes));
         final TextView OnItVotes = ((TextView) view.findViewById(R.id.on_it_votes));
@@ -216,6 +221,14 @@ public class CardArrayAdapter  extends ArrayAdapter<Card> {
             card.setBackground(null);
         }
 
+        Comments.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent mainIntent = new Intent(myActivity, Comments.class);
+                myActivity.startActivity(mainIntent);
+               // MyPitch.this.finish();
+            }
+        });
         Report.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

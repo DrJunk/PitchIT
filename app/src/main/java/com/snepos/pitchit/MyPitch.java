@@ -147,7 +147,7 @@ public class MyPitch extends ActionBarActivity implements ActionBar.TabListener 
                                 break;
                         }
                         if (data != null) {
-                            CardArrayAdapter cardArrayAdapter = new CardArrayAdapter(MyPitch.this.getApplicationContext(), R.layout.pitch_item);
+                            CardArrayAdapter cardArrayAdapter = new CardArrayAdapter(MyPitch.this.getApplicationContext(), R.layout.pitch_item,MyPitch.this);
 
                             Card[] cards = new Card[data.length];
                             for (int i = 0; i < data.length; i++) {
@@ -488,7 +488,7 @@ public class MyPitch extends ActionBarActivity implements ActionBar.TabListener 
             listView.addHeaderView(new View(rootView.getContext()));
             listView.addFooterView(new View(rootView.getContext()));
 
-            cardArrayAdapter = new CardArrayAdapter(getActivity().getApplicationContext(), R.layout.pitch_item);
+            cardArrayAdapter = new CardArrayAdapter(getActivity().getApplicationContext(), R.layout.pitch_item, getActivity());
             IdeaData[] data = Database.news;
             if (data != null) {
                 for (int i = 0; i < data.length; i++) {
@@ -528,7 +528,7 @@ public class MyPitch extends ActionBarActivity implements ActionBar.TabListener 
             listView.addHeaderView(new View(rootView.getContext()));
             listView.addFooterView(new View(rootView.getContext()));
 
-            cardArrayAdapter = new CardArrayAdapter(getActivity().getApplicationContext(), R.layout.pitch_item);
+            cardArrayAdapter = new CardArrayAdapter(getActivity().getApplicationContext(), R.layout.pitch_item,getActivity());
             IdeaData[] data = Database.trending;
             if (data != null) {
                 for (int i = 0; i < data.length; i++) {
@@ -568,7 +568,7 @@ public class MyPitch extends ActionBarActivity implements ActionBar.TabListener 
             listView.addHeaderView(new View(rootView.getContext()));
             listView.addFooterView(new View(rootView.getContext()));
 
-            cardArrayAdapter = new CardArrayAdapter(getActivity().getApplicationContext(), R.layout.pitch_item);
+            cardArrayAdapter = new CardArrayAdapter(getActivity().getApplicationContext(), R.layout.pitch_item,getActivity());
             IdeaData[] data = Database.hot;
             if (data != null) {
                 for (int i = 0; i < data.length; i++) {

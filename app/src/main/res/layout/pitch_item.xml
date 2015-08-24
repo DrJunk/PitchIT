@@ -36,7 +36,7 @@
             android:layout_width="30dp"
             android:layout_height="60dp"
             android:adjustViewBounds="true"
-            android:src="@drawable/light_bulb_top"/>
+            android:src="@drawable/light_bulb_10"/>
         <TextView
             android:dividerHeight="0dp"
             android:divider="@null"
@@ -226,7 +226,7 @@
                     android:layout_alignLeft="@+id/button_OnIt"
                     android:layout_marginTop="-7dp"
                     android:layout_marginLeft="-10dp"
-                    android:layout_marginRight="55dp"
+                    android:layout_marginRight="15dp"
                     android:dividerHeight="0dp"
                     android:divider="@null"
                     android:layout_width="wrap_content"
@@ -238,13 +238,24 @@
 
                     android:textColor="#ff231f20" />
 
-
+                <Button
+                    android:layout_alignLeft="@+id/up_votes"
+                    android:dividerHeight="0dp"
+                    android:divider="@null"
+                    android:layout_marginRight="25dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:background="@drawable/ic_comment_black_36dp"
+                    android:id="@+id/button_Comments"
+                    android:layout_gravity="right|bottom"
+                    android:gravity="right"/>
 
         <Button
             android:dividerHeight="0dp"
             android:divider="@null"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="-20dp"
+            android:layout_marginRight="-10dp"
             android:layout_marginTop="0dp"
             android:layout_width="22.5dp"
             android:layout_height="22.5dp"
