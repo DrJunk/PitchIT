@@ -1,5 +1,6 @@
 package com.snepos.pitchit.database;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.LinkedList;
@@ -70,8 +71,35 @@ public class Response {
         return success;
     }
 
-    public JSONObject[] GetJsonObjects()
+    public JSONObject[] GetAsJsonObjectArray()
     {
-        return jsons;
+        try
+        {
+            //TODO: After upgrading the server-client communication there will be no need to delete [200, ...]
+            JSONArray jsonArray = new JSONArray(data.substring(5, data.length()-1));
+            JSONObject res[] = new JSONObject[jsonArray.length()];
+            for(int i = 0; i < res.length; i++)
+                res[i] = jsonArray.getJSONObject(i);
+            return res;
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            return new JSONObject[0];
+        }
+    }
+
+    public  JSONObject GetAsJsonObject()
+    {
+        try
+        {
+            //TODO: After upgrading the server-client communication there will be no need to delete [200, ...]
+            return new JSONObject(data.substring(5, data.length()-1));
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            return new JSONObject();
+        }
     }
 }

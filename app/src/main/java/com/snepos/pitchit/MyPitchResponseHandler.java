@@ -6,6 +6,8 @@ import com.snepos.pitchit.database.Database;
 import com.snepos.pitchit.database.IdeaData;
 import com.snepos.pitchit.database.Response;
 
+import org.json.JSONObject;
+
 import java.util.LinkedList;
 import java.util.List;
 
@@ -25,8 +27,9 @@ public class MyPitchResponseHandler {
 
             List<IdeaData> ideas = new LinkedList<IdeaData>();
             IdeaData idea;
-            for (int i = 0; i < response.GetJsonObjects().length; i++) {
-                idea = IdeaData.fromJSON(response.GetJsonObjects()[i]);
+            JSONObject[] jsons = response.GetAsJsonObjectArray();
+            for (int i = 0; i < jsons.length; i++) {
+                idea = IdeaData.fromJSON(jsons[i]);
                 if (idea.id != -1)
                     ideas.add(idea);
             }
@@ -65,9 +68,10 @@ public class MyPitchResponseHandler {
 
             List<Integer> ids = new LinkedList<Integer>();
             Integer ideaId;
-            for (int i = 0; i < response.GetJsonObjects().length; i++) {
+            JSONObject[] jsons = response.GetAsJsonObjectArray();
+            for (int i = 0; i < jsons.length; i++) {
                 ideaId = -1;
-                try{ideaId = response.GetJsonObjects()[i].getInt("id");}
+                try{ideaId = jsons[i].getInt("id");}
                 catch (Exception e){System.out.println(e.getMessage());}
                 if (ideaId != -1)
                     ids.add(ideaId);
