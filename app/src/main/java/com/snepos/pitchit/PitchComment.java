@@ -6,18 +6,18 @@ package com.snepos.pitchit;
  */
 public class PitchComment {
     int id;
-    String head;
-    String body;
+    String userNickname;
+    String text;
 
-    public PitchComment (int _id, String _head, String _body)
+    public PitchComment (int _id, String _userNickname, String _text)
     {
         id=_id;
-        head=_head;
-        body=_body;
+        userNickname = _userNickname;
+        text = _text;
     }
     public int getId(){ return id;}
 
-    public String getBody() { return body; }
+    public String getUserNickname() { return userNickname; }
 
-    public String getHead() { return head; }
+    public String getText() { return text; }
 }
