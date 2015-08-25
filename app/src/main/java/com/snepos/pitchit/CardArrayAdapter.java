@@ -19,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -104,10 +105,10 @@ public class CardArrayAdapter  extends ArrayAdapter<Card> {
         final TextView Head = (TextView) view.findViewById(R.id.HeadName);
         final TextView Publisher = (TextView) view.findViewById(R.id.PublisherName);
         final TextView Body = (TextView) view.findViewById(R.id.Body);
-        final Button Like = (Button) view.findViewById(R.id.button_liked);
-        final Button Report = (Button) view.findViewById(R.id.button_report);
-        final Button OnIt = (Button) view.findViewById(R.id.button_OnIt);
-        final Button Comments = (Button) view.findViewById(R.id.button_Comments);
+        final ImageButton Like = (ImageButton) view.findViewById(R.id.button_liked);
+        final ImageButton Report = (ImageButton) view.findViewById(R.id.button_report);
+        final ImageButton OnIt = (ImageButton) view.findViewById(R.id.button_OnIt);
+        final ImageButton Comments = (ImageButton) view.findViewById(R.id.button_Comments);
 
 
         final LinearLayout top = (LinearLayout) view.findViewById(R.id.top_layout);
@@ -251,22 +252,22 @@ public class CardArrayAdapter  extends ArrayAdapter<Card> {
             public void onClick(View v) {
                 currentCard.clickedOnIt();
                 if(currentCard.getIsOnIt()){
-                    OnIt.setBackgroundResource(R.drawable.on_it_pressed);
+                    OnIt.setBackgroundResource(R.drawable.on_it_button_on);
                     OnItVotes.setText(String.valueOf(Integer.parseInt(OnItVotes.getText().toString()) + 1));
                 }
                 else{
-                    OnIt.setBackgroundResource(R.drawable.on_it_unpressed);
+                    OnIt.setBackgroundResource(R.drawable.on_it_button_off);
                     OnItVotes.setText(String.valueOf(Integer.parseInt(OnItVotes.getText().toString()) - 1));
                 }
             }
         });
         if(currentCard.getIsOnIt())
         {
-            OnIt.setBackgroundResource(R.drawable.on_it_pressed);
+            OnIt.setBackgroundResource(R.drawable.on_it_button_on);
             //OnItVotes.setText(String.valueOf(Integer.parseInt(UpVotes.getText().toString()) + 1));
         }
         else{
-            OnIt.setBackgroundResource(R.drawable.on_it_unpressed);
+            OnIt.setBackgroundResource(R.drawable.on_it_button_off);
             //OnItVotes.setText(String.valueOf(Integer.parseInt(UpVotes.getText().toString()) - 1));
         }
         top.setBackgroundColor(matColors.get(sum % matColors.size()));

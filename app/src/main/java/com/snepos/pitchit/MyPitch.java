@@ -51,6 +51,7 @@ public class MyPitch extends ActionBarActivity implements ActionBar.TabListener 
     private static boolean refreshing = false;
     private static boolean canRefresh = true;
     private final int REFRESH_DELTA_LENGTH = 3000;
+    private boolean isTutorial=false;
 
     AppSectionsPagerAdapter mAppSectionsPagerAdapter;
     ViewPager mViewPager;
@@ -76,6 +77,9 @@ public class MyPitch extends ActionBarActivity implements ActionBar.TabListener 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Bundle bundle = getIntent().getExtras();
+        isTutorial = bundle.getBoolean("tutorial");
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_pitch);
         final ActionBar actionBar = getActionBar();

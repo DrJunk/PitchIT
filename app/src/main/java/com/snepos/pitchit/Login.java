@@ -99,6 +99,9 @@ public class Login extends Activity {
                         }
                         else {
                             Intent mainIntent = new Intent(Login.this, MyPitch.class);
+                            Bundle bundle = new Bundle();
+                            bundle.putBoolean("tutorial", false);
+                            mainIntent.putExtras(bundle);
                             startActivity(mainIntent);
                             finish();
                         }

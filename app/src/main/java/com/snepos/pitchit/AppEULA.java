@@ -20,6 +20,7 @@ import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.os.Bundle;
 import android.preference.PreferenceManager;
 
 public class AppEULA {
@@ -121,12 +122,15 @@ public class AppEULA {
         if(Login.LoadUserEmail(_activity.getApplicationContext()))
         {
             Intent mainIntent = new Intent(_activity, MyPitch.class);
+            Bundle bundle = new Bundle();
+            bundle.putBoolean("tutorial", false);
+            mainIntent.putExtras(bundle);
             _activity.startActivity(mainIntent);
             _activity.finish();
         }
         else
         {
-            Intent mainIntent = new Intent(_activity, TutorialSwipe.class);
+            Intent mainIntent = new Intent(_activity, Login.class);
             _activity.startActivity(mainIntent);
             _activity.finish();
         }

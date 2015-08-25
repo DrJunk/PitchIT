@@ -55,6 +55,9 @@ public class TutorialSwipe extends FragmentActivity {
                 if(isLastFrame) {
                     if (Login.LoadUserEmail(TutorialSwipe.this.getApplicationContext())) {
                         Intent intent = new Intent(context, MyPitch.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putBoolean("tutorial", true);
+                        intent.putExtras(bundle);
                         startActivity(intent);
                         TutorialSwipe.this.finish();
                     } else {
