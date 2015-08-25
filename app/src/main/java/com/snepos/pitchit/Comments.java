@@ -46,6 +46,7 @@ public class Comments extends ActionBarActivity {
         final ActionBar actionBar = getActionBar();
         actionBar.setBackgroundDrawable(new ColorDrawable(0xFFBE3A27));
         actionBar.setIcon(R.drawable.icon);
+        commentArrayAdapter = new CommentArrayAdapter(getApplicationContext(), R.layout.comment_item);
 
         idea_id = getIntent().getIntExtra("idea_id", -1);
         if(idea_id == -1)

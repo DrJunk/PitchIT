@@ -15,12 +15,13 @@ import java.util.List;
  */
 public class CommentArrayAdapter extends ArrayAdapter<PitchComment> {
 private static final String TAG = "CardArrayAdapter";
-private List<PitchComment> commentList = new ArrayList<PitchComment>();
+private List<PitchComment> commentList ;
         Context myContext;
 
     public CommentArrayAdapter(Context context, int textViewResourceId) {
         super(context, textViewResourceId);
         myContext = context;
+        commentList = new ArrayList<PitchComment>();
     }
     @Override
     public void add(PitchComment comment) {
