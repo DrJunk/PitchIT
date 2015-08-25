@@ -2,6 +2,7 @@ package com.snepos.pitchit.database;
 
 import android.util.Log;
 
+import com.snepos.pitchit.Comments;
 import com.snepos.pitchit.Login;
 import com.snepos.pitchit.MyPitch;
 import com.snepos.pitchit.MyPost;
@@ -94,6 +95,9 @@ public class HttpHandler {
                 break;
             case Register:
                 Signup.HandleResponse(response);
+                break;
+            case Comments:
+                Comments.HandleResponse(response);
                 break;
         }
     }

@@ -57,8 +57,8 @@ private List<PitchComment> commentList = new ArrayList<PitchComment>();
 
         final PitchComment currentComment = commentList.get(position);
 
-        Head.setText(currentComment.getHead());
-        Body.setText(currentComment.getBody());
+        Head.setText(currentComment.getUserNickname());
+        Body.setText(currentComment.getText());
         return view;
     }
 

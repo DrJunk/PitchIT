@@ -225,8 +225,9 @@ public class CardArrayAdapter  extends ArrayAdapter<Card> {
         Comments.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent mainIntent = new Intent(myActivity, Comments.class);
-                myActivity.startActivity(mainIntent);
+                Intent commentIntent = new Intent(myActivity, Comments.class);
+                commentIntent.putExtra("idea_id", currentCard.getId());
+                myActivity.startActivity(commentIntent);
                // MyPitch.this.finish();
             }
         });
