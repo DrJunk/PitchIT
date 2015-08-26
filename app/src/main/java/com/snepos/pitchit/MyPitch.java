@@ -49,7 +49,6 @@ import com.snepos.pitchit.sqliteHelpers.DatabaseHandler;
 
 public class MyPitch extends ActionBarActivity implements ActionBar.TabListener   {
     private static Handler mHandler;
-    private static boolean refreshing = false;
     private static boolean canRefresh = true;
     private final int REFRESH_DELTA_LENGTH = 3000;
     private boolean isTutorial=false;
@@ -59,10 +58,6 @@ public class MyPitch extends ActionBarActivity implements ActionBar.TabListener 
     ViewPager mViewPager;
     Context context;
     Button FAB;
-
-    private View mRefresh;
-    private MenuItem mRefreshItem;
-    private Animation mRotate;
 
     //static FeedReaderDbHelper mDbHelper ;
 
@@ -90,29 +85,6 @@ public class MyPitch extends ActionBarActivity implements ActionBar.TabListener 
 
         // Animation test:
         canRefresh = true;
-        mRotate = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.rotate_refresh);
-        mRotate.setRepeatCount(Animation.INFINITE);
-        mRotate.setAnimationListener(new Animation.AnimationListener() {
-            @Override
-            public void onAnimationStart(Animation animation) {
-
-            }
-
-            @Override
-            public void onAnimationEnd(Animation animation) {
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation animation) {
-                if (!refreshing) {
-                    mRefreshItem.getActionView().clearAnimation();
-                    mRefreshItem.setActionView(null);
-                }
-            }
-        });
-
-        LayoutInflater inflater = (LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        mRefresh = inflater.inflate(R.layout.iv_refresh, null);
 
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
         mSwipeRefreshLayout.setOnRefreshListener(
@@ -128,7 +100,6 @@ public class MyPitch extends ActionBarActivity implements ActionBar.TabListener 
         mHandler = new Handler(Looper.getMainLooper()) {
             @Override
             public void handleMessage(Message inputMessage) {
-                refreshing = false;
                 mSwipeRefreshLayout.setRefreshing(false);
                 switch (inputMessage.what) {
                     case 0: // Failed to receive update
@@ -242,6 +213,11 @@ public class MyPitch extends ActionBarActivity implements ActionBar.TabListener 
                 // We can also use ActionBar.Tab#select() to do this if we have a reference to the
                 // Tab.
                 actionBar.setSelectedNavigationItem(position);
+            }
+
+            @Override
+            public void onPageScrollStateChanged( int state ) {
+                mSwipeRefreshLayout.setEnabled( state == ViewPager.SCROLL_STATE_IDLE );
             }
         });
 
@@ -357,12 +333,6 @@ public class MyPitch extends ActionBarActivity implements ActionBar.TabListener 
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.my_pitch, menu);
 
-        mRefreshItem = menu.findItem(R.id.action_refresh);
-        if(refreshing){
-            mRefreshItem.setActionView(mRefresh);
-            mRefresh.startAnimation(mRotate);
-        }
-
         restoreActionBar();
         return true;
 
@@ -371,12 +341,6 @@ public class MyPitch extends ActionBarActivity implements ActionBar.TabListener 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.action_refresh) {
-
-            Toast.makeText(MyPitch.this, "Outdated button", Toast.LENGTH_SHORT).show();
-
-            return true;
-        }
         if(id== R.id.action_tutorial)
         {
             Intent mainIntent = new Intent(MyPitch.this, TutorialSwipe.class);
@@ -401,9 +365,6 @@ public class MyPitch extends ActionBarActivity implements ActionBar.TabListener 
     void RefreshData()
     {
         if(canRefresh) {
-            mRefreshItem.setActionView(mRefresh);
-            mRefresh.startAnimation(mRotate);
-
             Database.PostRefreshProfile();
 
             Database.PostRefreshUpVotes();
@@ -414,14 +375,12 @@ public class MyPitch extends ActionBarActivity implements ActionBar.TabListener 
             Database.PostRefreshTrending();
             Database.PostRefreshHot();
 
-            refreshing = true;
             canRefresh = false;
 
             new Handler().postDelayed(new Runnable(){
                 @Override
                 public void run() {
                     mSwipeRefreshLayout.setRefreshing(false);
-                    refreshing = false;
                     canRefresh = true;
                 }
             }, REFRESH_DELTA_LENGTH);
