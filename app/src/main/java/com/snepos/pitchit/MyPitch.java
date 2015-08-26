@@ -20,6 +20,7 @@ import android.os.Looper;
 import android.os.Message;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Gravity;
@@ -54,6 +55,7 @@ public class MyPitch extends ActionBarActivity implements ActionBar.TabListener 
     private boolean isTutorial=false;
 
     AppSectionsPagerAdapter mAppSectionsPagerAdapter;
+    SwipeRefreshLayout mSwipeRefreshLayout;
     ViewPager mViewPager;
     Context context;
     Button FAB;
@@ -112,12 +114,22 @@ public class MyPitch extends ActionBarActivity implements ActionBar.TabListener 
         LayoutInflater inflater = (LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mRefresh = inflater.inflate(R.layout.iv_refresh, null);
 
+        mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
+        mSwipeRefreshLayout.setOnRefreshListener(
+                new SwipeRefreshLayout.OnRefreshListener() {
+                    @Override
+                    public void onRefresh() {
+                        RefreshData();
+                    }
+                });
+
         // End of test
 
         mHandler = new Handler(Looper.getMainLooper()) {
             @Override
             public void handleMessage(Message inputMessage) {
                 refreshing = false;
+                mSwipeRefreshLayout.setRefreshing(false);
                 switch (inputMessage.what) {
                     case 0: // Failed to receive update
                         switch ((Integer) inputMessage.obj) {
@@ -361,31 +373,7 @@ public class MyPitch extends ActionBarActivity implements ActionBar.TabListener 
         int id = item.getItemId();
         if (id == R.id.action_refresh) {
 
-            if(canRefresh) {
-                mRefreshItem.setActionView(mRefresh);
-                mRefresh.startAnimation(mRotate);
-
-                Database.PostRefreshProfile();
-
-                Database.PostRefreshUpVotes();
-                Database.PostRefreshOnItVotes();
-                Database.PostRefreshSpamVotes();
-
-                Database.PostRefreshNews();
-                Database.PostRefreshTrending();
-                Database.PostRefreshHot();
-
-                refreshing = true;
-                canRefresh = false;
-
-                new Handler().postDelayed(new Runnable(){
-                    @Override
-                    public void run() {
-                        refreshing = false;
-                        canRefresh = true;
-                    }
-                }, REFRESH_DELTA_LENGTH);
-            }
+            Toast.makeText(MyPitch.this, "Outdated button", Toast.LENGTH_SHORT).show();
 
             return true;
         }
@@ -408,6 +396,36 @@ public class MyPitch extends ActionBarActivity implements ActionBar.TabListener 
             MyPitch.this.finish();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    void RefreshData()
+    {
+        if(canRefresh) {
+            mRefreshItem.setActionView(mRefresh);
+            mRefresh.startAnimation(mRotate);
+
+            Database.PostRefreshProfile();
+
+            Database.PostRefreshUpVotes();
+            Database.PostRefreshOnItVotes();
+            Database.PostRefreshSpamVotes();
+
+            Database.PostRefreshNews();
+            Database.PostRefreshTrending();
+            Database.PostRefreshHot();
+
+            refreshing = true;
+            canRefresh = false;
+
+            new Handler().postDelayed(new Runnable(){
+                @Override
+                public void run() {
+                    mSwipeRefreshLayout.setRefreshing(false);
+                    refreshing = false;
+                    canRefresh = true;
+                }
+            }, REFRESH_DELTA_LENGTH);
+        }
     }
 
     /**
