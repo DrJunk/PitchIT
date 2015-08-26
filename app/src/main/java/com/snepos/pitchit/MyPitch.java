@@ -54,7 +54,7 @@ public class MyPitch extends ActionBarActivity implements ActionBar.TabListener 
     private boolean isTutorial=false;
 
     AppSectionsPagerAdapter mAppSectionsPagerAdapter;
-    SwipeRefreshLayout mSwipeRefreshLayout;
+    PitchSwipeRefreshLayout mSwipeRefreshLayout;
     ViewPager mViewPager;
     Context context;
     Button FAB;
@@ -86,7 +86,7 @@ public class MyPitch extends ActionBarActivity implements ActionBar.TabListener 
         // Animation test:
         canRefresh = true;
 
-        mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
+        mSwipeRefreshLayout = (PitchSwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
         mSwipeRefreshLayout.setOnRefreshListener(
                 new SwipeRefreshLayout.OnRefreshListener() {
                     @Override
@@ -213,14 +213,19 @@ public class MyPitch extends ActionBarActivity implements ActionBar.TabListener 
                 // We can also use ActionBar.Tab#select() to do this if we have a reference to the
                 // Tab.
                 actionBar.setSelectedNavigationItem(position);
+                //mViewPager.get
+                //GeneralPitchFragment fragment = (GeneralPitchFragment)getSupportFragmentManager().findFragmentById(position);
+                //GeneralPitchFragment fragment = (GeneralPitchFragment)((AppSectionsPagerAdapter)mViewPager.getAdapter()).getItem(position);
+                //System.out.println("Cla: " + fragment.getClass());
+                //mSwipeRefreshLayout.setFragment(((AppSectionsPagerAdapter)mViewPager.getAdapter()).getPitchFragment(position));
             }
 
             @Override
-            public void onPageScrollStateChanged( int state ) {
-                mSwipeRefreshLayout.setEnabled( state == ViewPager.SCROLL_STATE_IDLE );
+            public void onPageScrollStateChanged(int state) {
+                mSwipeRefreshLayout.setEnabled(state == ViewPager.SCROLL_STATE_IDLE);
             }
         });
-
+        mSwipeRefreshLayout.setFragment(mViewPager);
 
         TextView tv = new TextView(context);
         tv.setText("popular");
@@ -244,7 +249,7 @@ public class MyPitch extends ActionBarActivity implements ActionBar.TabListener 
         tv2.setTextSize(18);
 
         TextView tv3 = new TextView(context);
-        tv3.setText("my");
+        tv3.setText("you");
         tv3.setTextColor(getResources().getColor((R.color.greyText)));
         tv3.setLayoutParams(new TableLayout.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.MATCH_PARENT, 1f));
         tv3.setGravity(Gravity.CENTER);
@@ -391,22 +396,33 @@ public class MyPitch extends ActionBarActivity implements ActionBar.TabListener 
      * A placeholder fragment containing a simple view.
      */
     public static class AppSectionsPagerAdapter extends FragmentPagerAdapter {
+        private GeneralPitchFragment[] pitchFragments;
 
         public AppSectionsPagerAdapter(android.support.v4.app.FragmentManager fm) {
             super(fm);
+            pitchFragments = new GeneralPitchFragment[4];
+        }
+
+        public GeneralPitchFragment getPitchFragment(int i)
+        {
+            return pitchFragments[i];
         }
 
         @Override
         public android.support.v4.app.Fragment getItem(int i) {
             switch (i) {
                 case 0:
-                    return new HotFragment();
+                    pitchFragments[i] = new HotFragment();
+                    return pitchFragments[i];
                 case 1:
-                    return new TrendingFragment();
+                    pitchFragments[i] = new TrendingFragment();
+                    return pitchFragments[i];
                 case 2:
-                    return new NewFragment();
+                    pitchFragments[i] = new NewFragment();
+                    return pitchFragments[i];
                 case 3:
-                    return new AcountFragment();
+                    pitchFragments[i] = new AcountFragment();
+                    return pitchFragments[i];
                 default:
                     return new ErrorFragment();
             }
@@ -422,6 +438,20 @@ public class MyPitch extends ActionBarActivity implements ActionBar.TabListener 
             return "Section " + (position + 1);
         }
     }
+
+    public static class GeneralPitchFragment extends android.support.v4.app.Fragment
+    {
+        protected ListView listView;
+
+        public boolean canScrollUp()
+        {
+            if(listView != null && listView.getChildCount() != 0) {
+                return listView.getFirstVisiblePosition() != 0 || listView.getChildAt(0).getTop() < 0;
+            }
+            else return false;
+        }
+    }
+
     public static class PlaceholderFragment extends Fragment {
         /**
          * The fragment argument representing the section number for this
@@ -459,10 +489,9 @@ public class MyPitch extends ActionBarActivity implements ActionBar.TabListener 
         }
     }
 
-    public static class NewFragment extends android.support.v4.app.Fragment {
+    public static class NewFragment extends GeneralPitchFragment {
 
         CardArrayAdapter cardArrayAdapter;
-        ListView listView;
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -499,10 +528,9 @@ public class MyPitch extends ActionBarActivity implements ActionBar.TabListener 
             return rootView;
         }
     }
-    public static class TrendingFragment extends android.support.v4.app.Fragment {
+    public static class TrendingFragment extends GeneralPitchFragment {
 
         CardArrayAdapter cardArrayAdapter;
-        ListView listView;
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -539,10 +567,9 @@ public class MyPitch extends ActionBarActivity implements ActionBar.TabListener 
             return rootView;
         }
     }
-    public static class HotFragment extends android.support.v4.app.Fragment {
+    public static class HotFragment extends GeneralPitchFragment {
 
         CardArrayAdapter cardArrayAdapter;
-        ListView listView;
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -579,7 +606,7 @@ public class MyPitch extends ActionBarActivity implements ActionBar.TabListener 
             return rootView;
         }
     }
-    public static class AcountFragment extends android.support.v4.app.Fragment {
+    public static class AcountFragment extends GeneralPitchFragment {
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
