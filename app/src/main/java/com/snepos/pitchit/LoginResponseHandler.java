@@ -18,7 +18,7 @@ public class LoginResponseHandler
                 return;
             }
 
-            handler.obtainMessage(0);
+            handler.obtainMessage(0).sendToTarget();
             return;
         }
         if(response.GetMessage() == "login")
@@ -28,7 +28,7 @@ public class LoginResponseHandler
             }
             catch (Exception e)
             {
-                handler.obtainMessage(0);
+                handler.obtainMessage(0).sendToTarget();
             }
             return;
         }

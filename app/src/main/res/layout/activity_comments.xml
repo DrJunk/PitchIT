@@ -28,7 +28,7 @@
         android:layout_below="@+id/comments_listview"
         android:layout_marginTop="0dp"
         android:gravity="bottom"
-        android:text="tom"
+        android:hint="Write a comment..."
         android:maxLines="5"
         android:minLines="1"
         android:layout_width="280dp"

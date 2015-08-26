@@ -25,6 +25,9 @@ import com.snepos.pitchit.database.HttpHandler;
 import com.snepos.pitchit.database.Request;
 import com.snepos.pitchit.database.Response;
 
+import java.util.LinkedList;
+import java.util.Queue;
+
 /**
  * Created by user1 on 22/08/2015.
  */
@@ -38,6 +41,8 @@ public class Comments extends ActionBarActivity {
     EditText newComment;
     int idea_id;
 
+    Queue<PitchComment> sentComments = new LinkedList<PitchComment>();
+
     @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,12 +51,13 @@ public class Comments extends ActionBarActivity {
         final ActionBar actionBar = getActionBar();
         actionBar.setBackgroundDrawable(new ColorDrawable(0xFFBE3A27));
         actionBar.setIcon(R.drawable.icon);
+
         commentArrayAdapter = new CommentArrayAdapter(getApplicationContext(), R.layout.comment_item);
 
         idea_id = getIntent().getIntExtra("idea_id", -1);
         if(idea_id == -1)
         {
-            Toast.makeText(getApplicationContext(), "Error: Failed to load comments(code 1)", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), "Error: Failed to load comments", Toast.LENGTH_SHORT).show();
             finish();
         }
 
@@ -74,7 +80,9 @@ public class Comments extends ActionBarActivity {
                 req.put("text", newComment.getText().toString());
                 HttpHandler.addRequest(req);
 
-                commentArrayAdapter.add(new PitchComment(commentArrayAdapter.getCount(), Login.GetUserNickname(), newComment.getText().toString()));
+                PitchComment nextComment = new PitchComment(commentArrayAdapter.getCount(), Login.GetUserNickname(), newComment.getText().toString());
+                sentComments.add(nextComment);
+                commentArrayAdapter.add(nextComment);
                 listView.setAdapter(commentArrayAdapter);
 
                 newComment.setText("");
@@ -86,11 +94,28 @@ public class Comments extends ActionBarActivity {
             public void handleMessage(Message inputMessage) {
                 switch (inputMessage.what) {
                     case 0:
-                        Toast.makeText(Comments.this, "Error: Failed to load comments(code 2)", Toast.LENGTH_SHORT).show();
-                        finish();
+                        if(inputMessage.arg1 == 0)
+                            Toast.makeText(Comments.this, "Error: Unknown error", Toast.LENGTH_SHORT).show();
+                        else if(inputMessage.arg1 == 1)
+                        {
+                            Toast.makeText(Comments.this, "Error: Failed to load comments", Toast.LENGTH_SHORT).show();
+                            finish();
+                        }
+                        else if(inputMessage.arg1 == 2)
+                        {
+                            Toast.makeText(Comments.this, "Error: Failed to send comment", Toast.LENGTH_SHORT).show();
+                            //commentArrayAdapter.remove(sentComments.poll());
+                            sentComments.poll().alertNotSent();
+                            listView.setAdapter(commentArrayAdapter);
+                            System.out.println("Not sent: ");
+                        }
                         break;
                     case 1:
                         LoadComments((PitchComment[])inputMessage.obj);
+                        break;
+
+                    case 2:
+                        sentComments.poll();
                         break;
                 }
             }
@@ -99,7 +124,7 @@ public class Comments extends ActionBarActivity {
 
     public void LoadComments(PitchComment[] comments)
     {
-        commentArrayAdapter = new CommentArrayAdapter(getApplicationContext(), R.layout.comment_item);
+        commentArrayAdapter.clear();
         for (int i = 0; i < comments.length; i++) {
             //PitchComment c = new PitchComment(i, "no name", "no comment");
             commentArrayAdapter.add(comments[i]);

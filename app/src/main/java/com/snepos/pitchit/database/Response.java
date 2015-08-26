@@ -27,7 +27,11 @@ public class Response {
         {
             success = true;
             //TODO: After upgrading the server-client communication there will be no need to delete [200, ...]
-            this.data = data.substring(5, data.length()-1);
+            System.out.println("Data: " + data);
+            if(data.equals("[200]"))
+                this.data = "";
+            else
+                this.data = data.substring(5, data.length()-1);
             /*
             data = data.substring(data.lastIndexOf("["), data.indexOf("]"));
             int left = -1;

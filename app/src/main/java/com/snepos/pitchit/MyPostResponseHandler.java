@@ -13,7 +13,7 @@ public class MyPostResponseHandler
     {
         if(!response.IsSucceeded())
         {
-            handler.obtainMessage(0, 0).sendToTarget();
+            handler.obtainMessage(0, 0, 0).sendToTarget();
             return;
         }
         if(response.GetMessage() == "add_idea")

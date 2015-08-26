@@ -20,4 +20,9 @@ public class PitchComment {
     public String getUserNickname() { return userNickname; }
 
     public String getText() { return text; }
+
+    public void alertNotSent()
+    {
+        text = "Failed: " + text;
+    }
 }

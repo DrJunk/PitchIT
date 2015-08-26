@@ -73,13 +73,15 @@ public class HttpHandler {
 
         Response response = responses.poll();
 
-        System.out.println("Received response to: " + response.GetMessage());
-        System.out.println("Response data: " + response.GetData());
-
-        if(!response.IsSucceeded())
+        if(response.IsSucceeded())
         {
-            System.out.println("Error in response: " + response.GetMessage());
-            System.out.println("Response's data: " + response.GetData());
+            System.out.println("Received response to: " + response.GetMessage());
+            System.out.println("Response data: " + response.GetData());
+        }
+        else
+        {
+            System.out.println("Error in response to: " + response.GetMessage());
+            System.out.println("Response data: " + response.GetData());
         }
 
         switch (response.GetApp())
