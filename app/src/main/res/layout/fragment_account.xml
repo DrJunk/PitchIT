@@ -7,8 +7,7 @@
     android:layout_height="match_parent"
     android:paddingTop="20dp"
     android:paddingLeft="20dp"
-    android:paddingRight="20dp"
-    tools:context=".MyPost">
+    android:paddingRight="20dp">
 
     <LinearLayout
         android:id="@+id/account_general_section"
@@ -115,14 +114,7 @@
             android:layout_height="wrap_content"
             android:text="ON IT"
             android:textSize="30sp"
-            android:elevetion="3dp"
             />
-
-        <android.support.v7.widget.RecyclerView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-
-        </android.support.v7.widget.RecyclerView>
 
     </LinearLayout>
 
