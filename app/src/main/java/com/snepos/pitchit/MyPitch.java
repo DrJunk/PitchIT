@@ -22,6 +22,9 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -35,6 +38,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -43,6 +47,9 @@ import com.snepos.pitchit.database.Database;
 import com.snepos.pitchit.database.IdeaData;
 import com.snepos.pitchit.database.Response;
 import com.snepos.pitchit.sqliteHelpers.DatabaseHandler;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 //import android.support.v7.widget.Toolbar;
 
@@ -83,7 +90,6 @@ public class MyPitch extends ActionBarActivity implements ActionBar.TabListener 
         actionBar.setBackgroundDrawable(new ColorDrawable(0xFFBE3A27));
         actionBar.setIcon(R.drawable.icon);
 
-        // Animation test:
         canRefresh = true;
 
         mSwipeRefreshLayout = (PitchSwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
@@ -94,8 +100,6 @@ public class MyPitch extends ActionBarActivity implements ActionBar.TabListener 
                         RefreshData();
                     }
                 });
-
-        // End of test
 
         mHandler = new Handler(Looper.getMainLooper()) {
             @Override
@@ -151,6 +155,23 @@ public class MyPitch extends ActionBarActivity implements ActionBar.TabListener 
                         } else {
                             System.err.println("Error: 'data' is null(" + inputMessage.what + ")");
                         }
+                        break;
+                    case 4: // Refresh account's on it list
+                        JSONArray jsonArray = (JSONArray)inputMessage.obj;
+                        ExpandableIdea[] expandableIdeas = new ExpandableIdea[jsonArray.length()];
+                        for(int i = 0; i < expandableIdeas.length; i++)
+                        {
+                            try
+                            {
+                                expandableIdeas[i] = new ExpandableIdea((JSONObject) jsonArray.get(i));
+                            }
+                            catch(Exception e)
+                            {
+                                System.out.println(e.getMessage());
+                            }
+                        }
+                        AccountFragment.mInstance.mAdapter.refreshDataset(expandableIdeas);
+                        AccountFragment.mInstance.mAdapter.notifyDataSetChanged();
                         break;
                 }
             }
@@ -421,7 +442,7 @@ public class MyPitch extends ActionBarActivity implements ActionBar.TabListener 
                     pitchFragments[i] = new NewFragment();
                     return pitchFragments[i];
                 case 3:
-                    pitchFragments[i] = new AcountFragment();
+                    pitchFragments[i] = new AccountFragment();
                     return pitchFragments[i];
                 default:
                     return new ErrorFragment();
@@ -606,17 +627,31 @@ public class MyPitch extends ActionBarActivity implements ActionBar.TabListener 
             return rootView;
         }
     }
-    public static class AcountFragment extends GeneralPitchFragment {
+    public static class AccountFragment extends GeneralPitchFragment {
+        static AccountFragment mInstance;
+
+        ScrollView mScrollView;
+
+        RecyclerView mRecyclerView;
+        ExpandableIdeaLayoutManager mLayoutManager;
+        ExpandableIdeaAdapter mAdapter;
+
+        public AccountFragment()
+        {
+            mInstance = this;
+        }
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_account, container, false);
-            ImageView acountColor = (ImageView) rootView.findViewById(R.id.acount_color);
-            TextView acountText = (TextView) rootView.findViewById(R.id.acount_text);
+            mScrollView = (ScrollView)rootView.findViewById(R.id.account_scroll_view);
+
+            ImageView accountColor = (ImageView) rootView.findViewById(R.id.acount_color);
+            TextView accountText = (TextView) rootView.findViewById(R.id.acount_text);
             String Publisher = Login.GetUserNickname().toString();
             if(Publisher!=null)
-            acountText.setText(Publisher.toString());
+                accountText.setText(Publisher.toString());
             int sum = 5000;
             for (int i=0; i< Publisher.length(); i++)
             {
@@ -626,9 +661,23 @@ public class MyPitch extends ActionBarActivity implements ActionBar.TabListener 
             //cardTop
             sum *= sum;
             Integer temp = (CardArrayAdapter.matColors.get(sum % CardArrayAdapter.matColors.size()));
-            acountColor.setBackgroundColor(temp);
-            return rootView;
+            accountColor.setBackgroundColor(temp);
 
+            mRecyclerView = (RecyclerView)rootView.findViewById(R.id.account_on_it_list);
+
+            mLayoutManager = new ExpandableIdeaLayoutManager(getActivity().getApplicationContext());
+            mRecyclerView.setLayoutManager(mLayoutManager);
+
+            mAdapter = new ExpandableIdeaAdapter(new ExpandableIdea[]{new ExpandableIdea("Temp")});
+            mRecyclerView.setAdapter(mAdapter);
+
+            return rootView;
+        }
+
+        @Override
+        public boolean canScrollUp()
+        {
+            return mScrollView.getScrollY() > 0;
         }
     }
 
