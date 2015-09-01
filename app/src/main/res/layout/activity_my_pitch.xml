@@ -19,15 +19,24 @@
         android:layout_height="wrap_content"
         android:elevation="2dp"
         android:background="@color/ColorPrimary"
+
         />
 
 
-    <com.snepos.pitchit.PitchSwipeRefreshLayout
-        android:id="@+id/swipe_refresh_layout"
+
+
+
+
+
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:id="@+id/frameLayout">
+        <com.snepos.pitchit.PitchSwipeRefreshLayout
+            android:id="@+id/swipe_refresh_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
 
         <android.support.v4.view.ViewPager
@@ -36,46 +45,32 @@
             android:id="@+id/pager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:context=".MyActivity">
+            tools:context=".MyActivity"/>
+        </com.snepos.pitchit.PitchSwipeRefreshLayout>
 
-        </android.support.v4.view.ViewPager>
-
-    </com.snepos.pitchit.PitchSwipeRefreshLayout>
-
+        <ImageButton
+            android:radius="1dp"
+            android:layout_margin="8dp"
+            android:layout_width="76dp"
+            android:layout_height="76dp"
+            android:elevation="4dp"
+            android:src="@drawable/ic_action"
+            android:background="@drawable/circle"
+            android:id="@+id/button_add"
+            android:layout_gravity="right|bottom" />
     <FrameLayout
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
        />
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".MainActivity">
-
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            android:id="@+id/frameLayout">
 
 
 
-            <Button
-                android:radius="1dp"
-                android:layout_margin="10dp"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:background="@drawable/add_btn3"
-                android:id="@+id/button_add"
-                android:layout_gravity="right|bottom" />
 
 
         </FrameLayout>
-    </RelativeLayout>
+
 
 
 </LinearLayout>

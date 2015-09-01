@@ -77,6 +77,7 @@ public class MyPost extends ActionBarActivity {
         toolbar = (Toolbar) findViewById(R.id.tool_bar);
         toolbar.setLogo(R.drawable.icon);
         toolbar.setTitleTextColor(Color.parseColor("#ffffff"));
+        toolbar.setTitle(" PitchIt");
         setSupportActionBar(toolbar);
         head = (EditText) findViewById(R.id.new_Head);
         body = (EditText) findViewById(R.id.new_Body);
