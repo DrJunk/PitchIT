@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.AttributeSet;
+import android.widget.Toast;
 
 /**
  * Created by Omer on 26/08/2015.
@@ -23,6 +24,6 @@ public class PitchSwipeRefreshLayout extends SwipeRefreshLayout
     @Override
     public boolean canChildScrollUp()
     {
-        return ((MyPitch.AppSectionsPagerAdapter)viewPager.getAdapter()).getPitchFragment(viewPager.getCurrentItem()).canScrollUp();
+        return ((MyPitch.ViewPagerAdapter)viewPager.getAdapter()).getPitchFragment(viewPager.getCurrentItem()).canScrollUp();
     }
 }

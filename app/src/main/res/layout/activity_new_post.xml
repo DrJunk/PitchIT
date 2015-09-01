@@ -6,6 +6,12 @@
     android:layout_height="match_parent"
     android:gravity="bottom"
     tools:context=".MyPost">
+    <include
+        android:id="@+id/tool_bar"
+        layout="@layout/tool_bar"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        />
     <EditText
         android:digits="abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$%^*()_+='/.,"
         android:background="@android:color/transparent"

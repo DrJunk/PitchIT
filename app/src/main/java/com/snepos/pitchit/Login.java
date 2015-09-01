@@ -6,12 +6,15 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -32,11 +35,11 @@ import com.google.identitytoolkit.IdToken;
 /**
  * Created by user1 on 26/06/2015.
  */
-public class Login extends Activity {
+public class Login extends ActionBarActivity {
     private static Handler mHandler;
     private static String userEmail = MyPrefs.NOT_CONNECTED;
     private static String userNickname = "";
-
+    Toolbar toolbar;
     private final int LOGIN_TIMEOUT_LENGTH = 6000;
 
     Button signIn;
@@ -48,9 +51,14 @@ public class Login extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        final ActionBar actionBar = getActionBar();
-        actionBar.setBackgroundDrawable(new ColorDrawable(0xFFBE3A27));
-        actionBar.setIcon(R.drawable.icon);
+
+        //toolbar = (Toolbar) findViewById(R.id.tool_bar);
+        //toolbar.setLogo(R.drawable.icon);
+        //toolbar.setTitleTextColor(Color.parseColor("#ffffff"));
+        //setSupportActionBar(toolbar);
+        //final ActionBar actionBar = getActionBar();
+        //actionBar.setBackgroundDrawable(new ColorDrawable(0xFFBE3A27));
+        //actionBar.setIcon(R.drawable.icon);
 
         signIn = (Button) findViewById(R.id.signIn_btn);
 
@@ -81,6 +89,7 @@ public class Login extends Activity {
                         signIn.setEnabled(true);
                         break;
                     case 1: // Succeeded
+                        signIn.setEnabled(true);
                         userNickname = (String)inputMessage.obj;
                         String loginKey = KeyGenerator.GenerateKey(userEmail);
                         SharedPreferences settings = getApplicationContext().getSharedPreferences(MyPrefs.PREFS_NAME, 0);
