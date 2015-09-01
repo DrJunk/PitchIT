@@ -27,6 +27,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SwitchCompat;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Gravity;
@@ -39,6 +40,7 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ScrollView;
@@ -183,7 +185,7 @@ public class MyPitch extends ActionBarActivity /*implements ActionBar.TabListene
                                 break;
                         }
                         if (data != null) {
-                            CardArrayAdapter cardArrayAdapter = new CardArrayAdapter(MyPitch.this.getApplicationContext(), R.layout.pitch_item,MyPitch.this);
+                            CardArrayAdapter cardArrayAdapter = new CardArrayAdapter(MyPitch.this.getApplicationContext(), R.layout.pitch_item, MyPitch.this);
 
                             Card[] cards = new Card[data.length];
                             for (int i = 0; i < data.length; i++) {
@@ -201,23 +203,51 @@ public class MyPitch extends ActionBarActivity /*implements ActionBar.TabListene
                             System.err.println("Error: 'data' is null(" + inputMessage.what + ")");
                         }
                         break;
-                    case 4: // Refresh account's on it list
-                        JSONArray jsonArray = (JSONArray)inputMessage.obj;
+                    case 2: // Refresh account's personal ideas list
+                    {
+                        JSONArray jsonArray = (JSONArray) inputMessage.obj;
                         ExpandableIdea[] expandableIdeas = new ExpandableIdea[jsonArray.length()];
-                        for(int i = 0; i < expandableIdeas.length; i++)
-                        {
-                            try
-                            {
+                        for (int i = 0; i < expandableIdeas.length; i++) {
+                            try {
                                 expandableIdeas[i] = new ExpandableIdea((JSONObject) jsonArray.get(i));
-                            }
-                            catch(Exception e)
-                            {
+                            } catch (Exception e) {
                                 System.out.println(e.getMessage());
                             }
                         }
-                        AccountFragment.mInstance.mAdapter.refreshDataset(expandableIdeas);
-                        AccountFragment.mInstance.mAdapter.notifyDataSetChanged();
+                        AccountFragment.getUserIdeasAdapter().refreshDataset(expandableIdeas);
+                        AccountFragment.getUserIdeasAdapter().notifyDataSetChanged();
                         break;
+                    }
+                    case 3: // Refresh account's on it list
+                    {
+                        JSONArray jsonArray = (JSONArray) inputMessage.obj;
+                        ExpandableIdea[] expandableIdeas = new ExpandableIdea[jsonArray.length()];
+                        for (int i = 0; i < expandableIdeas.length; i++) {
+                            try {
+                                expandableIdeas[i] = new ExpandableIdea((JSONObject) jsonArray.get(i));
+                            } catch (Exception e) {
+                                System.out.println(e.getMessage());
+                            }
+                        }
+                        AccountFragment.getUpVotedAdapter().refreshDataset(expandableIdeas);
+                        AccountFragment.getUpVotedAdapter().notifyDataSetChanged();
+                        break;
+                    }
+                    case 4: // Refresh account's on it list
+                    {
+                        JSONArray jsonArray = (JSONArray) inputMessage.obj;
+                        ExpandableIdea[] expandableIdeas = new ExpandableIdea[jsonArray.length()];
+                        for (int i = 0; i < expandableIdeas.length; i++) {
+                            try {
+                                expandableIdeas[i] = new ExpandableIdea((JSONObject) jsonArray.get(i));
+                            } catch (Exception e) {
+                                System.out.println(e.getMessage());
+                            }
+                        }
+                        AccountFragment.getOnItAdapter().refreshDataset(expandableIdeas);
+                        AccountFragment.getOnItAdapter().notifyDataSetChanged();
+                        break;
+                    }
                 }
             }
         };
@@ -244,8 +274,6 @@ public class MyPitch extends ActionBarActivity /*implements ActionBar.TabListene
 
             }
         });
-
-
     }
 
 
@@ -574,18 +602,21 @@ public class MyPitch extends ActionBarActivity /*implements ActionBar.TabListene
         }
     }
     public static class AccountFragment extends GeneralPitchFragment {
-        static AccountFragment mInstance;
 
         ScrollView mScrollView;
 
-        RecyclerView mRecyclerView;
-        ExpandableIdeaLayoutManager mLayoutManager;
-        ExpandableIdeaAdapter mAdapter;
+        RecyclerView mOnItRecyclerView;
+        ExpandableIdeaLayoutManager mOnItLayoutManager;
+        private static ExpandableIdeaAdapter mOnItAdapter;
 
-        public AccountFragment()
-        {
-            mInstance = this;
-        }
+        static RecyclerView mUpVotedRecyclerView;
+        ExpandableIdeaLayoutManager mUpVotedLayoutManager;
+        private static ExpandableIdeaAdapter mUpVotedAdapter;
+        private static ExpandableIdeaAdapter mUserIdeasAdapter;
+
+        private static boolean mShowOnlyUserIdeas = false;
+
+        SwitchCompat mUserIdeasOnlySwitch;
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -604,20 +635,72 @@ public class MyPitch extends ActionBarActivity /*implements ActionBar.TabListene
                 sum+= Publisher.charAt(i);
             }
 
+            mUserIdeasOnlySwitch = (SwitchCompat) rootView.findViewById(R.id.account_user_ideas_only_switch);
+            mUserIdeasOnlySwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    setShowOnlyUserIdeas(isChecked);
+                }
+            });
+
             //cardTop
             sum *= sum;
             Integer temp = (CardArrayAdapter.matColors.get(sum % CardArrayAdapter.matColors.size()));
             accountColor.setBackgroundColor(temp);
 
-            mRecyclerView = (RecyclerView)rootView.findViewById(R.id.account_on_it_list);
+            if(mOnItAdapter == null)
+                mOnItAdapter = new ExpandableIdeaAdapter(new ExpandableIdea[]{new ExpandableIdea("Empty")});
+            if(mUpVotedAdapter == null)
+                mUpVotedAdapter = new ExpandableIdeaAdapter(new ExpandableIdea[]{new ExpandableIdea("Empty")});
+            if(mUserIdeasAdapter == null)
+                mUserIdeasAdapter = new ExpandableIdeaAdapter(new ExpandableIdea[]{new ExpandableIdea("Empty")});
 
-            mLayoutManager = new ExpandableIdeaLayoutManager(getActivity().getApplicationContext());
-            mRecyclerView.setLayoutManager(mLayoutManager);
+            // ON IT RecyclerView
+            mOnItRecyclerView = (RecyclerView)rootView.findViewById(R.id.account_on_it_list);
+            mOnItLayoutManager = new ExpandableIdeaLayoutManager(getActivity().getApplicationContext());
+            mOnItRecyclerView.setLayoutManager(mOnItLayoutManager);
+            mOnItRecyclerView.setAdapter(mOnItAdapter);
 
-            mAdapter = new ExpandableIdeaAdapter(new ExpandableIdea[]{new ExpandableIdea("Temp")});
-            mRecyclerView.setAdapter(mAdapter);
+            // Up voted RecyclerView
+            mUpVotedRecyclerView = (RecyclerView)rootView.findViewById(R.id.account_up_voted_list);
+            mUpVotedLayoutManager = new ExpandableIdeaLayoutManager(getActivity().getApplicationContext());
+            mUpVotedRecyclerView.setLayoutManager(mUpVotedLayoutManager);
+            if(mShowOnlyUserIdeas)
+                mUpVotedRecyclerView.setAdapter(mUserIdeasAdapter);
+            else
+                mUpVotedRecyclerView.setAdapter(mUpVotedAdapter);
 
             return rootView;
+        }
+
+        public static ExpandableIdeaAdapter getOnItAdapter()
+        {
+            if(mOnItAdapter == null)
+                mOnItAdapter = new ExpandableIdeaAdapter(new ExpandableIdea[]{new ExpandableIdea("Empty")});
+            return mOnItAdapter;
+        }
+
+        public static ExpandableIdeaAdapter getUpVotedAdapter()
+        {
+            if(mUpVotedAdapter == null)
+                mUpVotedAdapter = new ExpandableIdeaAdapter(new ExpandableIdea[]{new ExpandableIdea("Empty")});
+            return mUpVotedAdapter;
+        }
+
+        public static ExpandableIdeaAdapter getUserIdeasAdapter()
+        {
+            if(mUserIdeasAdapter == null)
+                mUserIdeasAdapter = new ExpandableIdeaAdapter(new ExpandableIdea[]{new ExpandableIdea("Empty")});
+            return mUserIdeasAdapter;
+        }
+
+        public static void setShowOnlyUserIdeas(boolean value)
+        {
+            mShowOnlyUserIdeas = value;
+            if(mShowOnlyUserIdeas)
+                mUpVotedRecyclerView.setAdapter(mUserIdeasAdapter);
+            else
+                mUpVotedRecyclerView.setAdapter(mUpVotedAdapter);
         }
 
         @Override

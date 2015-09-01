@@ -190,7 +190,19 @@
                 android:textSize="30sp"
                 />
 
-            <include layout="@layout/switch_widget" />
+            <android.support.v7.widget.SwitchCompat
+                android:id="@+id/account_user_ideas_only_switch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Show your ideas only "/>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/account_up_voted_list"
+                android:layout_width="wrap_content"
+                android:layout_height="100dp"
+                >
+
+            </android.support.v7.widget.RecyclerView>
 
         </LinearLayout>
 
