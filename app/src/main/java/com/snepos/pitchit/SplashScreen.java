@@ -34,29 +34,6 @@ public class SplashScreen extends Activity {
         setContentView(R.layout.activity_splash);
 
 
-
-        /*SharedPreferences settings = getApplicationContext().getSharedPreferences(MyPrefs.PREFS_NAME, 0);
-
-        isFirstTime = settings.getBoolean(MyPrefs.FIRST_TIME, true);
-        isLogin = settings.getBoolean(MyPrefs.LOGIN, false);
-        if(!isLogin)
-        {
-            Intent mainIntent = new Intent(SplashScreen.this,Login.class);
-            SplashScreen.this.startActivity(mainIntent);
-            SplashScreen.this.finish();
-        }
-
-        if(isFirstTime)
-        {
-
-            SharedPreferences.Editor editor = settings.edit();
-            editor.putBoolean(MyPrefs.FIRST_TIME, false);
-            editor.apply();
-            Intent mainIntent = new Intent(SplashScreen.this,TutorialSwipe.class);
-            SplashScreen.this.startActivity(mainIntent);
-            SplashScreen.this.finish();
-        }*/
-
         Database.Init();
 
         /* New Handler to start the Menu-Activity
@@ -65,34 +42,11 @@ public class SplashScreen extends Activity {
          new Handler().postDelayed(new Runnable(){
             @Override
             public void run() {
-                /* Create an Intent that will start the Menu-Activity. */
-                /*if(!isFirstTime&&isLogin) {
-                    Intent mainIntent = new Intent(SplashScreen.this, MyPitch.class);
-                    SplashScreen.this.startActivity(mainIntent);
-                    SplashScreen.this.finish();
-                }*/
+
 
 
                 new AppEULA(SplashScreen.this).show(SplashScreen.this);
             }
         }, SPLASH_DISPLAY_LENGTH);
-    }/*
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        //getMenuInflater().inflate(R.menu.login, menu);
-        return true;
     }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        //if (id == R.id.action_settings) {
-        //    return true;
-        //}
-        return super.onOptionsItemSelected(item);
-    }*/
 }
