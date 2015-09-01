@@ -171,6 +171,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 
     public Card[] getAllPosts(Table table) {
+        if (true)
+            return  new Card[0];
         List<Card> cardsList = new ArrayList<Card>();
         // Select All Query
 

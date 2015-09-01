@@ -176,10 +176,10 @@
             android:layout_alignLeft="@+id/button_liked"
             android:dividerHeight="0dp"
             android:divider="@null"
-            android:layout_width="wrap_content"
+            android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="0" android:textSize="13dp"
+            android:text="1" android:textSize="13dp"
             android:id="@+id/up_votes"
             android:layout_marginLeft="10dp"
             android:textColor="#ff231f20"
@@ -188,11 +188,10 @@
 
 
         <ImageButton
-            android:layout_alignLeft="@+id/up_votes"
             android:dividerHeight="0dp"
             android:divider="@null"
             android:layout_marginTop="-7dp"
-            android:layout_marginLeft="40dp"
+            android:layout_marginLeft="0dp"
             android:layout_width="46dp"
             android:layout_height="46dp"
             android:background="@drawable/on_it_button_off"
@@ -206,7 +205,7 @@
                     android:layout_marginRight="40dp"
                     android:dividerHeight="0dp"
                     android:divider="@null"
-                    android:layout_width="wrap_content"
+                    android:layout_width="50dp"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceLarge"
                     android:text="0"
@@ -218,7 +217,7 @@
                     android:layout_alignLeft="@+id/up_votes"
                     android:dividerHeight="0dp"
                     android:divider="@null"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginLeft="-40dp"
                     android:layout_marginTop="-4dp"
                     android:layout_width="32dp"
                     android:layout_height="32dp"
@@ -239,19 +238,7 @@
                     android:id="@+id/button_report"
                     android:layout_gravity="right|top"
             />
-                <TextView
-                    android:layout_alignLeft="@+id/text_flag"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginLeft="-20dp"
-                    android:dividerHeight="0dp"
-                    android:divider="@null"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="Report"
-                    android:textSize="7dp"
-                    android:textColor="#ff000000"
-                    android:layout_gravity="right|top"/>
+
 
 
         </LinearLayout>

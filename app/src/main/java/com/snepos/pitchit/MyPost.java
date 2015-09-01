@@ -2,6 +2,7 @@ package com.snepos.pitchit;
 
 import android.annotation.TargetApi;
 import android.app.ActionBar;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -9,10 +10,12 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
@@ -34,7 +37,7 @@ import java.util.TimerTask;
 
 public class MyPost extends ActionBarActivity {
     private static Handler mHandler;
-
+    Toolbar toolbar;
     EditText body;
     EditText head;
     TextView bodyLeftLength;
@@ -71,13 +74,10 @@ public class MyPost extends ActionBarActivity {
             }
         };
 
-        final ActionBar actionBar = getActionBar();
-        actionBar.setBackgroundDrawable(new ColorDrawable(0xFFBE3A27));
-        actionBar.setIcon(R.drawable.icon);
-        //MenuInflater inflater = getMenuInflater();
-        //inflater.inflate(R.menu.my_pitch, menu);
-        //getMenuInflater().inflate(R.menu.my_pitch, menu);
-        //restoreActionBar();
+        toolbar = (Toolbar) findViewById(R.id.tool_bar);
+        toolbar.setLogo(R.drawable.icon);
+        toolbar.setTitleTextColor(Color.parseColor("#ffffff"));
+        setSupportActionBar(toolbar);
         head = (EditText) findViewById(R.id.new_Head);
         body = (EditText) findViewById(R.id.new_Body);
 
@@ -154,6 +154,7 @@ public class MyPost extends ActionBarActivity {
         _menu = menu;
         return true;
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

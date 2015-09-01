@@ -1,17 +1,32 @@
 <resources>
 
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light">
-        <!-- Customize your theme here. -->
-         <item name="android:actionBarTabStyle">@style/MyActionBarTabs</item>
-        <item name="android:showDividers">none</item>
-        <item name="android:actionBarDivider">@null</item>
+
+
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/ColorPrimary</item>
+        <item name="colorPrimaryDark">@color/ColorPrimaryDark</item>
         <item name="android:textViewStyle">@style/RobotoTextViewStyle</item>
         <item name="android:actionBarStyle">@style/MyTheme.ActionBarStyle</item>
     </style>
-    <style name="RobotoTextViewStyle" parent="android:Widget.TextView">
-        <item name="android:fontFamily">sans-serif-light</item>
+    <style name="MyTheme.ActionBarStyle"
+        parent="Widget.AppCompat.Light.ActionBar">
+        <item name="android:titleTextStyle">@style/MyTheme.ActionBar.TitleTextStyle</item>
     </style>
+    <style name="MyTheme.ActionBar.TitleTextStyle"
+        parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
+        <item name="android:textColor">@color/ActionBarTitle</item>
+    </style>
+    <!-- Base application theme. -->
+    <!--
+    <style name="AppTheme" parent="Theme.AppCompat.Light">
+        <!- Customize your theme here.
+        <item name="android:windowContentOverlay">@null</item>
+         <item name="android:actionBarTabStyle">@style/MyActionBarTabs</item>
+        <item name="android:showDividers">none</item>
+        <item name="android:textViewStyle">@style/RobotoTextViewStyle</item>
+        <item name="android:actionBarStyle">@style/MyTheme.ActionBarStyle</item>
+    </style>
+
 
     <style name="MyActionBarTabs"
            parent="Theme.AppCompat.Light">
@@ -20,14 +35,16 @@
 
     <style name="MyTheme.ActionBarStyle"
         parent="Widget.AppCompat.Light.ActionBar">
-        <!-- tab indicator -->
+        <!- tab indicator
+
+        <item name="android:background">@drawable/background_actionbar_line</item>
         <item name="android:titleTextStyle">@style/MyTheme.ActionBar.TitleTextStyle</item>
     </style>
     <style name="MyTheme.ActionBar.TitleTextStyle"
         parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
-        <!-- tab indicator -->
+        <!- tab indicator
         <item name="android:textColor">@color/ActionBarTitle</item>
-    </style>
+    </style>-->
 
 
 
