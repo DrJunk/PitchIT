@@ -493,7 +493,6 @@ public class MyPitch extends ActionBarActivity /*implements ActionBar.TabListene
                 sum+= Publisher.charAt(i);
             }
 
-
             sum *= sum;
             Integer temp = (CardArrayAdapter.matColors.get(sum % CardArrayAdapter.matColors.size()));
             return rootView;

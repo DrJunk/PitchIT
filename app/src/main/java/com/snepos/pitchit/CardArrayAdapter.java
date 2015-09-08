@@ -132,17 +132,7 @@ public class CardArrayAdapter  extends ArrayAdapter<Card> {
         {
             sum+= Publisher.getText().toString().charAt(i);
         }
-        //cardTop
         sum *= sum;
-       /* red= sum % 151;
-        green = sum % 152;
-        blue =sum % 154;
-        if (green < red &&green < blue )
-            green= green%2;
-        if (blue < green &&blue < red )
-            blue= blue%2;
-        if (red < green &&red < blue )
-            red= red%2;*/
         final Integer temp = (matColors.get(sum % matColors.size()));
         top.setBackgroundColor(new Integer(temp));
 

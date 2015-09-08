@@ -19,6 +19,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -42,8 +43,9 @@ public class MyPost extends ActionBarActivity {
     EditText head;
     TextView publisher;
     TextView bodyLeftLength;
+    LinearLayout top;
     private Menu _menu = null;
-
+    int sum;
     MyTimerTask task;
     final long seconds = 3;
     Timer timer;
@@ -84,6 +86,16 @@ public class MyPost extends ActionBarActivity {
         body = (EditText) findViewById(R.id.new_Body);
         publisher = (TextView) findViewById(R.id.new_publisher);
         publisher.setText(Login.GetUserNickname().toString());
+        top = (LinearLayout) findViewById(R.id.top_layout);
+
+        sum = 5000;
+        for (int i=0; i< publisher.length(); i++)
+        {
+            sum+= publisher.getText().toString().charAt(i);
+        }
+        sum *= sum;
+        final Integer temp = CardArrayAdapter.matColors.get(sum % CardArrayAdapter.matColors.size());
+        top.setBackgroundColor(new Integer(temp));
 
         bodyLeftLength = (TextView) findViewById(R.id.body_chars_left);
         task = new MyTimerTask();
