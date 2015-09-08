@@ -10,8 +10,8 @@
     <string name="action_example">Example action</string>
     <string name="action_refresh">Refresh</string>
     <string name="action_settings">Refresh</string>
-    <string name="body_hint">body</string>
-    <string name="head_hint">head</string>
+    <string name="body_hint">Write body...</string>
+    <string name="head_hint">Write head...</string>
     <string name="action_send">send</string>
     <string name="action_back">head</string>
     <string name="first_time">first</string>

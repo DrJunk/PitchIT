@@ -40,6 +40,7 @@ public class MyPost extends ActionBarActivity {
     Toolbar toolbar;
     EditText body;
     EditText head;
+    TextView publisher;
     TextView bodyLeftLength;
     private Menu _menu = null;
 
@@ -81,6 +82,8 @@ public class MyPost extends ActionBarActivity {
         setSupportActionBar(toolbar);
         head = (EditText) findViewById(R.id.new_Head);
         body = (EditText) findViewById(R.id.new_Body);
+        publisher = (TextView) findViewById(R.id.new_publisher);
+        publisher.setText(Login.GetUserNickname().toString());
 
         bodyLeftLength = (TextView) findViewById(R.id.body_chars_left);
         task = new MyTimerTask();

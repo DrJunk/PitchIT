@@ -11,6 +11,7 @@
     android:background="@color/ActionBarTitle">
 
     <ImageView
+        android:id="@+id/comment_image"
         android:layout_width="32dp"
         android:layout_height="32dp"
         android:src="@drawable/account_image"/>

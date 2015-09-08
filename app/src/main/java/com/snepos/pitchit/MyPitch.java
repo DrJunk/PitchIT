@@ -7,11 +7,17 @@ import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.BitmapShader;
+import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Path;
+import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Shader;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -472,7 +478,11 @@ public class MyPitch extends ActionBarActivity /*implements ActionBar.TabListene
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_account, container, false);
-            ImageView acountColor = (ImageView) rootView.findViewById(R.id.acount_color);
+            RoundImage roundedImage;
+            ImageView acountImage = (ImageView) rootView.findViewById(R.id.account_image);
+            Bitmap bm = BitmapFactory.decodeResource(getResources(), R.drawable.account_image);
+            roundedImage = new RoundImage(bm);
+            acountImage.setImageDrawable(roundedImage);
             TextView acountText = (TextView) rootView.findViewById(R.id.acount_text);
             String Publisher = Login.GetUserNickname().toString();
             if(Publisher!=null)
@@ -483,10 +493,9 @@ public class MyPitch extends ActionBarActivity /*implements ActionBar.TabListene
                 sum+= Publisher.charAt(i);
             }
 
-            //cardTop
+
             sum *= sum;
             Integer temp = (CardArrayAdapter.matColors.get(sum % CardArrayAdapter.matColors.size()));
-            acountColor.setBackgroundColor(temp);
             return rootView;
 
         }
@@ -502,6 +511,5 @@ public class MyPitch extends ActionBarActivity /*implements ActionBar.TabListene
 
         }
     }
-
 
 }
