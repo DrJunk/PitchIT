@@ -42,6 +42,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TableLayout;
@@ -206,10 +207,10 @@ public class MyPitch extends ActionBarActivity /*implements ActionBar.TabListene
                     case 2: // Refresh account's personal ideas list
                     {
                         JSONArray jsonArray = (JSONArray) inputMessage.obj;
-                        ExpandableIdea[] expandableIdeas = new ExpandableIdea[jsonArray.length()];
+                        IdeaData[] expandableIdeas = new IdeaData[jsonArray.length()];
                         for (int i = 0; i < expandableIdeas.length; i++) {
                             try {
-                                expandableIdeas[i] = new ExpandableIdea((JSONObject) jsonArray.get(i));
+                                expandableIdeas[i] = IdeaData.fromJSON((JSONObject) jsonArray.get(i));
                             } catch (Exception e) {
                                 System.out.println(e.getMessage());
                             }
@@ -221,10 +222,10 @@ public class MyPitch extends ActionBarActivity /*implements ActionBar.TabListene
                     case 3: // Refresh account's on it list
                     {
                         JSONArray jsonArray = (JSONArray) inputMessage.obj;
-                        ExpandableIdea[] expandableIdeas = new ExpandableIdea[jsonArray.length()];
+                        IdeaData[] expandableIdeas = new IdeaData[jsonArray.length()];
                         for (int i = 0; i < expandableIdeas.length; i++) {
                             try {
-                                expandableIdeas[i] = new ExpandableIdea((JSONObject) jsonArray.get(i));
+                                expandableIdeas[i] = IdeaData.fromJSON((JSONObject) jsonArray.get(i));
                             } catch (Exception e) {
                                 System.out.println(e.getMessage());
                             }
@@ -236,10 +237,10 @@ public class MyPitch extends ActionBarActivity /*implements ActionBar.TabListene
                     case 4: // Refresh account's on it list
                     {
                         JSONArray jsonArray = (JSONArray) inputMessage.obj;
-                        ExpandableIdea[] expandableIdeas = new ExpandableIdea[jsonArray.length()];
+                        IdeaData[] expandableIdeas = new IdeaData[jsonArray.length()];
                         for (int i = 0; i < expandableIdeas.length; i++) {
                             try {
-                                expandableIdeas[i] = new ExpandableIdea((JSONObject) jsonArray.get(i));
+                                expandableIdeas[i] = IdeaData.fromJSON((JSONObject) jsonArray.get(i));
                             } catch (Exception e) {
                                 System.out.println(e.getMessage());
                             }
@@ -626,13 +627,13 @@ public class MyPitch extends ActionBarActivity /*implements ActionBar.TabListene
 
             ImageView accountColor = (ImageView) rootView.findViewById(R.id.acount_color);
             TextView accountText = (TextView) rootView.findViewById(R.id.acount_text);
-            String Publisher = Login.GetUserNickname().toString();
-            if(Publisher!=null)
-                accountText.setText(Publisher.toString());
+            String publisher = Login.GetUserNickname();
+            if(publisher.length() > 0)
+                accountText.setText(publisher);
             int sum = 5000;
-            for (int i=0; i< Publisher.length(); i++)
+            for (int i=0; i< publisher.length(); i++)
             {
-                sum+= Publisher.charAt(i);
+                sum+= publisher.charAt(i);
             }
 
             mUserIdeasOnlySwitch = (SwitchCompat) rootView.findViewById(R.id.account_user_ideas_only_switch);
@@ -649,11 +650,11 @@ public class MyPitch extends ActionBarActivity /*implements ActionBar.TabListene
             accountColor.setBackgroundColor(temp);
 
             if(mOnItAdapter == null)
-                mOnItAdapter = new ExpandableIdeaAdapter(new ExpandableIdea[]{new ExpandableIdea("Empty")});
+                mOnItAdapter = new ExpandableIdeaAdapter(new IdeaData[0]);
             if(mUpVotedAdapter == null)
-                mUpVotedAdapter = new ExpandableIdeaAdapter(new ExpandableIdea[]{new ExpandableIdea("Empty")});
+                mUpVotedAdapter = new ExpandableIdeaAdapter(new IdeaData[0]);
             if(mUserIdeasAdapter == null)
-                mUserIdeasAdapter = new ExpandableIdeaAdapter(new ExpandableIdea[]{new ExpandableIdea("Empty")});
+                mUserIdeasAdapter = new ExpandableIdeaAdapter(new IdeaData[0]);
 
             // ON IT RecyclerView
             mOnItRecyclerView = (RecyclerView)rootView.findViewById(R.id.account_on_it_list);
@@ -676,21 +677,21 @@ public class MyPitch extends ActionBarActivity /*implements ActionBar.TabListene
         public static ExpandableIdeaAdapter getOnItAdapter()
         {
             if(mOnItAdapter == null)
-                mOnItAdapter = new ExpandableIdeaAdapter(new ExpandableIdea[]{new ExpandableIdea("Empty")});
+                mOnItAdapter = new ExpandableIdeaAdapter(new IdeaData[0]);
             return mOnItAdapter;
         }
 
         public static ExpandableIdeaAdapter getUpVotedAdapter()
         {
             if(mUpVotedAdapter == null)
-                mUpVotedAdapter = new ExpandableIdeaAdapter(new ExpandableIdea[]{new ExpandableIdea("Empty")});
+                mUpVotedAdapter = new ExpandableIdeaAdapter(new IdeaData[0]);
             return mUpVotedAdapter;
         }
 
         public static ExpandableIdeaAdapter getUserIdeasAdapter()
         {
             if(mUserIdeasAdapter == null)
-                mUserIdeasAdapter = new ExpandableIdeaAdapter(new ExpandableIdea[]{new ExpandableIdea("Empty")});
+                mUserIdeasAdapter = new ExpandableIdeaAdapter(new IdeaData[0]);
             return mUserIdeasAdapter;
         }
 

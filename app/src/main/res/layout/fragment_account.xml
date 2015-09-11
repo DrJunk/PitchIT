@@ -11,7 +11,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="20dp"
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp"
         android:orientation="vertical">
 
         <LinearLayout
@@ -103,6 +104,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="30sp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
             android:orientation="vertical">
 
             <TextView
@@ -147,7 +150,7 @@
         <LinearLayout
             android:id="@+id/account_on_it_section"
             android:layout_gravity="start"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:textSize="30sp">
@@ -158,14 +161,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="ON IT"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
                 android:textSize="30sp"
                 />
 
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/account_on_it_list"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="100dp"
+                android:layout_marginTop="10dp"
                 >
 
             </android.support.v7.widget.RecyclerView>
@@ -176,7 +182,7 @@
             android:id="@+id/account_up_voted_section"
             android:layout_marginTop="10dp"
             android:layout_gravity="start"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:textSize="30sp">
@@ -187,6 +193,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Up voted"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
                 android:textSize="30sp"
                 />
 
@@ -194,12 +202,16 @@
                 android:id="@+id/account_user_ideas_only_switch"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
                 android:text="Show your ideas only "/>
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/account_up_voted_list"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="100dp"
+                android:layout_marginTop="10dp"
+                android:scrollbars="vertical"
                 >
 
             </android.support.v7.widget.RecyclerView>

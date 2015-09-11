@@ -1,5 +1,6 @@
 package com.snepos.pitchit;
 
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -12,7 +13,7 @@ import android.view.ViewGroup;
 public class ExpandableIdeaLayoutManager extends LinearLayoutManager
 {
     public  ExpandableIdeaLayoutManager(Context context)
-    { super(context); }
+    { super(context, VERTICAL, false); }
 
     private int[] mMeasuredDimension = new int[2];
 
@@ -29,6 +30,8 @@ public class ExpandableIdeaLayoutManager extends LinearLayoutManager
 
             height = height + mMeasuredDimension[1];
         }
+        mMeasuredDimension[0] = widthSpec;
+        mMeasuredDimension[1] = height;
 
         setMeasuredDimension(widthSpec, height);
     }
