@@ -79,7 +79,6 @@
             android:text="Head"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:textAllCaps="true"
             android:id="@+id/HeadName"
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"

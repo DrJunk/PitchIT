@@ -109,6 +109,9 @@ public class MyPitchResponseHandler {
                 System.out.println("myIdeas: " + myIdeas.toString());
                 System.out.println("upVotedIdeas: " + upVotedIdeas.toString());
                 System.out.println("onItVotedIdeas: " + onItVotedIdeas.toString());
+                handler.obtainMessage(2, myIdeas).sendToTarget();
+                handler.obtainMessage(3, upVotedIdeas).sendToTarget();
+                handler.obtainMessage(4, onItVotedIdeas).sendToTarget();
             }
             catch (Exception e)
             {

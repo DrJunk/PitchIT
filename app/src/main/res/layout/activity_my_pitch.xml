@@ -50,14 +50,14 @@
 
         <ImageButton
             android:radius="1dp"
-            android:layout_margin="8dp"
-            android:layout_width="76dp"
-            android:layout_height="76dp"
+            android:layout_margin="16dp"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
             android:elevation="4dp"
             android:src="@drawable/ic_action"
             android:background="@drawable/circle"
             android:id="@+id/button_add"
-            android:layout_gravity="right|bottom" />
+            android:layout_gravity="end|bottom" />
     <FrameLayout
         android:id="@+id/container"
         android:layout_width="match_parent"

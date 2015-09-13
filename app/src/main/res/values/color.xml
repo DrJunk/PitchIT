@@ -3,6 +3,7 @@
     <color name="mycolor">#BE3A27</color>
     <color name="ColorPrimary">#F44336</color>
     <color name="ColorPrimaryDark">#C62828</color>
+    <color name="ColorAccent">#0BBCC9</color>
     <color name="tabsScrollColor">#99cccccc</color>
     <color name="ActionBarTitleNotPressed">#cccccc</color>
     <color name="ActionBarTitle">#ffffff</color>

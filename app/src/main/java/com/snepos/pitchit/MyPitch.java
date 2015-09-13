@@ -14,11 +14,15 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.PorterDuff;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Shader;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.LayerDrawable;
+import android.graphics.drawable.ShapeDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -30,6 +34,10 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SwitchCompat;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Gravity;
@@ -43,9 +51,11 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.Switch;
+import android.widget.ScrollView;
 import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -55,6 +65,9 @@ import com.snepos.pitchit.database.Database;
 import com.snepos.pitchit.database.IdeaData;
 import com.snepos.pitchit.database.Response;
 import com.snepos.pitchit.sqliteHelpers.DatabaseHandler;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 //import android.support.v7.widget.Toolbar;
 
@@ -133,6 +146,7 @@ public class MyPitch extends ActionBarActivity /*implements ActionBar.TabListene
 
         tabs.setViewPager(pager);
         // Animation test:
+
         canRefresh = true;
 
         mSwipeRefreshLayout = (PitchSwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
@@ -184,7 +198,7 @@ public class MyPitch extends ActionBarActivity /*implements ActionBar.TabListene
                                 break;
                         }
                         if (data != null) {
-                            CardArrayAdapter cardArrayAdapter = new CardArrayAdapter(MyPitch.this.getApplicationContext(), R.layout.pitch_item,MyPitch.this);
+                            CardArrayAdapter cardArrayAdapter = new CardArrayAdapter(MyPitch.this.getApplicationContext(), R.layout.pitch_item, MyPitch.this);
 
                             Card[] cards = new Card[data.length];
                             for (int i = 0; i < data.length; i++) {
@@ -202,6 +216,51 @@ public class MyPitch extends ActionBarActivity /*implements ActionBar.TabListene
                             System.err.println("Error: 'data' is null(" + inputMessage.what + ")");
                         }
                         break;
+                    case 2: // Refresh account's personal ideas list
+                    {
+                        JSONArray jsonArray = (JSONArray) inputMessage.obj;
+                        IdeaData[] expandableIdeas = new IdeaData[jsonArray.length()];
+                        for (int i = 0; i < expandableIdeas.length; i++) {
+                            try {
+                                expandableIdeas[i] = IdeaData.fromJSON((JSONObject) jsonArray.get(i));
+                            } catch (Exception e) {
+                                System.out.println(e.getMessage());
+                            }
+                        }
+                        AccountFragment.getUserIdeasAdapter().refreshDataset(expandableIdeas);
+                        AccountFragment.getUserIdeasAdapter().notifyDataSetChanged();
+                        break;
+                    }
+                    case 3: // Refresh account's on it list
+                    {
+                        JSONArray jsonArray = (JSONArray) inputMessage.obj;
+                        IdeaData[] expandableIdeas = new IdeaData[jsonArray.length()];
+                        for (int i = 0; i < expandableIdeas.length; i++) {
+                            try {
+                                expandableIdeas[i] = IdeaData.fromJSON((JSONObject) jsonArray.get(i));
+                            } catch (Exception e) {
+                                System.out.println(e.getMessage());
+                            }
+                        }
+                        AccountFragment.getUpVotedAdapter().refreshDataset(expandableIdeas);
+                        AccountFragment.getUpVotedAdapter().notifyDataSetChanged();
+                        break;
+                    }
+                    case 4: // Refresh account's on it list
+                    {
+                        JSONArray jsonArray = (JSONArray) inputMessage.obj;
+                        IdeaData[] expandableIdeas = new IdeaData[jsonArray.length()];
+                        for (int i = 0; i < expandableIdeas.length; i++) {
+                            try {
+                                expandableIdeas[i] = IdeaData.fromJSON((JSONObject) jsonArray.get(i));
+                            } catch (Exception e) {
+                                System.out.println(e.getMessage());
+                            }
+                        }
+                        AccountFragment.getOnItAdapter().refreshDataset(expandableIdeas);
+                        AccountFragment.getOnItAdapter().notifyDataSetChanged();
+                        break;
+                    }
                 }
             }
         };
@@ -228,8 +287,6 @@ public class MyPitch extends ActionBarActivity /*implements ActionBar.TabListene
 
             }
         });
-
-
     }
 
 
@@ -297,7 +354,6 @@ public class MyPitch extends ActionBarActivity /*implements ActionBar.TabListene
             }, REFRESH_DELTA_LENGTH);
         }
     }
-
 
     public class ViewPagerAdapter extends FragmentStatePagerAdapter {
 
@@ -489,29 +545,118 @@ public class MyPitch extends ActionBarActivity /*implements ActionBar.TabListene
     }
     public static class AccountFragment extends GeneralPitchFragment {
 
+        ScrollView mScrollView;
+
+        RecyclerView mOnItRecyclerView;
+        ExpandableIdeaLayoutManager mOnItLayoutManager;
+        private static ExpandableIdeaAdapter mOnItAdapter;
+
+        static RecyclerView mUpVotedRecyclerView;
+        ExpandableIdeaLayoutManager mUpVotedLayoutManager;
+        private static ExpandableIdeaAdapter mUpVotedAdapter;
+        private static ExpandableIdeaAdapter mUserIdeasAdapter;
+
+        private static boolean mShowOnlyUserIdeas = false;
+
+        SwitchCompat mUserIdeasOnlySwitch;
+
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_account, container, false);
+
+
             RoundImage roundedImage;
             ImageView acountImage = (ImageView) rootView.findViewById(R.id.account_image);
             Bitmap bm = BitmapFactory.decodeResource(getResources(), R.drawable.account_image);
             roundedImage = new RoundImage(bm);
             acountImage.setImageDrawable(roundedImage);
-            TextView acountText = (TextView) rootView.findViewById(R.id.acount_text);
-            String Publisher = Login.GetUserNickname().toString();
-            if(Publisher!=null)
-                acountText.setText(Publisher.toString());
-            int sum = 5000;
-            for (int i=0; i< Publisher.length(); i++)
-            {
-                sum+= Publisher.charAt(i);
-            }
 
+            mScrollView = (ScrollView)rootView.findViewById(R.id.account_scroll_view);
+
+            ImageView accountColor = (ImageView) rootView.findViewById(R.id.acount_color);
+            TextView accountText = (TextView) rootView.findViewById(R.id.acount_text);
+            String publisher = Login.GetUserNickname();
+            if(publisher.length() > 0)
+                accountText.setText(publisher);
+
+            int sum = 5000;
+            for (int i=0; i< publisher.length(); i++)
+            {
+                sum+= publisher.charAt(i);
+            }
             sum *= sum;
             Integer temp = (CardArrayAdapter.matColors.get(sum % CardArrayAdapter.matColors.size()));
-            return rootView;
+            ((GradientDrawable)accountColor.getBackground()).setColor(temp);
+            accountColor.getBackground().setAlpha(100);
 
+            mUserIdeasOnlySwitch = (SwitchCompat) rootView.findViewById(R.id.account_user_ideas_only_switch);
+            mUserIdeasOnlySwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    setShowOnlyUserIdeas(isChecked);
+                }
+            });
+
+            if(mOnItAdapter == null)
+                mOnItAdapter = new ExpandableIdeaAdapter(new IdeaData[0]);
+            if(mUpVotedAdapter == null)
+                mUpVotedAdapter = new ExpandableIdeaAdapter(new IdeaData[0]);
+            if(mUserIdeasAdapter == null)
+                mUserIdeasAdapter = new ExpandableIdeaAdapter(new IdeaData[0]);
+
+            // ON IT RecyclerView
+            mOnItRecyclerView = (RecyclerView)rootView.findViewById(R.id.account_on_it_list);
+            mOnItLayoutManager = new ExpandableIdeaLayoutManager(getActivity().getApplicationContext(), mOnItRecyclerView);
+            mOnItRecyclerView.setLayoutManager(mOnItLayoutManager);
+            mOnItRecyclerView.setAdapter(mOnItAdapter);
+
+            // Up voted RecyclerView
+            mUpVotedRecyclerView = (RecyclerView)rootView.findViewById(R.id.account_up_voted_list);
+            mUpVotedLayoutManager = new ExpandableIdeaLayoutManager(getActivity().getApplicationContext(), mUpVotedRecyclerView);
+            mUpVotedRecyclerView.setLayoutManager(mUpVotedLayoutManager);
+            if(mShowOnlyUserIdeas)
+                mUpVotedRecyclerView.setAdapter(mUserIdeasAdapter);
+            else
+                mUpVotedRecyclerView.setAdapter(mUpVotedAdapter);
+
+            return rootView;
+        }
+
+        public static ExpandableIdeaAdapter getOnItAdapter()
+        {
+            if(mOnItAdapter == null)
+                mOnItAdapter = new ExpandableIdeaAdapter(new IdeaData[0]);
+            return mOnItAdapter;
+        }
+
+        public static ExpandableIdeaAdapter getUpVotedAdapter()
+        {
+            if(mUpVotedAdapter == null)
+                mUpVotedAdapter = new ExpandableIdeaAdapter(new IdeaData[0]);
+            return mUpVotedAdapter;
+        }
+
+        public static ExpandableIdeaAdapter getUserIdeasAdapter()
+        {
+            if(mUserIdeasAdapter == null)
+                mUserIdeasAdapter = new ExpandableIdeaAdapter(new IdeaData[0]);
+            return mUserIdeasAdapter;
+        }
+
+        public static void setShowOnlyUserIdeas(boolean value)
+        {
+            mShowOnlyUserIdeas = value;
+            if(mShowOnlyUserIdeas)
+                mUpVotedRecyclerView.setAdapter(mUserIdeasAdapter);
+            else
+                mUpVotedRecyclerView.setAdapter(mUpVotedAdapter);
+        }
+
+        @Override
+        public boolean canScrollUp()
+        {
+            return mScrollView.getScrollY() > 0;
         }
     }
 
@@ -525,5 +670,4 @@ public class MyPitch extends ActionBarActivity /*implements ActionBar.TabListene
 
         }
     }
-
 }
