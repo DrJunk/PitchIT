@@ -658,13 +658,13 @@ public class MyPitch extends ActionBarActivity /*implements ActionBar.TabListene
 
             // ON IT RecyclerView
             mOnItRecyclerView = (RecyclerView)rootView.findViewById(R.id.account_on_it_list);
-            mOnItLayoutManager = new ExpandableIdeaLayoutManager(getActivity().getApplicationContext());
+            mOnItLayoutManager = new ExpandableIdeaLayoutManager(getActivity().getApplicationContext(), mOnItRecyclerView);
             mOnItRecyclerView.setLayoutManager(mOnItLayoutManager);
             mOnItRecyclerView.setAdapter(mOnItAdapter);
 
             // Up voted RecyclerView
             mUpVotedRecyclerView = (RecyclerView)rootView.findViewById(R.id.account_up_voted_list);
-            mUpVotedLayoutManager = new ExpandableIdeaLayoutManager(getActivity().getApplicationContext());
+            mUpVotedLayoutManager = new ExpandableIdeaLayoutManager(getActivity().getApplicationContext(), mUpVotedRecyclerView);
             mUpVotedRecyclerView.setLayoutManager(mUpVotedLayoutManager);
             if(mShowOnlyUserIdeas)
                 mUpVotedRecyclerView.setAdapter(mUserIdeasAdapter);

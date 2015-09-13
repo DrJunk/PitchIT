@@ -23,6 +23,7 @@ public class LayoutAnimator {
         public void onAnimationUpdate(ValueAnimator animation) {
             final ViewGroup.LayoutParams lp = _view.getLayoutParams();
             lp.height = (int) animation.getAnimatedValue();
+            System.out.println("Test h: " + _view.getHeight());
             _view.setLayoutParams(lp);
         }
     }
