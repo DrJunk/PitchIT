@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">PitchIt</string>
-    <string name="title_section1">PitchIt</string>
+    <string name="app_name"> PitchIt</string>
+    <string name="title_section1"> PitchIt</string>
     <string name="title_section2">tutorial</string>
     <string name="title_section3">Section 3</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -10,8 +10,8 @@
     <string name="action_example">Example action</string>
     <string name="action_refresh">Refresh</string>
     <string name="action_settings">Refresh</string>
-    <string name="body_hint">body</string>
-    <string name="head_hint">head</string>
+    <string name="body_hint">Write body...</string>
+    <string name="head_hint">Write head...</string>
     <string name="action_send">send</string>
     <string name="action_back">head</string>
     <string name="first_time">first</string>

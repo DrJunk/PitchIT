@@ -19,6 +19,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -40,9 +41,11 @@ public class MyPost extends ActionBarActivity {
     Toolbar toolbar;
     EditText body;
     EditText head;
+    TextView publisher;
     TextView bodyLeftLength;
+    LinearLayout top;
     private Menu _menu = null;
-
+    int sum;
     MyTimerTask task;
     final long seconds = 3;
     Timer timer;
@@ -77,9 +80,22 @@ public class MyPost extends ActionBarActivity {
         toolbar = (Toolbar) findViewById(R.id.tool_bar);
         toolbar.setLogo(R.drawable.icon);
         toolbar.setTitleTextColor(Color.parseColor("#ffffff"));
+        toolbar.setTitle(" PitchIt");
         setSupportActionBar(toolbar);
         head = (EditText) findViewById(R.id.new_Head);
         body = (EditText) findViewById(R.id.new_Body);
+        publisher = (TextView) findViewById(R.id.new_publisher);
+        publisher.setText(Login.GetUserNickname().toString());
+        top = (LinearLayout) findViewById(R.id.top_layout);
+
+        sum = 5000;
+        for (int i=0; i< publisher.length(); i++)
+        {
+            sum+= publisher.getText().toString().charAt(i);
+        }
+        sum *= sum;
+        final Integer temp = CardArrayAdapter.matColors.get(sum % CardArrayAdapter.matColors.size());
+        top.setBackgroundColor(new Integer(temp));
 
         bodyLeftLength = (TextView) findViewById(R.id.body_chars_left);
         task = new MyTimerTask();

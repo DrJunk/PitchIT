@@ -7,11 +7,17 @@ import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.BitmapShader;
+import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Path;
+import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Shader;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -36,6 +42,7 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Switch;
@@ -70,7 +77,7 @@ public class MyPitch extends ActionBarActivity /*implements ActionBar.TabListene
     PitchSwipeRefreshLayout mSwipeRefreshLayout;
 
     Context context;
-    Button FAB;
+    ImageButton FAB;
 
 
     private CharSequence mTitle;
@@ -89,6 +96,7 @@ public class MyPitch extends ActionBarActivity /*implements ActionBar.TabListene
         toolbar = (Toolbar) findViewById(R.id.tool_bar);
         toolbar.setLogo(R.drawable.icon);
         toolbar.setTitleTextColor(Color.parseColor("#ffffff"));
+        toolbar.setTitle(" PitchIt");
         setSupportActionBar(toolbar);
 
         adapter =  new ViewPagerAdapter(getSupportFragmentManager(),Titles,Numboftabs);
@@ -211,7 +219,7 @@ public class MyPitch extends ActionBarActivity /*implements ActionBar.TabListene
         mTitle = getTitle();
         context= this;
 
-        FAB = (Button) findViewById(R.id.button_add);
+        FAB = (ImageButton) findViewById(R.id.button_add);
         FAB.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -290,65 +298,7 @@ public class MyPitch extends ActionBarActivity /*implements ActionBar.TabListene
         }
     }
 
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-    /*
-    public static class AppSectionsPagerAdapter extends FragmentPagerAdapter {
-        private GeneralPitchFragment[] pitchFragments;
 
-        public AppSectionsPagerAdapter(android.support.v4.app.FragmentManager fm) {
-            super(fm);
-            pitchFragments = new GeneralPitchFragment[4];
-        }
-
-        public GeneralPitchFragment getPitchFragment(int i)
-        {
-            return pitchFragments[i];
-        }
-
-        @Override
-        public android.support.v4.app.Fragment getItem(int i) {
-            switch (i) {
-                case 0:
-                    pitchFragments[i] = new HotFragment();
-                    return pitchFragments[i];
-                case 1:
-                    pitchFragments[i] = new TrendingFragment();
-                    return pitchFragments[i];
-                case 2:
-                    pitchFragments[i] = new NewFragment();
-                    return pitchFragments[i];
-                case 3:
-                    pitchFragments[i] = new AcountFragment();
-                    return pitchFragments[i];
-                default:
-                    return new ErrorFragment();
-            }
-        }
-
-        @Override
-        public int getCount() {
-            return 4;
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            switch (position)
-            {
-                case 0:
-                    return " popular";
-                case 1:
-                    return " growing";
-                case 2:
-                    return " new";
-                case 3:
-                    return  " profile";
-            }
-            return "Section " + (position + 1);
-        }
-    }
-*/
     public class ViewPagerAdapter extends FragmentStatePagerAdapter {
 
         CharSequence Titles[]; // This will Store the Titles of the Tabs which are Going to be passed when ViewPagerAdapter is created
@@ -385,18 +335,7 @@ public class MyPitch extends ActionBarActivity /*implements ActionBar.TabListene
                 default:
                     return new ErrorFragment();
             }
-            /*
-            if(position == 0) // if the position is 0 we are returning the First tab
-            {
-                Tab1 tab1 = new Tab1();
-                return tab1;
-            }
-            else             // As we are having 2 tabs if the position is now 0 it must be 1 so we are returning second tab
-            {
-                Tab2 tab2 = new Tab2();
-                return tab2;
-            }
-            */
+
 
         }
         public GeneralPitchFragment getPitchFragment(int i)
@@ -404,7 +343,6 @@ public class MyPitch extends ActionBarActivity /*implements ActionBar.TabListene
             return pitchFragments[i];
         }
 
-        // This method return the titles for the Tabs in the Tab Strip
 
         @Override
         public CharSequence getPageTitle(int position) {
@@ -555,7 +493,11 @@ public class MyPitch extends ActionBarActivity /*implements ActionBar.TabListene
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_account, container, false);
-            ImageView acountColor = (ImageView) rootView.findViewById(R.id.acount_color);
+            RoundImage roundedImage;
+            ImageView acountImage = (ImageView) rootView.findViewById(R.id.account_image);
+            Bitmap bm = BitmapFactory.decodeResource(getResources(), R.drawable.account_image);
+            roundedImage = new RoundImage(bm);
+            acountImage.setImageDrawable(roundedImage);
             TextView acountText = (TextView) rootView.findViewById(R.id.acount_text);
             String Publisher = Login.GetUserNickname().toString();
             if(Publisher!=null)
@@ -566,10 +508,8 @@ public class MyPitch extends ActionBarActivity /*implements ActionBar.TabListene
                 sum+= Publisher.charAt(i);
             }
 
-            //cardTop
             sum *= sum;
             Integer temp = (CardArrayAdapter.matColors.get(sum % CardArrayAdapter.matColors.size()));
-            acountColor.setBackgroundColor(temp);
             return rootView;
 
         }
@@ -585,6 +525,5 @@ public class MyPitch extends ActionBarActivity /*implements ActionBar.TabListene
 
         }
     }
-
 
 }

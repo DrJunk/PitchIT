@@ -2,6 +2,7 @@ package com.snepos.pitchit;
 
 import android.annotation.TargetApi;
 import android.app.ActionBar;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -19,6 +21,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.snepos.pitchit.database.HttpHandler;
@@ -34,9 +37,11 @@ import java.util.Queue;
 public class Comments extends ActionBarActivity {
     private static Handler mHandler;
     private int postId;
+    Toolbar toolbar;
     CommentArrayAdapter commentArrayAdapter;
     ListView listView;
     String mTitle;
+    TextView noComment;
     ImageButton send;
     EditText newComment;
     int idea_id;
@@ -48,11 +53,15 @@ public class Comments extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_comments);
-        final ActionBar actionBar = getActionBar();
-        actionBar.setBackgroundDrawable(new ColorDrawable(0xFFBE3A27));
-        actionBar.setIcon(R.drawable.icon);
+        toolbar = (Toolbar) findViewById(R.id.tool_bar);
+        toolbar.setLogo(R.drawable.icon);
+        toolbar.setTitleTextColor(Color.parseColor("#ffffff"));
+        toolbar.setTitle(" PitchIt");
+        setSupportActionBar(toolbar);
 
-        commentArrayAdapter = new CommentArrayAdapter(getApplicationContext(), R.layout.comment_item);
+        noComment = (TextView)findViewById(R.id.no_comment);
+
+        commentArrayAdapter = new CommentArrayAdapter(getApplicationContext(), R.layout.comment_item,getResources());
 
         idea_id = getIntent().getIntExtra("idea_id", -1);
         if(idea_id == -1)
@@ -130,6 +139,15 @@ public class Comments extends ActionBarActivity {
             commentArrayAdapter.add(comments[i]);
         }
         listView.setAdapter(commentArrayAdapter);
+        if(commentArrayAdapter.getCount()==0)
+        {
+           noComment.setVisibility(View.VISIBLE);
+        }
+        else
+        {
+            noComment.setVisibility(View.INVISIBLE);
+        }
+
     }
 
     public static void HandleResponse(Response response)
@@ -143,28 +161,15 @@ public class Comments extends ActionBarActivity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.comment_menu, menu);
 
-        /*mRefreshItem = menu.findItem(R.id.action_refresh);
-        if(refreshing){
-            mRefreshItem.setActionView(mRefresh);
-            mRefresh.startAnimation(mRotate);
-        }*/
 
-        restoreActionBar();
+
         return true;
 
     }
-    public void restoreActionBar() {
-        ActionBar actionBar = getActionBar();
-        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
-        actionBar.setDisplayShowTitleEnabled(true);
-        actionBar.setTitle(mTitle);
-    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        // Handle presses on the action bar items
+
         switch (item.getItemId()) {
             case R.id.action_back:
                 finish();
