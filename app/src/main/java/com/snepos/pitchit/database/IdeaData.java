@@ -30,11 +30,11 @@ public class IdeaData {
         try {
             res.title = json.getString("title");
             res.text = json.getString("text");
-            res.publisherName = json.getString("user__nick_name");
             res.upVotes = json.getInt("up_votes");
             res.spamVotes = json.getInt("spam_votes");
             res.imOnItVotes = json.getInt("on_it_votes");
             res.id = json.getInt("id");
+            res.publisherName = json.getString("user__nick_name");
         }
         catch(Exception e)
         {

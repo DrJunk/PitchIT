@@ -218,17 +218,21 @@ public class MyPitch extends ActionBarActivity /*implements ActionBar.TabListene
                         break;
                     case 2: // Refresh account's personal ideas list
                     {
+                        int totalUpVotes = 0;
                         JSONArray jsonArray = (JSONArray) inputMessage.obj;
                         IdeaData[] expandableIdeas = new IdeaData[jsonArray.length()];
                         for (int i = 0; i < expandableIdeas.length; i++) {
                             try {
                                 expandableIdeas[i] = IdeaData.fromJSON((JSONObject) jsonArray.get(i));
+                                expandableIdeas[i].publisherName = Login.GetUserNickname();
+                                totalUpVotes += expandableIdeas[i].upVotes;
                             } catch (Exception e) {
                                 System.out.println(e.getMessage());
                             }
                         }
                         AccountFragment.getUserIdeasAdapter().refreshDataset(expandableIdeas);
                         AccountFragment.getUserIdeasAdapter().notifyDataSetChanged();
+                        AccountFragment.updateStatistics(expandableIdeas.length, totalUpVotes);
                         break;
                     }
                     case 3: // Refresh account's on it list
@@ -560,11 +564,16 @@ public class MyPitch extends ActionBarActivity /*implements ActionBar.TabListene
 
         SwitchCompat mUserIdeasOnlySwitch;
 
+        static int mTotalIdeasCounter;
+        static int mTotalUpVotesCounter;
+
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_account, container, false);
 
+            ((TextView) rootView.findViewById(R.id.account_statistics_totalIdeas)).setText("Total ideas: " + mTotalIdeasCounter);
+            ((TextView) rootView.findViewById(R.id.account_statistics_totalUpVotes)).setText("Total up votes: " + mTotalUpVotesCounter);
 
             RoundImage roundedImage;
             ImageView acountImage = (ImageView) rootView.findViewById(R.id.account_image);
@@ -621,6 +630,12 @@ public class MyPitch extends ActionBarActivity /*implements ActionBar.TabListene
                 mUpVotedRecyclerView.setAdapter(mUpVotedAdapter);
 
             return rootView;
+        }
+
+        public static void updateStatistics(int totalIdeas, int totalUpVotes)
+        {
+            mTotalIdeasCounter = totalIdeas;
+            mTotalUpVotesCounter = totalUpVotes;
         }
 
         public static ExpandableIdeaAdapter getOnItAdapter()
