@@ -12,5 +12,7 @@
         android:cacheColorHint="@android:color/transparent"
         android:background="@color/backgroundcolor"
         android:divider="@null"
-        android:dividerHeight="10dp" />
+        android:dividerHeight="10dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"/>
 </LinearLayout>

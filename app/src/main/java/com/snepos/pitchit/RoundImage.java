@@ -7,6 +7,7 @@ package com.snepos.pitchit;
 import android.graphics.Bitmap;
 import android.graphics.BitmapShader;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.ColorFilter;
 import android.graphics.Paint;
 import android.graphics.PixelFormat;
@@ -28,11 +29,17 @@ public class RoundImage extends Drawable {
         mPaint = new Paint();
         mPaint.setAntiAlias(true);
         mPaint.setDither(true);
+        mPaint.setColor(Color.BLUE);
         final BitmapShader shader = new BitmapShader(bitmap, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP);
         mPaint.setShader(shader);
 
         mBitmapWidth = mBitmap.getWidth();
         mBitmapHeight = mBitmap.getHeight();
+    }
+
+    public void setColor(int color)
+    {
+        mPaint.setColor(color);
     }
 
     @Override
