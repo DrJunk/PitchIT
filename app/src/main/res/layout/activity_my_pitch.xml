@@ -24,10 +24,6 @@
 
 
 
-
-
-
-
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -47,13 +43,21 @@
             android:layout_height="match_parent"
             tools:context=".MyActivity"/>
         </com.snepos.pitchit.PitchSwipeRefreshLayout>
+        <ImageView
+            android:scaleType="centerCrop"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:elevation="4dp"
+            android:src="@drawable/tst1"
+            android:id="@+id/tutorial_float_image"
+            android:layout_gravity="center" />
 
         <ImageButton
             android:radius="1dp"
             android:layout_margin="8dp"
             android:layout_width="76dp"
             android:layout_height="76dp"
-            android:elevation="4dp"
+            android:elevation="3dp"
             android:src="@drawable/ic_action"
             android:background="@drawable/circle"
             android:id="@+id/button_add"
@@ -65,12 +69,7 @@
        />
 
 
-
-
-
-
         </FrameLayout>
-
 
 
 </LinearLayout>
