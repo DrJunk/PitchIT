@@ -14,7 +14,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ScrollView;
 
-public class FragmentTutorial extends Fragment {
+public class FragmentWelcome extends Fragment {
     int position;
     ScrollView scrollView;
     ImageView img;
@@ -22,9 +22,9 @@ public class FragmentTutorial extends Fragment {
 
 
 
-    public static final FragmentTutorial newInstance(int num)
+    public static final FragmentWelcome newInstance(int num)
     {
-        FragmentTutorial f = new FragmentTutorial();
+        FragmentWelcome f = new FragmentWelcome();
         Bundle bdl = new Bundle(2);
         bdl.putInt("position", num);
         f.setArguments(bdl);

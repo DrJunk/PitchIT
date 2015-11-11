@@ -17,7 +17,7 @@
         android:dividerHeight="0dp"
         android:divider="@null"
         android:orientation="vertical"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/card_background"
         android:layout_gravity="left|top"
@@ -27,7 +27,7 @@
         android:dividerHeight="0dp"
         android:divider="@null"
         android:orientation="vertical"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="80dp"
         android:background="@drawable/card_background"
         android:layout_gravity="center_horizontal|top"
@@ -62,7 +62,7 @@
         android:dividerHeight="0dp"
         android:divider="@null"
         android:orientation="vertical"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/card_background"
         android:layout_gravity="center_horizontal|top"
@@ -145,103 +145,124 @@
 
 
         <LinearLayout
-            android:layout_marginLeft="12dp"
-            android:layout_marginRight="12dp"
-            android:layout_alignParentLeft="true"
-            android:id="@+id/SuperInnerLayout"
-            android:layout_marginTop="10dp"
-            android:dividerHeight="0dp"
-            android:divider="@null"
+        android:layout_alignParentLeft="true"
+        android:id="@+id/SuperInnerLayout"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:dividerHeight="0dp"
+        android:divider="@null"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="32dp"
+        android:layout_gravity="left|top"
+        android:visibility="visible"
+        android:showDividers="none">
+
+            <LinearLayout
+            android:id="@+id/buttombar1"
             android:orientation="horizontal"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="left|top"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:visibility="visible"
+            android:showDividers="none"
+            android:layout_weight="1.0">
+
+                <ImageButton
+                android:layout_alignParentLeft="true"
+                android:layout_width="20dp"
+                android:layout_height="30dp"
+                android:background="@drawable/bulb_on"
+                android:id="@+id/button_liked"/>
+
+
+                <TextView
+                android:layout_alignLeft="@+id/button_liked"
+                android:dividerHeight="0dp"
+                android:divider="@null"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="1" android:textSize="13dp"
+                android:id="@+id/up_votes"
+                android:layout_marginLeft="10dp"
+                android:textColor="#ff231f20"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+            android:layout_weight="1.0"
+            android:id="@+id/buttombar2"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
             android:visibility="visible"
             android:showDividers="none">
-            <ImageButton
-             android:layout_alignParentLeft="true"
-             android:dividerHeight="0dp"
-             android:divider="@null"
-             android:layout_marginLeft="5dp"
-             android:layout_width="20dp"
-             android:layout_height="30dp"
-             android:background="@drawable/bulb_on"
-             android:id="@+id/button_liked"
-             android:layout_gravity="left|top" />
 
+                <ImageButton
+                android:dividerHeight="0dp"
+                android:divider="@null"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@drawable/on_it_button_off"
+                android:id="@+id/button_OnIt"
+                />
 
-            <TextView
-
-            android:layout_alignLeft="@+id/button_liked"
-            android:dividerHeight="0dp"
-            android:divider="@null"
-            android:layout_width="50dp"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="1" android:textSize="13dp"
-            android:id="@+id/up_votes"
-            android:layout_marginLeft="10dp"
-            android:textColor="#ff231f20"
-            />
-
-
-
-        <ImageButton
-            android:dividerHeight="0dp"
-            android:divider="@null"
-            android:layout_marginTop="-7dp"
-            android:layout_marginLeft="0dp"
-            android:layout_width="46dp"
-            android:layout_height="46dp"
-            android:background="@drawable/on_it_button_off"
-            android:id="@+id/button_OnIt"
-            android:layout_gravity="left|top"
-            android:gravity="right"
-            />
                 <TextView
-                    android:layout_marginLeft="0dp"
-                    android:layout_alignLeft="@+id/button_OnIt"
-                    android:layout_marginRight="40dp"
-                    android:dividerHeight="0dp"
-                    android:divider="@null"
-                    android:layout_width="50dp"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="0"
-                    android:textSize="13dp"
-                    android:id="@+id/on_it_votes"
-                    android:layout_gravity="left|top"
-                    android:textColor="#ff231f20" />
+                android:layout_alignLeft="@+id/button_OnIt"
+                android:dividerHeight="0dp"
+                android:divider="@null"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="0"
+                android:textSize="13dp"
+                android:id="@+id/on_it_votes"
+                android:textColor="#ff231f20" />
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_weight="1.0"
+                android:id="@+id/buttombar3"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:visibility="visible"
+                android:showDividers="none">
+
                 <ImageButton
                     android:layout_alignLeft="@+id/up_votes"
                     android:dividerHeight="0dp"
                     android:divider="@null"
-                    android:layout_marginLeft="-40dp"
-                    android:layout_marginTop="-4dp"
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
                     android:background="@drawable/ic_comment_grey_36dp"
                     android:id="@+id/button_Comments"
-                    android:layout_gravity="left|top"
                     />
 
+            </LinearLayout>
+            <LinearLayout
+                android:layout_weight="1.0"
+                android:id="@+id/buttombar4"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:visibility="visible"
+                android:showDividers="none">
 
                 <ImageButton
                     android:dividerHeight="0dp"
                     android:divider="@null"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginLeft="50dp"
-                    android:layout_width="22.5dp"
-                    android:layout_height="22.5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:background="@drawable/flag_upressed"
-                    android:id="@+id/button_report"
-                    android:layout_gravity="right|top"
-            />
+                    android:id="@+id/button_report" />
 
-
-
+            </LinearLayout>
         </LinearLayout>
-
 
     </LinearLayout>
     </LinearLayout>

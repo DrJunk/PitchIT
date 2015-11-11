@@ -1,0 +1,65 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rere_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MyPitch">
+
+<com.snepos.pitchit.CustomViewPager
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/pager"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"/>
+<FrameLayout
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:layout_alignParentEnd="true"
+android:layout_alignParentRight="true"
+android:layout_alignParentTop="true"
+android:id="@+id/frameLayoutWelcome">
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:orientation="horizontal"
+    android:gravity="center">
+
+
+<Button
+    android:radius="1dp"
+    android:layout_margin="5dp"
+    android:layout_width="10dp"
+    android:layout_height="10dp"
+    android:background="@drawable/emepty_dots"
+    android:id="@+id/radioButton1"
+    android:layout_gravity="right|bottom" />
+<Button
+    android:radius="1dp"
+    android:layout_margin="5dp"
+    android:layout_width="10dp"
+    android:layout_height="10dp"
+    android:background="@drawable/emepty_dots"
+    android:id="@+id/radioButton2"
+    android:layout_gravity="right|bottom" />
+<Button
+    android:radius="1dp"
+    android:layout_margin="5dp"
+    android:layout_width="10dp"
+    android:layout_height="10dp"
+    android:background="@drawable/emepty_dots"
+    android:id="@+id/radioButton3"
+    android:layout_gravity="right|bottom" />
+<Button
+    android:radius="1dp"
+    android:layout_margin="5dp"
+    android:layout_width="10dp"
+    android:layout_height="10dp"
+    android:background="@drawable/emepty_dots"
+    android:id="@+id/radioButton4"
+    android:layout_gravity="right|bottom" />
+
+</LinearLayout>
+</FrameLayout>
+    </RelativeLayout>

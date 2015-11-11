@@ -43,8 +43,6 @@ public class SplashScreen extends Activity {
             @Override
             public void run() {
 
-
-
                 new AppEULA(SplashScreen.this).show(SplashScreen.this);
             }
         }, SPLASH_DISPLAY_LENGTH);

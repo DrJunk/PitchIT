@@ -8,7 +8,7 @@
     <color name="ActionBarTitleNotPressed">#cccccc</color>
     <color name="ActionBarTitle">#ffffff</color>
     <color name="dividercolor">#BE3A27</color>
-    <color name="backgroundcolor">#E0E0DF</color>
+    <color name="backgroundcolor">#ffffff</color>
     <color name="darkGreyText">#888888</color>
     <color name="greyText">#AAAAAA</color>
     <color name="Transparent">#00AAAAAA</color>

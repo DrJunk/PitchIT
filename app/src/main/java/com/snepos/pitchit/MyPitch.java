@@ -101,10 +101,6 @@ public class MyPitch extends ActionBarActivity /*implements ActionBar.TabListene
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_pitch);
 
-        Bundle bundle = getIntent().getExtras();
-        if(bundle!=null)
-         isTutorial = bundle.getBoolean("tutorial", false);
-
 
         toolbar = (Toolbar) findViewById(R.id.tool_bar);
         toolbar.setLogo(R.drawable.icon);
@@ -327,7 +323,10 @@ public class MyPitch extends ActionBarActivity /*implements ActionBar.TabListene
         if(id== R.id.action_log_out)
         {
             Login.LogOut(getApplicationContext());
-            Intent mainIntent = new Intent(MyPitch.this, Login.class);
+            Intent mainIntent = new Intent(MyPitch.this, WelcomeSwipe.class);
+            Bundle bundle = new Bundle();
+            bundle.putBoolean("start", false);
+            mainIntent.putExtras(bundle);
             MyPitch.this.startActivity(mainIntent);
             MyPitch.this.finish();
         }

@@ -119,6 +119,7 @@ public class AppEULA {
 
     static void StartApp()
     {
+
         if(Login.LoadUserEmail(_activity.getApplicationContext()))
         {
             Intent mainIntent = new Intent(_activity, MyPitch.class);
@@ -130,7 +131,10 @@ public class AppEULA {
         }
         else
         {
-            Intent mainIntent = new Intent(_activity, Login.class);
+            Intent mainIntent = new Intent(_activity, WelcomeSwipe.class);
+            Bundle bundle = new Bundle();
+            bundle.putBoolean("start", true);
+            mainIntent.putExtras(bundle);
             _activity.startActivity(mainIntent);
             _activity.finish();
         }
